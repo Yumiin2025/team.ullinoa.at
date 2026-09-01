@@ -80,15 +80,18 @@
   .tday.done .tdot{background:var(--mint-d);border-color:var(--mint-d);color:#fff}
   .tday.today .tdot{background:var(--terra);border-color:var(--terra);color:#fff;box-shadow:0 0 0 5px rgba(200,136,110,.18)}
   .tday.locked .tdot{color:#c3ccca}
+  .tday.waiting .tdot{background:#fff;border-color:var(--gold);color:var(--gold)}
   .tcard{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px 18px;cursor:pointer;transition:.15s}
   .tcard:hover{border-color:var(--mint-d);box-shadow:0 6px 20px rgba(30,61,58,.06)}
-  .tday.locked .tcard{opacity:.6;cursor:default}
-  .tday.locked .tcard:hover{border-color:var(--line);box-shadow:none}
+  .tday.locked .tcard,.tday.waiting .tcard{opacity:.6;cursor:default}
+  .tday.locked .tcard:hover,.tday.waiting .tcard:hover{border-color:var(--line);box-shadow:none}
+  .tday.waiting .tcard{opacity:.72}
   .tcard .th{display:flex;align-items:center;gap:10px}
   .tcard .tlabel{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
   .tcard .tstatus{margin-left:auto;font-size:11.5px;font-weight:700;color:var(--mint-d)}
   .tday.today .tcard .tstatus{color:var(--terra)}
   .tday.locked .tcard .tstatus{color:#c3ccca}
+  .tday.waiting .tcard .tstatus{color:var(--gold)}
   .tcard h3{font-size:19px;color:var(--teal);margin:5px 0 3px}
   .tcard .ttease{font-size:13.5px;color:var(--muted)}
   .tcard .tmeta{display:flex;gap:14px;margin-top:11px;font-size:12px;font-weight:700;color:var(--muted)}
@@ -130,6 +133,11 @@
   .evening b{color:var(--butter)}
   .l-done{width:100%;background:var(--mint-d);color:#fff;border:none;border-radius:14px;padding:16px;font-weight:700;font-size:16px;font-family:'Fraunces';margin-top:14px;transition:.12s}
   .l-done:active{transform:scale(.98)}
+  .l-done:disabled{background:#cfe0da;color:#fff;cursor:not-allowed}
+  .l-done:disabled:active{transform:none}
+  .done-hint{display:none;font-size:12.5px;font-weight:700;color:var(--gold);text-align:center;margin-top:12px;line-height:1.4}
+  .toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%) translateY(20px);background:var(--teal);color:#fff;padding:13px 20px;border-radius:14px;font-weight:700;font-size:14px;box-shadow:0 12px 34px rgba(30,61,58,.28);opacity:0;pointer-events:none;transition:.3s;z-index:200;max-width:88vw;text-align:center}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
   /* ================= LINKS ================= */
   .lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:15px}
@@ -429,9 +437,12 @@ let state=loadState()||{
   best:0,              // beste Serie
   lastActive:null,     // letztes Datum, an dem etwas erledigt wurde (ISO)
   doneDays:[],         // abgeschlossene Onboarding-Tage [1,2,...]
+  dayDone:{},          // { "1":"2026-09-15", ... } Datum des Abschlusses je Tag
   tasks:{},            // { "3": [true,false,true], ... } abgehakte To-dos je Tag
   reflect:{}           // { "3": "text..." } Reflexionen je Tag
 };
+/* Migration für ältere gespeicherte Stände */
+if(!state.dayDone)state.dayDone={};
 function saveState(){try{localStorage.setItem(STORE_KEY,JSON.stringify(state));}catch(e){}}
 
 /* Streak-Logik: einmal pro Kalendertag hochzählen, bei Lücke > 1 Tag zurücksetzen */
@@ -546,10 +557,14 @@ const days=[
 const tl=document.getElementById('timeline');
 function dayStatus(n){
   if(state.doneDays.includes(n))return 'done';
-  // current = first day that isn't done; everything after is locked
+  // aktueller Tag = erster noch nicht abgeschlossener; alles danach gesperrt
   const firstOpen=days.map(d=>d.n).find(x=>!state.doneDays.includes(x));
-  if(n===firstOpen)return 'today';
-  return 'locked';
+  if(n!==firstOpen)return 'locked';
+  if(n===days[0].n)return 'today';            // der allererste Tag ist immer offen
+  // Zeitschloss: genau ein neuer Tag pro Kalendertag
+  const prevDate=state.dayDone[n-1];
+  if(prevDate && prevDate===todayISO())return 'waiting';  // Vortag heute fertig -> ab morgen
+  return 'today';
 }
 function renderTimeline(){
   let w2=false;
@@ -557,8 +572,8 @@ function renderTimeline(){
     let sep='';
     if(d.n===8 && !w2){sep='<div class="week-sep" style="margin:22px 0 14px">Woche 2 · Tiefer gehen</div>';w2=true;}
     const st=dayStatus(d.n);
-    const status=st==='done'?'✓ Erledigt':st==='today'?'Heute dran':'🔒 Bald';
-    const dot=st==='done'?'✓':st==='locked'?'🔒':d.emoji;
+    const status=st==='done'?'✓ Erledigt':st==='today'?'Heute dran':st==='waiting'?'🔒 Ab morgen':'🔒 Bald';
+    const dot=st==='done'?'✓':(st==='locked'||st==='waiting')?'🔒':d.emoji;
     return `${sep}<div class="tday ${st}" data-day="${d.n}">
       <div class="tdot">${dot}</div>
       <div class="tcard">
@@ -569,7 +584,11 @@ function renderTimeline(){
       </div></div>`;
   }).join('');
   tl.querySelectorAll('.tday').forEach(el=>{
-    el.addEventListener('click',()=>{if(!el.classList.contains('locked'))openDay(+el.dataset.day)});
+    el.addEventListener('click',()=>{
+      if(el.classList.contains('waiting')){toast('Tag '+el.dataset.day+' öffnet sich morgen für dich 🌱');return;}
+      if(el.classList.contains('locked'))return;
+      openDay(+el.dataset.day);
+    });
   });
 }
 renderTimeline();
@@ -606,10 +625,33 @@ function openDay(n){
       </div>
       <div class="evening"><span class="e">🌱</span><div>Heute Abend: <b>ein Satz.</b> Was hast du heute getan? Nur für dich. Wer seinen Fortschritt festhält, sieht ihn auch, und wer ihn sieht, bleibt dran.</div></div>
       <button class="l-done" id="doneBtn">${alreadyDone?'Tag '+d.n+' erledigt ✓':'Tag '+d.n+' abschließen 🌿'}</button>
+      <div class="done-hint" id="doneHint"></div>
     </div>`;
   overlay.classList.add('show');
   document.body.style.overflow='hidden';
   sheet.scrollTop=0;
+
+  const rb=sheet.querySelector('#reflectBox');
+  const doneBtn=sheet.querySelector('#doneBtn');
+  const doneHint=sheet.querySelector('#doneHint');
+
+  // Abschluss-Button erst freigeben, wenn alle To-dos abgehakt sind UND die Reflexion ausgefüllt ist
+  function refreshDone(){
+    if(alreadyDone){doneBtn.disabled=false;return;}
+    const allTasks=d.tasks.every((_,i)=>sheet.querySelector(`.task[data-i="${i}"]`).classList.contains('done'));
+    const hasReflect=rb.value.trim().length>0;
+    doneBtn.disabled=!(allTasks&&hasReflect);
+    if(doneBtn.disabled){
+      const miss=[];
+      if(!allTasks)miss.push('alle To-dos abhaken');
+      if(!hasReflect)miss.push('einen Satz in die Reflexion schreiben');
+      doneHint.textContent='Noch offen: '+miss.join(' · ');
+      doneHint.style.display='block';
+    }else{
+      doneHint.textContent='';
+      doneHint.style.display='none';
+    }
+  }
 
   // toggle + save each task
   sheet.querySelectorAll('.task').forEach(t=>t.addEventListener('click',e=>{
@@ -617,22 +659,36 @@ function openDay(n){
     t.classList.toggle('done');
     const arr=d.tasks.map((_,i)=>sheet.querySelector(`.task[data-i="${i}"]`).classList.contains('done'));
     state.tasks[n]=arr; saveState();
+    refreshDone();
   }));
   // save reflection as you type
-  const rb=sheet.querySelector('#reflectBox');
-  rb.addEventListener('input',()=>{state.reflect[n]=rb.value;saveState();});
+  rb.addEventListener('input',()=>{state.reflect[n]=rb.value;saveState();refreshDone();});
 
   // complete the day
-  sheet.querySelector('#doneBtn').addEventListener('click',()=>{
+  doneBtn.addEventListener('click',()=>{
+    if(doneBtn.disabled)return;
     if(!state.doneDays.includes(n)){
       state.doneDays.push(n);
-      markActiveToday();       // zählt die Serie einmal pro Tag hoch
+      state.dayDone[n]=todayISO();   // Datum merken -> nächster Tag öffnet morgen
+      markActiveToday();             // zählt die Serie einmal pro Tag hoch
       saveState();
       renderTimeline();
       renderPlant(state.streak);
+      const more=days.some(x=>x.n===n+1);
+      closeDay();
+      toast(more?('Stark. Tag '+(n+1)+' ist morgen für dich da 🌱'):'Alle Tage geschafft. Wow. 🌿');
+      return;
     }
     closeDay();
   });
+
+  refreshDone();
+}
+function toast(msg){
+  let el=document.getElementById('toast');
+  if(!el){el=document.createElement('div');el.id='toast';el.className='toast';document.body.appendChild(el);}
+  el.textContent=msg; el.classList.add('show');
+  clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('show'),3400);
 }
 function closeDay(){overlay.classList.remove('show');document.body.style.overflow=''}
 overlay.addEventListener('click',e=>{if(e.target===overlay)closeDay()});
