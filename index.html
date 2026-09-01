@@ -169,6 +169,31 @@
   .vidcard .vl small{display:block;font-weight:400;color:var(--muted);font-size:12.5px;margin-top:1px}
   .vidgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
 
+  /* ---- podcast ---- */
+  .podrow{display:flex;gap:14px;align-items:flex-start;background:var(--paper);border:1px solid var(--line);border-radius:15px;padding:15px 16px;margin-bottom:11px}
+  .podrow .ri{width:46px;height:46px;border-radius:13px;flex:none;display:grid;place-items:center;font-size:22px;background:var(--sage-bg)}
+  .podrow .rt{font-weight:700;font-size:15px;color:var(--teal)}
+  .podrow .rd{font-size:13px;color:var(--muted);margin-top:1px}
+  .podlinks{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}
+  .podlink{display:inline-block;text-decoration:none;font-weight:700;font-size:12px;padding:7px 12px;border-radius:9px;background:#1db954;color:#fff}
+  .podlink.ap{background:var(--purple)}
+  .podlink:hover{opacity:.9}
+
+  /* ---- folders (Aufzeichnungen) ---- */
+  .folder{background:var(--paper);border:1px solid var(--line);border-radius:15px;margin-bottom:11px;overflow:hidden}
+  .folder-h{width:100%;display:flex;align-items:center;gap:12px;padding:15px 16px;background:none;border:none;text-align:left}
+  .folder-i{font-size:20px;flex:none}
+  .folder-t{font-weight:700;font-size:15px;color:var(--teal)}
+  .folder-c{margin-left:auto;font-size:11.5px;font-weight:700;color:var(--lav);background:var(--lilac);padding:3px 9px;border-radius:999px}
+  .folder-tri{color:var(--mint-d);transition:.2s;font-size:15px;font-weight:700}
+  .folder.open .folder-tri{transform:rotate(90deg)}
+  .folder-b{display:none;padding:2px 10px 10px}
+  .folder.open .folder-b{display:block}
+  .vrow{display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:11px;text-decoration:none;color:inherit;transition:.12s}
+  .vrow:hover{background:var(--sage-bg)}
+  .vrow .vic{width:30px;height:30px;border-radius:9px;background:var(--teal);color:#fff;display:grid;place-items:center;font-size:11px;flex:none;padding-left:2px}
+  .vrow .vtt{font-weight:700;font-size:13.5px;color:var(--teal)}
+
   /* ================= CALENDAR ================= */
   .calwrap{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px}
   .calbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
@@ -296,12 +321,24 @@
 
       <div class="rescat">Womit du täglich arbeitest</div>
       <div class="lgrid">
-        <a class="lcard" href="https://priller.ringana.com" target="_blank" rel="noopener"><div class="lh"><span class="lb" style="background:#2f6f60">R</span><div><div class="lt">Dein RINGANA Shop</div><div class="ld">Code PRILLER20 für deine Kundinnen</div></div></div><span class="vtag">▶ So teilst du ihn · 2:10</span></a>
+        <a class="lcard" href="https://priller.ringana.com" target="_blank" rel="noopener"><div class="lh"><span class="lb" style="background:#2f6f60">R</span><div><div class="lt">Dein RINGANA Shop</div><div class="ld">Dein Link zum Weitergeben</div></div></div><span class="vtag">▶ So teilst du ihn · 2:10</span></a>
         <a class="lcard"><div class="lh"><span class="lb" style="background:#6accb1">O</span><div><div class="lt">Online Office</div><div class="ld">Journey, Academy, Events & Booking</div></div></div><span class="vtag">▶ Rundgang · 4:30</span></a>
         <a class="lcard"><div class="lh"><span class="lb" style="background:#fbb33c">📱</span><div><div class="lt">myRINGANA App</div><div class="ld">Fast Track und Umsätze im Blick</div></div></div><span class="vtag">▶ Kurz erklärt · 1:50</span></a>
-        <a class="lcard" href="https://calendar.app.google/Joo4asPkTA32ZYut9" target="_blank" rel="noopener"><div class="lh"><span class="lb" style="background:#806cbf">📅</span><div><div class="lt">Gespräch buchen</div><div class="ld">Hol dir einen Termin mit deiner Mentorin</div></div></div></a>
         <a class="lcard" href="https://ullinoa.at" target="_blank" rel="noopener"><div class="lh"><span class="lb" style="background:#2f6f60">W</span><div><div class="lt">ullinoa.at</div><div class="ld">Unsere Website</div></div></div></a>
         <a class="lcard" href="https://instagram.com/ulli.noa.so.we" target="_blank" rel="noopener"><div class="lh"><span class="lb" style="background:#806cbf">IG</span><div><div class="lt">Instagram</div><div class="ld">@ulli.noa.so.we</div></div></div></a>
+      </div>
+
+      <div class="rescat">Unser Podcast</div>
+      <div class="podrow">
+        <span class="ri">🎙️</span>
+        <div>
+          <div class="rt">Her Turn. Her Impact</div>
+          <div class="rd">Mit Ulli & Noa · über Business, Haltung und den Weg</div>
+          <div class="podlinks">
+            <a class="podlink sp" href="https://open.spotify.com/show/3MH7NMO1nOKX4afIQUmdbi" target="_blank" rel="noopener">Spotify ↗</a>
+            <a class="podlink ap" href="https://podcasts.apple.com/at/podcast/her-turn-her-impact-mit-ulli-noa/id1894191663" target="_blank" rel="noopener">Apple Podcasts ↗</a>
+          </div>
+        </div>
       </div>
 
       <div class="rescat">Verstehen & planen</div>
@@ -316,10 +353,40 @@
         <div class="vidcard"><div class="vth a3"><div class="pl">▶</div><span class="dur">2:10</span></div><div class="vl">Suncare erklären<small>SPF, Kids und CAPS protect</small></div></div>
       </div>
 
-      <div class="rescat">Zum Mitnehmen</div>
-      <a class="resrow"><span class="ri">💬</span><div><div class="rt">Gesprächseinstiege, die sich echt anfühlen</div><div class="rd">Als Idee, nie als Skript zum Ablesen</div></div><span class="rtag pdf">PDF</span></a>
-      <a class="resrow"><span class="ri">🖼️</span><div><div class="rt">Bilder & Canva-Vorlagen</div><div class="rd">Logo, Farben und Story-Vorlagen im ullinoa-Look</div></div><span class="rtag">Link</span></a>
-      <a class="resrow"><span class="ri">⚖️</span><div><div class="rt">Kurz zum Rechtlichen</div><div class="rd">Werbung | RINGANA Partnerin, und was du sagen darfst</div></div><span class="rtag pdf">PDF</span></a>
+      <div class="rescat">Aufzeichnungen</div>
+
+      <div class="folder">
+        <button class="folder-h"><span class="folder-i">📱</span><span class="folder-t">Social Media</span><span class="folder-c">2</span><span class="folder-tri">›</span></button>
+        <div class="folder-b">
+          <a class="vrow" href="https://youtu.be/jiYM5PB5jzU" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">Social Media Start</span></a>
+          <a class="vrow" href="https://youtu.be/tteUZMwTK-U" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">Social Media Ins &amp; Outs mit Alisa</span></a>
+        </div>
+      </div>
+
+      <div class="folder">
+        <button class="folder-h"><span class="folder-i">☀️</span><span class="folder-t">Best Summer of our Lives</span><span class="folder-c">9</span><span class="folder-tri">›</span></button>
+        <div class="folder-b">
+          <a class="vrow" href="https://youtu.be/5shUcnoMJ5w" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">1. Call</span></a>
+          <a class="vrow" href="https://youtu.be/qcrOQDnCwbo" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">2. Call</span></a>
+          <a class="vrow" href="https://youtu.be/9_gPYwiW3Zo" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">3. Call</span></a>
+          <a class="vrow" href="https://youtu.be/wQ5tQy_4DA4" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">4. Call</span></a>
+          <a class="vrow" href="https://youtu.be/WVsQA1BbLWk" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">5. Call</span></a>
+          <a class="vrow" href="https://youtu.be/rv-yx_oo_Xw" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">6. Call</span></a>
+          <a class="vrow" href="https://youtu.be/_PNB5_Xthoo" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">7. Call</span></a>
+          <a class="vrow" href="https://youtu.be/PaRdteLsC9s" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">8. Call</span></a>
+          <a class="vrow" href="https://youtu.be/DWfxb3g0qpM" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">9. Call</span></a>
+        </div>
+      </div>
+
+      <div class="folder">
+        <button class="folder-h"><span class="folder-i">💼</span><span class="folder-t">Business Info Calls</span><span class="folder-c">4</span><span class="folder-tri">›</span></button>
+        <div class="folder-b">
+          <a class="vrow" href="https://youtu.be/ASQHzwSoOFw" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">Business Info Call mit Noa</span></a>
+          <a class="vrow" href="https://youtu.be/CbfLj2tVAd8" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">Let’s talk Business mit Alexa &amp; Noa</span></a>
+          <a class="vrow" href="https://youtu.be/NqnaVfvuB-A" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">Business Info Call mit Thomas &amp; Noa</span></a>
+          <a class="vrow" href="https://youtu.be/gZdkPxD9Shs" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">Business Info Call · 9. September</span></a>
+        </div>
+      </div>
     </div>
 
     <!-- ============ KALENDER ============ -->
@@ -788,8 +855,9 @@ if(resetBtn)resetBtn.addEventListener('click',()=>{
   }
 });
 
-/* ---------------- faq / pills ---------------- */
+/* ---------------- faq / pills / folders ---------------- */
 document.querySelectorAll('.faq .q').forEach(q=>q.addEventListener('click',()=>q.parentElement.classList.toggle('open')));
+document.querySelectorAll('.folder-h').forEach(h=>h.addEventListener('click',()=>h.parentElement.classList.toggle('open')));
 document.querySelectorAll('.pills button').forEach(b=>b.addEventListener('click',()=>{
   b.parentElement.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
 }));
