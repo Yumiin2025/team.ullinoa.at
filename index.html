@@ -71,6 +71,30 @@
   .welcome-card p{color:rgba(255,255,255,.9);font-size:14.5px;max-width:52ch}
   .welcome-card .wq{font-family:'Fraunces';font-style:italic;font-size:18px;color:#fff;margin:14px 0 0;line-height:1.4}
 
+  /* ---- persönliches Willkommen (vor Tag 1) ---- */
+  .intro-card{width:100%;display:flex;align-items:center;gap:14px;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:26px;cursor:pointer;transition:.15s;font-family:inherit}
+  .intro-card:hover{border-color:var(--mint-d);box-shadow:0 8px 24px rgba(30,61,58,.07)}
+  .intro-card:active{transform:scale(.99)}
+  .intro-card .ic-photo{width:64px;height:64px;border-radius:14px;overflow:hidden;flex:none;background:linear-gradient(135deg,var(--gold),var(--purple));display:grid;place-items:center}
+  .intro-card .ic-photo img{width:100%;height:100%;object-fit:cover;object-position:center top}
+  .intro-card .ic-photo.noimg img{display:none}
+  .intro-card .ic-photo.noimg::after{content:"☀️";font-size:24px}
+  .intro-card .ic-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+  .intro-card .ic-ey{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--purple)}
+  .intro-card .ic-h{font-family:'Fraunces';font-weight:500;font-size:17px;color:var(--teal);line-height:1.2}
+  .intro-card .ic-d{font-size:12px;color:var(--muted);line-height:1.4}
+  .intro-card .ic-arrow{color:var(--mint-d);font-size:20px;font-weight:700;flex:none}
+  .welcome-photo{width:100%;aspect-ratio:4/5;max-height:440px;border-radius:16px;margin-bottom:18px;overflow:hidden;background:linear-gradient(135deg,var(--gold),var(--purple));display:grid;place-items:center}
+  .welcome-photo img{width:100%;height:100%;object-fit:cover;object-position:center top}
+  .welcome-photo.noimg img{display:none}
+  .welcome-photo.noimg::after{content:"Ulli & Noa ☀️";color:#fff;font-family:'Fraunces';font-size:18px}
+  .wsub{font-family:'Fraunces';font-size:15px;color:var(--purple);text-transform:uppercase;letter-spacing:.05em;margin:24px 0 10px}
+  .wtwo{background:var(--sage-bg);border-radius:12px;padding:14px 16px;margin:16px 0;font-size:14px;color:var(--teal2);line-height:1.9;font-weight:700}
+  .wa-cta{background:var(--lilac);border-radius:16px;padding:18px;margin-top:22px}
+  .wa-cta p{font-size:14px;color:var(--ink);line-height:1.6;margin-bottom:13px}
+  .wa-btn{display:block;width:100%;text-align:center;background:#25d366;color:#fff;text-decoration:none;font-weight:700;font-family:'Fraunces';font-size:16px;padding:15px;border-radius:14px}
+  .wa-btn:active{transform:scale(.98)}
+
   .timeline{position:relative;padding-left:38px}
   .timeline::before{content:"";position:absolute;left:14px;top:8px;bottom:40px;width:2px;
     background:linear-gradient(var(--mint-d),var(--line))}
@@ -308,6 +332,16 @@
         <p>Das hier ist kein Kurs den du zuerst abschließen musst. Es ist ein Weg, ein Tag nach dem anderen. Du musst nicht bereit sein um anzufangen.</p>
         <p class="wq">Du wirst bereit, indem du anfängst.</p>
       </div>
+
+      <button class="intro-card" id="introCard">
+        <span class="ic-photo" id="icPhoto"><img src="ulli-noa.jpg" alt="Ulli und Noa" onerror="document.getElementById('icPhoto').classList.add('noimg')"></span>
+        <span class="ic-txt">
+          <span class="ic-ey">Von uns an dich</span>
+          <span class="ic-h">Lies das, bevor du startest ☀️</span>
+          <span class="ic-d">Ein persönliches Willkommen von Ulli &amp; Noa · und der Link zur Onboarding-Gruppe</span>
+        </span>
+        <span class="ic-arrow">›</span>
+      </button>
 
       <div class="week-sep">Woche 1 · Ankommen & anfangen</div>
       <div class="timeline" id="timeline">
@@ -759,6 +793,50 @@ function toast(msg){
 }
 function closeDay(){overlay.classList.remove('show');document.body.style.overflow=''}
 overlay.addEventListener('click',e=>{if(e.target===overlay)closeDay()});
+
+/* ---------------- persönliches Willkommen (immer offen, vor Tag 1) ---------------- */
+const WA_ONBOARDING='https://chat.whatsapp.com/Gwul36PKhFbEYvm6ByXt3g?mode=gi_t';
+function openWelcome(){
+  sheet.innerHTML=`
+    <div class="sheet-hd">
+      <button class="close" onclick="closeDay()">✕</button>
+      <div class="ey">Willkommen ☀️</div>
+      <h3>Von uns an dich</h3>
+    </div>
+    <div class="sheet-bd">
+      <div class="welcome-photo" id="wPhoto"><img src="ulli-noa.jpg" alt="Ulli und Noa" onerror="document.getElementById('wPhoto').classList.add('noimg')"></div>
+      <div class="intro-prose">
+        <p class="lead">Da seid ihr. Und wir freuen uns wirklich. ☀️</p>
+        <p>Lass uns direkt mit etwas anfangen, das alles leichter macht: RINGANA lernt man nicht zuerst und macht es dann. Man macht es und versteht es dabei. Es ist ein Business, das im echten Leben passiert. Am Markt. Beim Kaffee. Im Gespräch mit der Nachbarin. In einer ehrlichen Nachricht. In einer Story, die sich nicht nach Werbung anfühlt. Online und offline, beides gehört dazu, beides zählt, beides funktioniert. 🫶</p>
+        <p>Was dein Job ist? Simpel. Mit Menschen reden. Teilen, was dir gut tut. Zuhören, was andere gerade bewegt, suchen, brauchen. Das ist RINGANA. Nicht mehr, nicht weniger.</p>
+        <p>Die Academy ist dabei dein Begleiter. Sie gibt dir Sprache für das, was du schon fühlst, Ideen für Momente, die du sowieso hast, Sicherheit für Gespräche, die du bereits führst. Aber der Startpunkt bist du. Heute. Genau so, wie du bist.</p>
+      </div>
+      <div class="wtwo">🌟 1 echter Moment mit einem Menschen<br>🌟 1 Mal wirklich zuhören, ohne schon die Antwort im Kopf zu haben</div>
+      <div class="evening"><span class="e">🌱</span><div>Und eine letzte Sache, die wir wirklich ernst meinen: Schreib jeden Abend <b>einen Satz</b> auf. Was hast du heute getan. Nur für dich. Kein Roman. Einen Satz. Leonardo da Vinci hat es gemacht, die erfolgreichsten Athletinnen und Athleten der Welt machen es bis heute. Weil Fortschritt, den man nicht festhält, sich irgendwann nicht mehr wie Fortschritt anfühlt.</div></div>
+      <div class="intro-prose">
+        <p>Diese Gruppe gehört euch. Kein Druck. Keine Perfektion. Keine Vergleiche. Nur Menschen, die in ihrem Tempo, auf ihre Art, mit ihrer ganz eigenen Geschichte wachsen.</p>
+        <p>Wir freuen uns, dass ihr hier seid. Wirklich. ☀️<br><em>Eure Ulli &amp; Noa</em> 🥰</p>
+      </div>
+
+      <div class="wsub">Kurz zu uns</div>
+      <div class="intro-prose">
+        <p>Wir sind Ulli und Noa. Mama und Tochter. Und wenn wir ehrlich sind, ist RINGANA bei uns weniger Business als Lebensweise. Ullis Mama Uschi hat vor 27 Jahren damit angefangen. Ulli war ihre erste Partnerin. Und ich, Noa, bin buchstäblich damit aufgewachsen.</p>
+        <p>Aber fangen wir dort an, wo es wirklich begonnen hat. Ulli war Tennisprofi, auf dem Weg zur Trainerin. Und schwanger mit mir. Einer dieser Momente im Leben, wo sich in kürzester Zeit alles verändert und man sich ganz still eine Frage stellt: <em>Was kommt jetzt?</em> Nicht aus Angst. Aus Ehrlichkeit. Sie hat gespürt, wie sich Wege schließen. Und dann stand da RINGANA. Keine große Garantie. Kein fertiger Plan. Nur eine Frage: könnte das meine Freiheit sein? Sie hat Ja gesagt. Und dieses Ja hat unser Leben verändert. 🤍</p>
+        <p>Ich bin mit 18 Partnerin geworden. Neben Bachelor, Praktika, erstem Job. Niemand hätte damals gesagt, dass genau dieses Nebenbei eines Tages mein Anker wird. Aber es war da, als ich es gebraucht habe. Als ich ein Arbeitsumfeld verlassen musste, das mir nicht gut getan hat. Als ich letztes Jahr jeden Moment bei meiner Hündin Hope sein wollte, als sie gegangen ist. 🍂🤍 RINGANA hat mir nicht das Leben gerettet. Aber es hat mir Spielraum gegeben. Und Spielraum ist manchmal alles.</p>
+        <p>Warum erzählen wir das? Weil wir wissen, dass viele von euch ihre eigene Version dieser Geschichte kennen. Den eigenen Moment, wo sich eine Tür geschlossen hat. Die eigene stille Frage. Den eigenen Grund, warum ihr heute hier seid. Und der verdient es, gesehen zu werden. Das ist RINGANA. Nicht die Produkte allein. Nicht das Business allein. Die Menschen. 🌟</p>
+      </div>
+
+      <div class="wa-cta">
+        <p>🌿 Stell dich in unserer Onboarding-Gruppe kurz vor: Name, woher du kommst, und ein ehrlicher Satz, warum du gestartet bist. Nicht als Pflichtübung, sondern weil dein einer Satz jemandem hier vielleicht genau den Mut gibt, den sie gerade braucht.</p>
+        <a class="wa-btn" href="${WA_ONBOARDING}" target="_blank" rel="noopener">Zur WhatsApp-Gruppe ↗</a>
+      </div>
+    </div>`;
+  overlay.classList.add('show');
+  document.body.style.overflow='hidden';
+  sheet.scrollTop=0;
+}
+const introCard=document.getElementById('introCard');
+if(introCard)introCard.addEventListener('click',openWelcome);
 
 /* ---------------- plant streak: real SVG that grows with the streak ---------------- */
 /* Milestones purely for the label + progress bar; the drawing itself scales continuously. */
