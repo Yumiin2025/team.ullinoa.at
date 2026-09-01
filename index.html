@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ulli. noa. so. we. · Partner-Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,600;0,6..12,700;1,6..12,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* team palette */
+    --butter:#fae9c2;   /* warm cream/butter */
+    --mint:#d4efe6;      /* soft mint surface */
+    --lilac:#d9d3eb;     /* soft lavender surface */
+    --green:#6accb1;     /* primary teal-green accent */
+    --green-d:#4bb597;   /* darker green for shadows/hover */
+    --gold:#fbb33c;      /* warm gold accent */
+    --purple:#806cbf;    /* deep purple accent */
+    --purple-d:#6a58a6;
+
+    /* derived roles */
+    --teal:#2f6f60;      /* deep readable green for headings */
+    --teal2:#265a4e;
+    --mint-d:#6accb1;
+    --lav:#806cbf;
+    --terra:#fbb33c;     /* gold now plays the warm-accent role */
+    --cream:#fdf6e6;     /* page background, light butter */
+    --ink:#33403a;
+    --muted:#7a857f;
+    --line:rgba(47,111,96,.16);
+    --paper:#ffffff;
+    --sage-bg:#d4efe6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{font-family:'Nunito Sans',system-ui,sans-serif;background:var(--cream);color:var(--ink);
+    -webkit-font-smoothing:antialiased;line-height:1.6}
+  h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:500;line-height:1.15;letter-spacing:-.01em}
+  button{font-family:'Nunito Sans',sans-serif;cursor:pointer}
+  em{font-style:italic}
+
+  /* ---- top bar with plant streak ---- */
+  .topbar{position:sticky;top:0;z-index:40;background:rgba(248,246,243,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .topbar-inner{max-width:1040px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;gap:14px}
+  .logo{font-family:'Fraunces';font-weight:500;font-size:19px;color:var(--teal);letter-spacing:.01em;margin-right:auto}
+  .logo span{color:var(--terra)}
+  .streak{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 14px 5px 8px}
+  .streak .pot{font-size:20px;line-height:1}
+  .streak .sval{font-family:'Fraunces';font-weight:600;font-size:16px;color:var(--purple)}
+  .streak .slab{font-size:11px;color:var(--muted);font-weight:600;margin-top:-2px}
+
+  /* ---- layout ---- */
+  .shell{max-width:1040px;margin:0 auto;display:flex;gap:26px;padding:26px 20px 120px}
+  .main{flex:1;min-width:0}
+  .rail{width:300px;flex:none}
+  @media(max-width:900px){.rail{display:none}}
+
+  .view{display:none;animation:fade .4s ease}
+  .view.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  .vhead{margin-bottom:22px}
+  .vhead .ey{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);margin-bottom:8px}
+  .vhead h2{font-size:31px;color:var(--teal)}
+  .vhead p{color:var(--muted);margin-top:5px;font-size:15px;max-width:56ch}
+
+  /* ================= JOURNAL TIMELINE ================= */
+  .welcome-card{background:var(--purple);color:#fff;border-radius:22px;padding:26px 26px 24px;margin-bottom:26px;position:relative;overflow:hidden}
+  .welcome-card .ey{color:var(--butter);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+  .welcome-card h2{color:#fff;font-size:25px;margin-bottom:10px;max-width:20ch}
+  .welcome-card p{color:rgba(255,255,255,.9);font-size:14.5px;max-width:52ch}
+  .welcome-card .wq{font-family:'Fraunces';font-style:italic;font-size:18px;color:#fff;margin:14px 0 0;line-height:1.4}
+
+  .timeline{position:relative;padding-left:38px}
+  .timeline::before{content:"";position:absolute;left:14px;top:8px;bottom:40px;width:2px;
+    background:linear-gradient(var(--mint-d),var(--line))}
+  .tday{position:relative;margin-bottom:16px}
+  .tdot{position:absolute;left:-38px;top:2px;width:30px;height:30px;border-radius:50%;
+    display:grid;place-items:center;font-size:15px;background:#fff;border:2px solid var(--line);z-index:2}
+  .tday.done .tdot{background:var(--mint-d);border-color:var(--mint-d);color:#fff}
+  .tday.today .tdot{background:var(--terra);border-color:var(--terra);color:#fff;box-shadow:0 0 0 5px rgba(200,136,110,.18)}
+  .tday.locked .tdot{color:#c3ccca}
+  .tcard{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px 18px;cursor:pointer;transition:.15s}
+  .tcard:hover{border-color:var(--mint-d);box-shadow:0 6px 20px rgba(30,61,58,.06)}
+  .tday.locked .tcard{opacity:.6;cursor:default}
+  .tday.locked .tcard:hover{border-color:var(--line);box-shadow:none}
+  .tcard .th{display:flex;align-items:center;gap:10px}
+  .tcard .tlabel{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .tcard .tstatus{margin-left:auto;font-size:11.5px;font-weight:700;color:var(--mint-d)}
+  .tday.today .tcard .tstatus{color:var(--terra)}
+  .tday.locked .tcard .tstatus{color:#c3ccca}
+  .tcard h3{font-size:19px;color:var(--teal);margin:5px 0 3px}
+  .tcard .ttease{font-size:13.5px;color:var(--muted)}
+  .tcard .tmeta{display:flex;gap:14px;margin-top:11px;font-size:12px;font-weight:700;color:var(--muted)}
+  .tcard .tmeta span{display:inline-flex;align-items:center;gap:4px}
+  .week-sep{font-family:'Fraunces';font-size:13px;font-weight:600;color:var(--purple);text-transform:uppercase;letter-spacing:.08em;margin:6px 0 14px}
+
+  /* ================= LESSON SHEET ================= */
+  .overlay{position:fixed;inset:0;background:rgba(30,61,58,.5);z-index:100;display:none;justify-content:center;align-items:flex-end}
+  .overlay.show{display:flex}
+  .sheet{background:var(--cream);width:100%;max-width:600px;max-height:92vh;overflow-y:auto;border-radius:24px 24px 0 0;padding:0}
+  @media(min-width:600px){.overlay{align-items:center}.sheet{border-radius:24px}}
+  .sheet-hd{position:sticky;top:0;background:var(--teal);color:var(--cream);padding:22px 24px 20px;border-radius:24px 24px 0 0}
+  @media(min-width:600px){.sheet-hd{border-radius:24px 24px 0 0}}
+  .sheet-hd .close{position:absolute;top:16px;right:18px;border:none;background:rgba(255,255,255,.16);color:#fff;width:32px;height:32px;border-radius:50%;font-size:16px}
+  .sheet-hd .ey{color:var(--butter);font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  .sheet-hd h3{color:#fff;font-size:24px;margin-top:6px}
+  .sheet-bd{padding:22px 24px 30px}
+  .intro-prose{font-size:15px;line-height:1.7;color:var(--ink);margin-bottom:6px}
+  .intro-prose p{margin-bottom:12px}
+  .intro-prose .lead{font-family:'Fraunces';font-style:italic;font-size:18px;color:var(--teal);line-height:1.45}
+  .todo-h{font-family:'Fraunces';font-size:15px;color:var(--purple);text-transform:uppercase;letter-spacing:.06em;margin:22px 0 12px}
+  .task{display:flex;gap:13px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:10px;cursor:pointer;transition:.12s}
+  .task:hover{border-color:var(--mint-d)}
+  .task .cb{width:24px;height:24px;border-radius:8px;border:2px solid #bcc7c4;flex:none;position:relative;margin-top:1px;transition:.15s}
+  .task.done .cb{background:var(--mint-d);border-color:var(--mint-d)}
+  .task.done .cb::after{content:"✓";color:#fff;position:absolute;left:4px;top:-2px;font-weight:700;font-size:15px}
+  .task .tk-t{font-weight:700;font-size:14.5px;color:var(--ink)}
+  .task.done .tk-t{color:var(--muted);text-decoration:line-through}
+  .task .tk-d{font-size:13px;color:var(--muted);font-weight:400;margin-top:3px}
+  .task .tk-d em{color:var(--teal);font-style:italic}
+  .msg-ex{background:var(--sage-bg);border-radius:10px;padding:10px 13px;margin-top:9px;font-size:13px;font-style:italic;color:var(--teal2);line-height:1.5}
+  .reflect{background:var(--lilac);border-left:3px solid var(--lav);border-radius:0 12px 12px 0;padding:15px 17px;margin:20px 0 8px}
+  .reflect .rh{font-family:'Fraunces';font-size:14px;color:var(--lav);margin-bottom:7px;font-weight:600}
+  .reflect .rq{font-style:italic;font-size:14.5px;color:var(--teal);line-height:1.5}
+  .reflect textarea{width:100%;margin-top:11px;border:1px solid var(--line);border-radius:10px;padding:11px;font-family:'Nunito Sans';font-size:13.5px;resize:none;min-height:60px;background:#fff}
+  .reflect textarea:focus{outline:none;border-color:var(--lav)}
+  .evening{background:var(--teal);color:var(--cream);border-radius:14px;padding:15px 17px;margin:16px 0;font-size:14px;line-height:1.55;display:flex;gap:11px}
+  .evening .e{font-size:19px;flex:none}
+  .evening b{color:var(--butter)}
+  .l-done{width:100%;background:var(--mint-d);color:#fff;border:none;border-radius:14px;padding:16px;font-weight:700;font-size:16px;font-family:'Fraunces';margin-top:14px;transition:.12s}
+  .l-done:active{transform:scale(.98)}
+
+  /* ================= LINKS ================= */
+  .lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:15px}
+  .lcard{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px;text-decoration:none;color:inherit;transition:.14s;display:block}
+  .lcard:hover{transform:translateY(-3px);border-color:var(--mint-d);box-shadow:0 10px 26px rgba(30,61,58,.07)}
+  .lcard .lh{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+  .lcard .lb{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;color:#fff;font-weight:700;font-size:16px;flex:none}
+  .lcard .lt{font-family:'Fraunces';font-weight:500;font-size:17px;color:var(--teal)}
+  .lcard .ld{font-size:13px;color:var(--muted)}
+  .lcard .vtag{display:inline-flex;align-items:center;gap:5px;margin-top:11px;background:var(--lilac);color:var(--lav);font-weight:700;font-size:12px;padding:4px 11px;border-radius:8px}
+
+  /* ================= RESSOURCEN ================= */
+  .rescat{font-family:'Fraunces';font-size:14px;font-weight:600;color:var(--purple);text-transform:uppercase;letter-spacing:.06em;margin:24px 2px 13px}
+  .rescat:first-of-type{margin-top:4px}
+  .resrow{display:flex;align-items:center;gap:14px;background:var(--paper);border:1px solid var(--line);border-radius:15px;padding:15px 16px;margin-bottom:11px;cursor:pointer;transition:.14s;text-decoration:none;color:inherit}
+  .resrow:hover{border-color:var(--mint-d);transform:translateX(3px)}
+  .resrow .ri{width:46px;height:46px;border-radius:13px;flex:none;display:grid;place-items:center;font-size:22px;background:var(--sage-bg)}
+  .resrow .rt{font-weight:700;font-size:15px;color:var(--teal)}
+  .resrow .rd{font-size:13px;color:var(--muted);margin-top:1px}
+  .resrow .rtag{margin-left:auto;font-size:11px;font-weight:700;color:var(--lav);background:var(--lilac);padding:4px 10px;border-radius:8px;flex:none}
+  .resrow .rtag.pdf{color:var(--terra);background:#fdeccb}
+  .vidcard{background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:11px}
+  .vidcard .vth{aspect-ratio:16/9;background:linear-gradient(135deg,var(--teal),var(--lav));display:grid;place-items:center;position:relative;cursor:pointer}
+  .vidcard .vth.a2{background:linear-gradient(135deg,var(--mint-d),var(--teal2))}
+  .vidcard .vth.a3{background:linear-gradient(135deg,var(--terra),var(--teal))}
+  .vidcard .pl{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.92);display:grid;place-items:center;font-size:19px;color:var(--teal);padding-left:3px}
+  .vidcard .dur{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;font-size:11px;padding:2px 8px;border-radius:6px}
+  .vidcard .vl{padding:12px 15px;font-weight:700;font-size:14.5px;color:var(--teal)}
+  .vidcard .vl small{display:block;font-weight:400;color:var(--muted);font-size:12.5px;margin-top:1px}
+  .vidgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+
+  /* ================= CALENDAR ================= */
+  .calwrap{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px}
+  .calbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .calbar .mo{font-family:'Fraunces';font-size:19px;color:var(--teal)}
+  .calbar button{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--teal);font-weight:700}
+  .calhd{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:7px}
+  .calhd div{text-align:center;font-size:11px;font-weight:700;color:var(--muted)}
+  .caldays{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+  .cd{aspect-ratio:1;border-radius:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:600;font-size:13.5px;cursor:pointer;position:relative}
+  .cd:hover{background:#eceae6}.cd.mute{opacity:0}
+  .cd.today{background:var(--mint);color:var(--teal)}.cd.sel{background:var(--teal);color:#fff}
+  .cd .dt{display:flex;gap:2px;position:absolute;bottom:6px}
+  .cd .dt i{width:5px;height:5px;border-radius:50%;background:var(--terra)}.cd .dt i.l{background:var(--lav)}.cd.sel .dt i{background:#fff}
+  .dsel{margin-top:16px}
+  .dsel .dh{font-family:'Fraunces';font-size:16px;color:var(--teal);margin-bottom:10px}
+  .evc{display:flex;gap:13px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 15px;margin-bottom:9px}
+  .evc .et{background:var(--teal);color:#fff;border-radius:11px;text-align:center;padding:7px 9px;min-width:54px;font-weight:700;font-size:13px}
+  .evc .en{font-weight:700;font-size:14.5px;color:var(--teal)}
+  .evc .ed{font-size:12.5px;color:var(--muted)}
+  .evc .ei{flex:1}
+  .evc .emeta{font-size:11.5px;color:var(--muted);margin-top:5px}
+  .evc.call .et{background:var(--purple)}
+  .evc.fresh .et{background:var(--green-d)}
+  .evlinks{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .evlink{display:inline-block;background:var(--purple);color:#fff;text-decoration:none;font-weight:700;font-size:12px;padding:7px 12px;border-radius:9px}
+  .evlink.alt{background:var(--green-d)}
+  .evlink:hover{opacity:.9}
+  .noev{text-align:center;color:var(--muted);padding:22px;font-style:italic}
+
+  /* ================= FAQ ================= */
+  .faqcat{font-family:'Fraunces';font-size:14px;font-weight:600;color:var(--purple);text-transform:uppercase;letter-spacing:.05em;margin:22px 2px 12px}
+  .faqcat:first-of-type{margin-top:4px}
+  .faq{background:var(--paper);border:1px solid var(--line);border-radius:14px;margin-bottom:9px;overflow:hidden}
+  .faq .q{padding:15px 16px;font-weight:700;font-size:14.5px;color:var(--teal);display:flex;gap:10px;align-items:center}
+  .faq .q .tri{margin-left:auto;transition:.2s;color:var(--mint-d)}
+  .faq.open .q .tri{transform:rotate(90deg)}
+  .faq .a{display:none;padding:0 16px 15px;font-size:14px;color:var(--muted);line-height:1.65}
+  .faq.open .a{display:block}
+
+  /* ================= COMMUNITY ================= */
+  .addbtn{width:100%;background:var(--lav);color:#fff;border:none;border-radius:14px;padding:14px;font-weight:700;font-size:15px;font-family:'Fraunces';margin-bottom:16px}
+  .pills{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+  .pills button{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:8px 16px;font-weight:700;font-size:13px;color:var(--muted)}
+  .pills button.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+  .scard{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:17px;margin-bottom:13px}
+  .scard .sh{display:flex;align-items:center;gap:11px;margin-bottom:11px}
+  .scard .av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:'Fraunces';font-weight:500;font-size:17px}
+  .scard .sn{font-weight:700;font-size:14.5px;color:var(--teal)}
+  .scard .sr{font-size:12px;color:var(--muted)}
+  .scard .p2{margin-left:auto;font-size:11px;font-weight:700;padding:4px 11px;border-radius:999px}
+  .p2.win{background:var(--sage-bg);color:var(--teal2)}.p2.tip{background:var(--lilac);color:var(--lav)}
+  .scard .quote{font-family:'Fraunces';font-style:italic;font-size:17px;color:var(--teal);line-height:1.4;margin-bottom:7px}
+  .scard .txt{font-size:14px;line-height:1.6}
+  .scard .rc{display:flex;gap:16px;margin-top:12px;padding-top:11px;border-top:1px solid var(--line);font-weight:700;font-size:13px;color:var(--muted)}
+
+  /* ---- rail ---- */
+  .rail .box{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:19px;margin-bottom:18px}
+  .rail h4{font-size:16px;color:var(--teal);margin-bottom:14px}
+  .plantbox{text-align:center}
+  .plantbox .big{height:120px;display:flex;align-items:flex-end;justify-content:center}
+  .plantbox .big svg{width:110px;height:120px;overflow:visible}
+  .plantbox .pd{font-family:'Fraunces';font-size:30px;color:var(--purple);margin-top:8px}
+  .plantbox .pl{font-size:13px;color:var(--muted);font-weight:600}
+  .plantbox .pnext{font-size:12.5px;color:var(--muted);margin-top:10px;font-style:italic;line-height:1.4}
+  .growbar{height:7px;background:var(--lilac);border-radius:99px;overflow:hidden;margin:12px 4px 0}
+  .growbar span{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--purple));border-radius:99px;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+  .pbest{margin-top:12px;font-size:12.5px;color:var(--muted);font-weight:600}
+  .pbest b{color:var(--purple);font-weight:700}
+  .preset{margin-top:12px;background:none;border:none;color:var(--muted);font-size:11.5px;text-decoration:underline;cursor:pointer;font-weight:600}
+  .preset:hover{color:var(--purple)}
+  /* top bar plant */
+  .streak .pot{width:26px;height:30px;display:flex;align-items:flex-end;justify-content:center}
+  .streak .pot svg{width:26px;height:30px;overflow:visible}
+  .mini-ev{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+  .mini-ev:last-child{border:none}
+  .mini-ev .md{background:var(--teal);color:#fff;border-radius:9px;text-align:center;padding:5px 8px;font-size:11px;font-weight:700;min-width:44px;line-height:1.25}
+  .mini-ev .mt{font-weight:700;font-size:13.5px;color:var(--teal)}
+  .mini-ev .ms{font-size:12px;color:var(--muted)}
+  .quotebox{background:var(--teal);border-color:var(--teal2);color:var(--cream)}
+  .quotebox h4{color:#fff}
+  .quotebox .qt{font-family:'Fraunces';font-style:italic;font-size:16px;line-height:1.45}
+
+  /* ---- bottom nav ---- */
+  .bnav{position:fixed;bottom:0;left:0;right:0;z-index:50;background:rgba(248,246,243,.94);backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:9px 4px calc(9px + env(safe-area-inset-bottom))}
+  .bnav button{border:none;background:none;display:flex;flex-direction:column;align-items:center;gap:3px;font-weight:700;font-size:10.5px;color:#a3aeac;flex:1;padding:4px 2px}
+  .bnav button .bi{font-size:21px}
+  .bnav button.active{color:var(--teal)}
+
+  .foot-note{max-width:1040px;margin:0 auto;padding:6px 20px 0;text-align:center;color:var(--muted);font-size:12.5px;font-style:italic}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="logo">ulli. noa. <span>so. we.</span></div>
+    <div class="streak">
+      <span class="pot" id="potTop"></span>
+      <div><div class="sval" id="streakTop">0</div><div class="slab">Tage dran</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="shell">
+  <div class="main">
+
+    <!-- ============ ONBOARDING (journal) ============ -->
+    <div class="view active" data-v="path">
+      <div class="welcome-card">
+        <div class="ey">Willkommen</div>
+        <h2>Schön, dass du da bist.</h2>
+        <p>Das hier ist kein Kurs den du zuerst abschließen musst. Es ist ein Weg, ein Tag nach dem anderen. Du musst nicht bereit sein um anzufangen.</p>
+        <p class="wq">Du wirst bereit, indem du anfängst.</p>
+      </div>
+
+      <div class="week-sep">Woche 1 · Ankommen & anfangen</div>
+      <div class="timeline" id="timeline">
+        <!-- days injected by JS -->
+      </div>
+    </div>
+
+    <!-- ============ LINKS & RESSOURCEN (merged) ============ -->
+    <div class="view" data-v="res">
+      <div class="vhead"><div class="ey">Alles an einem Ort</div><h2>Links & Ressourcen</h2><p>Deine Tools, Pläne und Videos. Nimm dir raus, was du gerade brauchst.</p></div>
+
+      <div class="rescat">Womit du täglich arbeitest</div>
+      <div class="lgrid">
+        <a class="lcard" href="https://priller.ringana.com" target="_blank" rel="noopener"><div class="lh"><span class="lb" style="background:#2f6f60">R</span><div><div class="lt">Dein RINGANA Shop</div><div class="ld">Code PRILLER20 für deine Kundinnen</div></div></div><span class="vtag">▶ So teilst du ihn · 2:10</span></a>
+        <a class="lcard"><div class="lh"><span class="lb" style="background:#6accb1">O</span><div><div class="lt">Online Office</div><div class="ld">Journey, Academy, Events & Booking</div></div></div><span class="vtag">▶ Rundgang · 4:30</span></a>
+        <a class="lcard"><div class="lh"><span class="lb" style="background:#fbb33c">📱</span><div><div class="lt">myRINGANA App</div><div class="ld">Fast Track und Umsätze im Blick</div></div></div><span class="vtag">▶ Kurz erklärt · 1:50</span></a>
+        <a class="lcard" href="https://calendar.app.google/Joo4asPkTA32ZYut9" target="_blank" rel="noopener"><div class="lh"><span class="lb" style="background:#806cbf">📅</span><div><div class="lt">Gespräch buchen</div><div class="ld">Hol dir einen Termin mit deiner Mentorin</div></div></div></a>
+        <a class="lcard" href="https://ullinoa.at" target="_blank" rel="noopener"><div class="lh"><span class="lb" style="background:#2f6f60">W</span><div><div class="lt">ullinoa.at</div><div class="ld">Unsere Website</div></div></div></a>
+        <a class="lcard" href="https://instagram.com/ulli.noa.so.we" target="_blank" rel="noopener"><div class="lh"><span class="lb" style="background:#806cbf">IG</span><div><div class="lt">Instagram</div><div class="ld">@ulli.noa.so.we</div></div></div></a>
+      </div>
+
+      <div class="rescat">Verstehen & planen</div>
+      <a class="resrow"><span class="ri">📊</span><div><div class="rt">Der Zielstufen-Plan, Schritt für Schritt</div><div class="rd">Wie sich FAIRsale aufbaut, von Target 1 bis Target 3 und weiter</div></div><span class="rtag pdf">PDF</span></a>
+      <a class="resrow"><span class="ri">🚀</span><div><div class="rt">Deinen Fast Track nutzen</div><div class="rd">Was in deinen ersten Monaten wirklich zählt</div></div><span class="rtag">Video</span></a>
+      <a class="resrow"><span class="ri">💶</span><div><div class="rt">Wie dein Einkommen entsteht</div><div class="rd">Klar und ehrlich, ohne Versprechen von passivem Geld</div></div><span class="rtag pdf">PDF</span></a>
+
+      <div class="rescat">Produkte in kurzen Videos</div>
+      <div class="vidgrid">
+        <div class="vidcard"><div class="vth"><div class="pl">▶</div><span class="dur">3:20</span></div><div class="vl">Die FRESH Linie<small>Warum gekühlt und ohne Konservierung</small></div></div>
+        <div class="vidcard"><div class="vth a2"><div class="pl">▶</div><span class="dur">2:45</span></div><div class="vl">CAPS: fem, cerebro, protect<small>Welche passt zu wem</small></div></div>
+        <div class="vidcard"><div class="vth a3"><div class="pl">▶</div><span class="dur">2:10</span></div><div class="vl">Suncare erklären<small>SPF, Kids und CAPS protect</small></div></div>
+      </div>
+
+      <div class="rescat">Zum Mitnehmen</div>
+      <a class="resrow"><span class="ri">💬</span><div><div class="rt">Gesprächseinstiege, die sich echt anfühlen</div><div class="rd">Als Idee, nie als Skript zum Ablesen</div></div><span class="rtag pdf">PDF</span></a>
+      <a class="resrow"><span class="ri">🖼️</span><div><div class="rt">Bilder & Canva-Vorlagen</div><div class="rd">Logo, Farben und Story-Vorlagen im ullinoa-Look</div></div><span class="rtag">Link</span></a>
+      <a class="resrow"><span class="ri">⚖️</span><div><div class="rt">Kurz zum Rechtlichen</div><div class="rd">Werbung | RINGANA Partnerin, und was du sagen darfst</div></div><span class="rtag pdf">PDF</span></a>
+    </div>
+
+    <!-- ============ KALENDER ============ -->
+    <div class="view" data-v="cal">
+      <div class="vhead"><div class="ey">Termine</div><h2>Kalender</h2><p>Tippe einen Tag an, um die Termine zu sehen.</p></div>
+      <div class="calwrap">
+        <div class="calbar"><button id="calPrev">‹</button><span class="mo" id="calMo">September 2026</span><button id="calNext">›</button></div>
+        <div class="calhd"><div>Mo</div><div>Di</div><div>Mi</div><div>Do</div><div>Fr</div><div>Sa</div><div>So</div></div>
+        <div class="caldays" id="caldays"></div>
+        <div class="dsel" id="dsel"></div>
+      </div>
+    </div>
+
+    <!-- ============ FAQ ============ -->
+    <div class="view" data-v="faq">
+      <div class="vhead"><div class="ey">Häufige Fragen</div><h2>Fragen, die am Anfang oft kommen</h2><p>Ganz ehrlich beantwortet. Und wenn deine Frage fehlt, schreib einfach deiner Mentorin.</p></div>
+
+      <div class="faqcat">Der Anfang</div>
+      <div class="faq"><div class="q">Ich weiß nicht, wo ich anfangen soll. <span class="tri">›</span></div><div class="a">Musst du auch nicht wissen. Geh einfach in Tag 1 und mach das, was dort steht. Ein Tag nach dem anderen, in deinem Tempo. Du wirst bereit, indem du anfängst, nicht vorher.</div></div>
+      <div class="faq"><div class="q">Ich hab kaum Follower. Geht das trotzdem? <span class="tri">›</span></div><div class="a">Ja, und ehrlich gesagt fangen die meisten genau so an. Es geht nicht um Reichweite, sondern um echte Gespräche. Deine ersten Kundinnen kommen fast immer aus deinem ganz normalen Umfeld, offline wie online.</div></div>
+      <div class="faq"><div class="q">Wie viel Zeit brauche ich dafür? <span class="tri">›</span></div><div class="a">Weniger, als du denkst. Wenn du am Tag einmal wirklich für jemanden da bist und einmal wirklich zuhörst, hast du das Wichtigste schon getan. Dranbleiben zählt mehr als viele Stunden.</div></div>
+      <div class="faq"><div class="q">Ich bin schüchtern. Ist das ein Problem? <span class="tri">›</span></div><div class="a">Überhaupt nicht. Zuhören ist hier wichtiger als Reden, und leise Menschen sind darin oft die Besten. Du brauchst keine große Show, nur ehrliches Interesse an der Person vor dir.</div></div>
+
+      <div class="faqcat">Ums Geld</div>
+      <div class="faq"><div class="q">Wie verdiene ich eigentlich? <span class="tri">›</span></div><div class="a">Über deine eigenen Verkäufe und, wenn du magst, über dein Team (das nennt sich FAIRsale): 19% ab Target 1, 29% ab Target 2, 39% ab Target 3. Wie viel dabei rauskommt, hängt von deinem Einsatz ab. Es ist kein passives Einkommen und keine Garantie, aber es ist fair und nachvollziehbar.</div></div>
+      <div class="faq"><div class="q">Ist das nicht so ein Schneeball-Ding? <span class="tri">›</span></div><div class="a">Nein. Du zahlst nichts dafür, jemanden ins Team zu holen, und du verdienst nichts fürs bloße Anwerben. Alles baut auf echtem Produktumsatz auf. Genau das ist der Unterschied.</div></div>
+      <div class="faq"><div class="q">Muss ich Leute überreden? <span class="tri">›</span></div><div class="a">Bitte nicht. Wer wirklich zuhört, muss nie überreden, sie empfiehlt einfach das, was passt. Kein Druck, kein Hype. Die andere Person spürt sofort, ob du verkaufst oder ob du sie meinst.</div></div>
+      <div class="faq"><div class="q">Was, wenn jemand Nein sagt? <span class="tri">›</span></div><div class="a">Dann ist das völlig okay. Kein Nein ist persönlich und keins ist für immer. Es sagt nichts über dich aus. Weiter zur nächsten Person, so einfach ist das.</div></div>
+
+      <div class="faqcat">Produkte & was ich sagen darf</div>
+      <div class="faq"><div class="q">Ich kenn mich mit den Produkten noch nicht aus. <span class="tri">›</span></div><div class="a">Das kommt mit der Zeit ganz von allein. Fang mit den ein, zwei Produkten an, die du selbst benutzt und liebst. Über die erzählst du automatisch am echtesten. Für Details gibt es die Produktvideos unter Ressourcen.</div></div>
+      <div class="faq"><div class="q">Was macht RINGANA besonders? <span class="tri">›</span></div><div class="a">Die Produkte sind frisch, ohne Konservierungsstoffe und deshalb gekühlt haltbar. Bei genauen Angaben nutz immer die offiziellen Infos und vereinfache Inhaltsstoffe nicht.</div></div>
+      <div class="faq"><div class="q">Darf ich sagen, dass etwas „wirkt"? <span class="tri">›</span></div><div class="a">Nur, was wirklich belegt ist. Kein „klinisch bewiesen" ohne Nachweis, keine Heilversprechen. Und auf jeden Werbe-Post gehört: Werbung | RINGANA Partnerin. Im Zweifel lieber einmal zu viel bei deiner Mentorin nachfragen.</div></div>
+
+      <div class="faqcat">Team & Termine</div>
+      <div class="faq"><div class="q">Wann sind die Team Calls? <span class="tri">›</span></div><div class="a">Immer am 1. des Monats um 20 Uhr, online über Zoom. Den Link findest du im Kalender. Einfach dazukommen, du musst dich nicht anmelden.</div></div>
+      <div class="faq"><div class="q">Wie melde ich mich fürs Fresh Date am Campus an? <span class="tri">›</span></div><div class="a">Über das Anmeldeformular im Kalender, spätestens den Freitag der Woche davor. Mittagessen kannst du dort ebenfalls bis eine Woche vorher über die RingBar bestellen. Ab 10 Uhr ist offenes Team-Meeting für alle, da darfst du einfach vorbeikommen.</div></div>
+      <div class="faq"><div class="q">An wen wende ich mich, wenn ich nicht weiterweiß? <span class="tri">›</span></div><div class="a">Zuerst an deine direkte Mentorin, dafür ist sie da. Für alles Offizielle gibt es außerdem den RINGANA Support im Online Office. Du musst nichts allein lösen.</div></div>
+    </div>
+
+    <!-- ============ COMMUNITY ============ -->
+    <div class="view" data-v="community">
+      <div class="vhead"><div class="ey">Von Partnerin zu Partnerin</div><h2>Erfolge & Tipps</h2><p>Echte Momente aus dem Team. Kein Hype, nur ehrlich.</p></div>
+      <button class="addbtn">＋ Eigene Story oder Tipp teilen</button>
+      <div class="pills"><button class="on">Alle</button><button>Erfolge</button><button>Tipps</button></div>
+
+      <div class="scard"><div class="sh"><span class="av" style="background:#2f6f60">S</span><div><div class="sn">Sarah M.</div><div class="sr">Partnerin seit 4 Monaten</div></div><span class="p2 win">Erfolg</span></div>
+        <div class="quote">„Meine erste Stammkundin kam über eine ehrliche Story."</div>
+        <div class="txt">Ich hab einfach gezeigt, wie ich die FRESH Serie morgens nutze. Ohne Verkaufsabsicht. Zwei Tage später die erste Bestellung.</div>
+        <div class="rc"><span>♡ 34</span><span>💬 8</span></div></div>
+
+      <div class="scard"><div class="sh"><span class="av" style="background:#806cbf">L</span><div><div class="sn">Lena K.</div><div class="sr">Partnerin seit 1 Jahr</div></div><span class="p2 tip">Tipp</span></div>
+        <div class="quote">„Beantworte zuerst, verkaufe später."</div>
+        <div class="txt">Wenn jemand nach einem Produkt fragt, gebe ich erst eine ehrliche Antwort auf ihr Hautthema. Der Link kommt danach, wenn überhaupt.</div>
+        <div class="rc"><span>♡ 52</span><span>💬 12</span></div></div>
+
+      <div class="scard"><div class="sh"><span class="av" style="background:#fbb33c">M</span><div><div class="sn">Marie T.</div><div class="sr">Partnerin seit 7 Monaten</div></div><span class="p2 tip">Tipp</span></div>
+        <div class="quote">„Konsistenz schlägt Perfektion."</div>
+        <div class="txt">Lieber 3x pro Woche echt und unperfekt als 1x hochglanz. Meine Reichweite ist so viel stabiler geworden.</div>
+        <div class="rc"><span>♡ 41</span><span>💬 5</span></div></div>
+    </div>
+
+  </div>
+
+  <!-- ============ RAIL ============ -->
+  <aside class="rail">
+    <div class="box plantbox">
+      <h4>Deine Serie</h4>
+      <div class="big" id="potBig"></div>
+      <div class="pd" id="streakBig">0</div>
+      <div class="pl">Tage in Folge dran</div>
+      <div class="pnext" id="plantNext"></div>
+      <div class="growbar"><span id="growfill"></span></div>
+      <div class="pbest">🏆 Deine beste Serie: <b id="bestVal">0 Tage</b></div>
+      <button class="preset" id="resetBtn">Fortschritt zurücksetzen</button>
+    </div>
+    <div class="box">
+      <h4>Als Nächstes</h4>
+      <div class="mini-ev"><div class="md">1.<br>20:00</div><div><div class="mt">Team Call</div><div class="ms">Jeden Monat, für alle</div></div></div>
+      <div class="mini-ev"><div class="md">25.9.<br>15:00</div><div><div class="mt">Fresh Date am Campus</div><div class="ms">Anmeldung bis Fr davor</div></div></div>
+      <div class="mini-ev"><div class="md">9.10.<br>15:00</div><div><div class="mt">Fresh Date am Campus</div><div class="ms">Ab 10 Uhr offen für alle</div></div></div>
+    </div>
+    <div class="box quotebox">
+      <h4>Gedanke des Tages</h4>
+      <div class="qt">Fortschritt, den man nicht festhält, fühlt sich irgendwann nicht mehr wie Fortschritt an. Schreib heute Abend einen Satz auf. 🌱</div>
+    </div>
+  </aside>
+</div>
+
+<p class="foot-note">Dein persönlicher Fortschritt wird nur auf diesem Gerät gespeichert · Werbung | RINGANA Partnerin</p>
+
+<div class="overlay" id="overlay"><div class="sheet" id="sheet"></div></div>
+
+<div class="bnav" id="bnav">
+  <button class="active" data-v="path"><span class="bi">🌱</span>Weg</button>
+  <button data-v="res"><span class="bi">📚</span>Ressourcen</button>
+  <button data-v="cal"><span class="bi">📅</span>Kalender</button>
+  <button data-v="faq"><span class="bi">💡</span>FAQ</button>
+  <button data-v="community"><span class="bi">⭐</span>Community</button>
+</div>
+
+<script>
+/* ============================================================
+   ullinoa Partner-Hub · Fortschritt bleibt auf dem Gerät
+   (localStorage, kein Login, keine Kosten)
+   ============================================================ */
+const STORE_KEY='ullinoa_v1';
+const todayISO=()=>new Date().toISOString().slice(0,10);
+function loadState(){
+  try{const s=JSON.parse(localStorage.getItem(STORE_KEY));if(s&&typeof s==='object')return s;}catch(e){}
+  return null;
+}
+let state=loadState()||{
+  streak:0,            // aktuelle Serie in Tagen
+  best:0,              // beste Serie
+  lastActive:null,     // letztes Datum, an dem etwas erledigt wurde (ISO)
+  doneDays:[],         // abgeschlossene Onboarding-Tage [1,2,...]
+  tasks:{},            // { "3": [true,false,true], ... } abgehakte To-dos je Tag
+  reflect:{}           // { "3": "text..." } Reflexionen je Tag
+};
+function saveState(){try{localStorage.setItem(STORE_KEY,JSON.stringify(state));}catch(e){}}
+
+/* Streak-Logik: einmal pro Kalendertag hochzählen, bei Lücke > 1 Tag zurücksetzen */
+function markActiveToday(){
+  const t=todayISO();
+  if(state.lastActive===t)return;               // heute schon gezählt
+  if(state.lastActive){
+    const diff=Math.round((new Date(t)-new Date(state.lastActive))/86400000);
+    state.streak = diff===1 ? state.streak+1 : 1; // gestern -> +1, sonst neu bei 1
+  }else{
+    state.streak=1;
+  }
+  state.lastActive=t;
+  if(state.streak>state.best)state.best=state.streak;
+  saveState();
+}
+/* Falls eine Lücke entstanden ist (App später geöffnet), Serie ehrlich zurücksetzen */
+function reconcileStreak(){
+  if(!state.lastActive)return;
+  const diff=Math.round((new Date(todayISO())-new Date(state.lastActive))/86400000);
+  if(diff>1){state.streak=0;saveState();}
+}
+reconcileStreak();
+
+/* ---------------- nav ---------------- */
+const views=document.querySelectorAll('.view');
+const navs=document.querySelectorAll('#bnav button');
+function show(v){
+  views.forEach(x=>x.classList.toggle('active',x.dataset.v===v));
+  navs.forEach(b=>b.classList.toggle('active',b.dataset.v===v));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+navs.forEach(b=>b.addEventListener('click',()=>show(b.dataset.v)));
+
+/* ---------------- onboarding day data (from real ullinoa flow, "du" voice) ---------------- */
+const days=[
+  {n:1,emoji:"🥳",title:"Dein erster Tag",tease:"Vier konkrete Dinge, dann bist du durch.",status:"done",
+   lead:"Willkommen. Wir freuen uns wirklich, dass du da bist.",
+   intro:["Kein Roman heute. Kein Overwhelm. Nur vier Dinge, die heute zählen.","Weißt du, was die Menschen gemeinsam haben, die hier wirklich etwas aufgebaut haben? Sie haben nicht gewartet, bis sie alles wussten. Sie haben angefangen. Genau das tust du heute."],
+   tasks:[
+     {t:"Welcome Call anmelden",d:"Dein offizieller Startpunkt. Online Office → Journey & Training → Partner Journey → Welcome Call. Einen Termin aussuchen, anmelden, fertig."},
+     {t:"myRINGANA App herunterladen",d:"Im App Store oder Google Play. Hier siehst du deinen Fast Track, deine Umsätze und alles Wichtige. Einmal draufschauen reicht heute."},
+     {t:"Paket auspacken und wirklich testen",d:"Nicht abhaken, wirklich erleben. Riechen, fühlen, ausprobieren. Du baust ein Business auf Basis von Dingen, die du liebst."},
+     {t:"Einmal mit jemandem reden oder teilen",d:"Offline oder online. Eine ehrliche Nachricht, so wie du es einer Freundin erzählen würdest. Kein Skript. Nur du."}
+   ],
+   reflect:"Was hat mich heute überrascht? Was fühlt sich schon gut an und was macht mir noch ein bisschen Angst?"},
+  {n:2,emoji:"💞",title:"Dein Werkzeug kennenlernen",tease:"In Ruhe, ohne alles sofort verstehen zu müssen.",status:"today",
+   lead:"Yey, du bist wieder da.",
+   intro:["Die Online Academy ist nicht deine Hausaufgabe. Sie ist eher wie eine erfahrene Freundin, die dir zeigt, was funktioniert, und dich sicherer macht in Gesprächen, die du sowieso schon führst.","Online Office → Journey & Training → Online Academy"],
+   tasks:[
+     {t:"FRESH Start anschauen",d:"Einfach reinschauen, stöbern, Überblick holen. Nichts auswendig lernen müssen."},
+     {t:"myRINGANA App kurz erkunden",d:"Dein täglicher Begleiter. Fortschritt, Fast Track, Tipps. Fünf Minuten reichen heute."},
+     {t:"Fragen aufschreiben",d:"Wirklich alles ist erlaubt, keine Frage ist zu klein. Dann ab damit an deine Mentorin. Du musst das nicht alleine rausfinden."},
+     {t:"Noch ein Moment mit jemandem",d:"Offline oder online. Nicht perfekt, nicht groß. Einfach da sein. Jeden Tag ein kleiner Schritt."}
+   ],
+   reflect:"Was hat mir die Academy heute gezeigt, das ich noch nicht wusste? Und was davon kann ich morgen schon ausprobieren?"},
+  {n:3,emoji:"🤝",title:"Heute wird's konkret",tease:"Du bist bereit. Nicht irgendwann. Jetzt.",status:"locked",
+   lead:"Du bist bereit. Nicht irgendwann. Jetzt.",
+   intro:["Heute verkaufst du nicht. Du teilst etwas, das du selbst gerade erlebst, und gibst jemandem die Chance, selbst zu entscheiden. Das ist kein Pitch, das ist ein Gespräch."],
+   tasks:[
+     {t:"Academy: Kundengewinnung BASIC (#goforRUN3)",d:"Schau es an, bevor du die Nachrichten schickst. Du wirst danach verstehen, warum der Moment jetzt genau richtig ist."},
+     {t:"Timer auf 5 Minuten, 30 Namen aufschreiben",d:"Nicht nachdenken, nicht filtern, nicht für andere entscheiden. Einfach schreiben, wer dir einfällt."},
+     {t:"5 Menschen kontaktieren, so wie du bist",d:"Nachricht, Anruf oder persönlich.",ex:"„Hey du 🤍 ich musste grad an dich denken. Du achtest doch so auf deine Haut, oder? Ich teste gerade etwas, das mich wirklich überrascht hat. Darf ich dir kurz zeigen, was ich meine?“"}
+   ],
+   reflect:"Wie hat es sich angefühlt, jemanden anzusprechen? Was hat mich aufgehalten und was hat mir Mut gemacht?"},
+  {n:4,emoji:"🌟",title:"Zuhören statt verkaufen",tease:"Wer wirklich zuhört, muss nie pitchen.",status:"locked",
+   lead:"Heute ist deine Aufgabe nicht verkaufen. Zuhören.",
+   intro:["Stell dir vor, du triffst jemanden beim Kaffee. Sie erzählt von ihrer Müdigkeit, davon dass sie nicht in die Gänge kommt. Und du hörst wirklich zu. Und dann weißt du plötzlich genau, was ihr helfen könnte.","Wer wirklich zuhört, muss nie pitchen. Er empfiehlt einfach."],
+   tasks:[
+     {t:"Academy: Kundengewinnung ADVANCED",d:"Frisch upgedated von RINGANA. Lohnt sich für alle, nicht nur für Neue."},
+     {t:"Meld dich bei jemandem, mit einer Frage",d:"Nicht mit einem Produkt.",ex:"„Ich hab heute an dich gedacht. Wie geht's dir gerade eigentlich wirklich?“"},
+     {t:"Erstes FRESH Date fixieren",d:"Kaffee, kurzes Online-Treffen, gemeinsam stöbern. Kein Verkaufsgespräch. Datum ist alles, Format ist egal."}
+   ],
+   reflect:"Wann habe ich heute wirklich zugehört? Und was habe ich dabei über diese Person erfahren, das ich vorher nicht wusste?"},
+  {n:5,emoji:"🤗",title:"Menschen, nicht Kunden",tease:"Wer in deinem Leben sucht gerade nach mehr?",status:"locked",
+   lead:"Nicht mehr Arbeit. Mehr Luft. Mehr Sinn.",
+   intro:["Heute geht es um Menschen, nicht um Kunden. Wer in deinem Leben sucht gerade nach etwas, das sich nach ihr anfühlt? Du musst das nicht perfekt angehen. Du musst nur anfangen."],
+   tasks:[
+     {t:"Academy: Partnergewinnung BASIC",d:"Anschauen."},
+     {t:"Zwei Events fix eintragen",d:"Online Office → Events & Booking. Nicht irgendwann. Heute."},
+     {t:"Eine Person heute einladen",d:"Nicht mit einem Skript, sondern so wie du ihr wirklich schreiben würdest.",ex:"„Ich mach nächste Woche was Cooles mit, willst du kurz reinhören? Dauert 20 Minuten und du verstehst danach genau, was ich gerade nebenbei aufbaue.“"}
+   ],
+   reflect:"Wer ist die Person, die mir heute als Erstes eingefallen ist, und habe ich sie schon kontaktiert?"},
+  {n:6,emoji:"💗",title:"Dein Warum",tease:"Nach innen statt nach außen.",status:"locked",
+   lead:"Heute geht es nicht nach außen. Nach innen.",
+   intro:["Simon Sinek hat sein Leben lang eine Frage erforscht: warum tun Menschen, was sie tun? Die stärksten Verbindungen entstehen nicht durch das, was jemand anbietet, sondern durch das Warum. Wer sein Warum kennt, redet einfach. Und die Menschen spüren den Unterschied.","Dein Warum muss heute nicht fertig sein. Aber es lohnt sich, ehrlich hinzuschauen."],
+   tasks:[
+     {t:"Academy: Company & Values",d:"Anschauen."},
+     {t:"Für dich schreiben, ohne Zensur",d:"„Ich teile Ringana weil…“ · „Mir ist wichtig dass…“ · „Ich wünsche mir durch dieses Business…“ · „Ich liebe Ringana weil…“"},
+     {t:"Dein ehrlicher Woche-1-Überblick",d:"Nicht um dich zu bewerten, sondern um zu sehen, was du wirklich getan hast. Was offen ist? Kein Drama, Woche 2 wartet."}
+   ],
+   reflect:"Was hat sich diese Woche in mir verändert? Auch wenn es sich noch klein anfühlt."},
+  {n:7,emoji:"🌿",title:"Innehalten & festlegen",tease:"Ein konkreter Plan bringt dich ans Ziel.",status:"locked",
+   lead:"Heute halten wir kurz inne.",
+   intro:["Schau zurück auf die letzten Tage. Die Nachricht, die du geschickt hast, obwohl sich die innere Stimme gemeldet hat. Das Gespräch, das länger gedauert hat, weil du wirklich zugehört hast. Das warst du.","Menschen, die genau aufschreiben wann, wo und mit wem sie etwas tun, halten sich zu 91% häufiger daran. Motivation bringt dich zum Starten, ein konkreter Plan bringt dich ans Ziel."],
+   tasks:[
+     {t:"Academy: FRESH Impact",d:"Nimm dir heute wirklich die Zeit. Nicht nebenbei. Ein schöner Abschluss für diesen ersten Part."},
+     {t:"Drei Dinge konkret festlegen, heute",d:"Namen. Daten. Uhrzeiten.",ex:"Mein FRESH Date ist am ___ um ___ mit ___. · Das Event, das ich mitnehme, ist am ___ und ich frage ___. · Die eine Person, die ich diese Woche wirklich einlade, ist ___."}
+   ],
+   reflect:"Wo war ich in den letzten Tagen mutig? Was nehme ich mit und was darf ich loslassen?"},
+  {n:8,emoji:"✨",title:"Woche 2 · Tiefer, nicht schneller",tease:"Nicht was du erreichen willst. Wer du dabei wirst.",status:"locked",
+   lead:"Woche 2 geht tiefer. Nicht schneller. Tiefer.",
+   intro:["Wenn du in einem Jahr auf diesen Moment zurückschaust, was willst du dir dann sagen können? Nicht was du erreicht hast, sondern wie du diese Zeit genutzt hast."],
+   tasks:[
+     {t:"Academy: Mind & Goals",d:"Anschauen, dann wirklich hinsetzen."},
+     {t:"Timer auf 5 Minuten",d:"Was will ich in 30 Tagen spüren, nicht haben, spüren? Und was brauche ich dafür: Struktur, Mut, Wissen oder jemanden der mich begleitet? Markiere den einen Satz, der sich am wahrsten anfühlt. Der ist dein Fokus."}
+   ],
+   reflect:"Was will ich in 30 Tagen spüren? Und welcher eine Satz fühlt sich am wahrsten an?"}
+];
+
+/* ---------------- render timeline (status from saved progress) ---------------- */
+const tl=document.getElementById('timeline');
+function dayStatus(n){
+  if(state.doneDays.includes(n))return 'done';
+  // current = first day that isn't done; everything after is locked
+  const firstOpen=days.map(d=>d.n).find(x=>!state.doneDays.includes(x));
+  if(n===firstOpen)return 'today';
+  return 'locked';
+}
+function renderTimeline(){
+  let w2=false;
+  tl.innerHTML=days.map(d=>{
+    let sep='';
+    if(d.n===8 && !w2){sep='<div class="week-sep" style="margin:22px 0 14px">Woche 2 · Tiefer gehen</div>';w2=true;}
+    const st=dayStatus(d.n);
+    const status=st==='done'?'✓ Erledigt':st==='today'?'Heute dran':'🔒 Bald';
+    const dot=st==='done'?'✓':st==='locked'?'🔒':d.emoji;
+    return `${sep}<div class="tday ${st}" data-day="${d.n}">
+      <div class="tdot">${dot}</div>
+      <div class="tcard">
+        <div class="th"><span class="tlabel">Tag ${d.n}</span><span class="tstatus">${status}</span></div>
+        <h3>${d.title}</h3>
+        <div class="ttease">${d.tease}</div>
+        <div class="tmeta"><span>📝 ${d.tasks.length} To-dos</span><span>🎬 Video</span><span>💭 Reflexion</span></div>
+      </div></div>`;
+  }).join('');
+  tl.querySelectorAll('.tday').forEach(el=>{
+    el.addEventListener('click',()=>{if(!el.classList.contains('locked'))openDay(+el.dataset.day)});
+  });
+}
+renderTimeline();
+
+/* ---------------- lesson sheet ---------------- */
+const overlay=document.getElementById('overlay'), sheet=document.getElementById('sheet');
+function openDay(n){
+  const d=days.find(x=>x.n===n); if(!d)return;
+  const savedTasks=state.tasks[n]||[];
+  const savedReflect=state.reflect[n]||'';
+  const alreadyDone=state.doneDays.includes(n);
+  sheet.innerHTML=`
+    <div class="sheet-hd">
+      <button class="close" onclick="closeDay()">✕</button>
+      <div class="ey">Tag ${d.n} ${d.emoji}</div>
+      <h3>${d.title}</h3>
+    </div>
+    <div class="sheet-bd">
+      <div class="intro-prose">
+        <p class="lead">${d.lead}</p>
+        ${d.intro.map(p=>`<p>${p}</p>`).join('')}
+      </div>
+      <div class="lvideo-wrap"></div>
+      <div class="todo-h">Heute zählt</div>
+      ${d.tasks.map((t,i)=>`<div class="task ${savedTasks[i]?'done':''}" data-i="${i}">
+          <span class="cb"></span>
+          <div><div class="tk-t">${t.t}</div>${t.d?`<div class="tk-d">${t.d}</div>`:''}
+          ${t.ex?`<div class="msg-ex">${t.ex}</div>`:''}</div>
+        </div>`).join('')}
+      <div class="reflect">
+        <div class="rh">💭 Deine Reflexion, nur für dich</div>
+        <div class="rq">${d.reflect}</div>
+        <textarea id="reflectBox" placeholder="Schreib, was kommt... (bleibt privat auf deinem Gerät)">${savedReflect.replace(/</g,'&lt;')}</textarea>
+      </div>
+      <div class="evening"><span class="e">🌱</span><div>Heute Abend: <b>ein Satz.</b> Was hast du heute getan? Nur für dich. Wer seinen Fortschritt festhält, sieht ihn auch, und wer ihn sieht, bleibt dran.</div></div>
+      <button class="l-done" id="doneBtn">${alreadyDone?'Tag '+d.n+' erledigt ✓':'Tag '+d.n+' abschließen 🌿'}</button>
+    </div>`;
+  overlay.classList.add('show');
+  document.body.style.overflow='hidden';
+  sheet.scrollTop=0;
+
+  // toggle + save each task
+  sheet.querySelectorAll('.task').forEach(t=>t.addEventListener('click',e=>{
+    if(e.target.tagName==='TEXTAREA')return;
+    t.classList.toggle('done');
+    const arr=d.tasks.map((_,i)=>sheet.querySelector(`.task[data-i="${i}"]`).classList.contains('done'));
+    state.tasks[n]=arr; saveState();
+  }));
+  // save reflection as you type
+  const rb=sheet.querySelector('#reflectBox');
+  rb.addEventListener('input',()=>{state.reflect[n]=rb.value;saveState();});
+
+  // complete the day
+  sheet.querySelector('#doneBtn').addEventListener('click',()=>{
+    if(!state.doneDays.includes(n)){
+      state.doneDays.push(n);
+      markActiveToday();       // zählt die Serie einmal pro Tag hoch
+      saveState();
+      renderTimeline();
+      renderPlant(state.streak);
+    }
+    closeDay();
+  });
+}
+function closeDay(){overlay.classList.remove('show');document.body.style.overflow=''}
+overlay.addEventListener('click',e=>{if(e.target===overlay)closeDay()});
+
+/* ---------------- plant streak: real SVG that grows with the streak ---------------- */
+/* Milestones purely for the label + progress bar; the drawing itself scales continuously. */
+const milestones=[0,3,7,14,30,60,100];
+function nextMilestone(s){for(const m of milestones)if(m>s)return m;return null;}
+function prevMilestone(s){let p=0;for(const m of milestones)if(m<=s)p=m;return p;}
+
+/* build an SVG plant whose size/leaves/flowers depend on `g` (0..1 growth) */
+function plantSVG(streak){
+  const g=Math.min(streak/60,1);                 // full grown at 60 days
+  const potTop=118, potBot=150;
+  const stemH=18+g*84;                            // stem grows upward
+  const topY=potTop-stemH;
+  const sway=0;
+  let s=`<svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">`;
+  // pot
+  s+=`<path d="M34 ${potTop} L86 ${potTop} L80 ${potBot} Q80 156 74 156 L46 156 Q40 156 40 ${potBot} Z" fill="#c98a4a"/>`;
+  s+=`<rect x="30" y="${potTop-8}" width="60" height="12" rx="4" fill="#e0a35c"/>`;
+  s+=`<ellipse cx="60" cy="${potTop-6}" rx="26" ry="4.5" fill="#3f2d1a" opacity=".35"/>`;
+  if(streak<=0){
+    // just soil + a tiny seed sprout dot
+    s+=`<circle cx="60" cy="${potTop-8}" r="3" fill="#6accb1"/>`;
+    s+=`</svg>`;return s;
+  }
+  // stem
+  s+=`<path d="M60 ${potTop-6} Q${60+sway} ${(potTop-6+topY)/2} 60 ${topY}" stroke="#4bb597" stroke-width="${3+g*2.5}" fill="none" stroke-linecap="round"/>`;
+  // leaves appear progressively along the stem
+  const leaves=Math.min(Math.floor(streak/2),8);  // more days = more leaves
+  for(let i=0;i<leaves;i++){
+    const t=(i+1)/(leaves+1);
+    const ly=potTop-6-stemH*t;
+    const side=i%2===0?1:-1;
+    const lx=60;
+    const size=7+g*7;
+    const col=i%3===0?'#6accb1':'#4bb597';
+    s+=`<path d="M${lx} ${ly} q${side*size} ${-size*0.7} ${side*size*2} ${-size*0.2} q${-side*size} ${size*0.9} ${-side*size*2} ${size*0.2} Z" fill="${col}"/>`;
+  }
+  // buds -> flowers as it matures
+  if(streak>=14){
+    const flowers=streak>=30?3:1;
+    const fcolors=['#806cbf','#fbb33c','#6accb1'];
+    for(let f=0;f<flowers;f++){
+      const fx=60+(f-(flowers-1)/2)*16;
+      const fy=topY-(f===Math.floor(flowers/2)?6:0);
+      const petal=streak>=30?5.5:4;
+      for(let p=0;p<6;p++){
+        const a=p/6*Math.PI*2;
+        s+=`<circle cx="${fx+Math.cos(a)*petal}" cy="${fy+Math.sin(a)*petal}" r="${petal}" fill="${fcolors[f%3]}" opacity=".92"/>`;
+      }
+      s+=`<circle cx="${fx}" cy="${fy}" r="${petal*0.7}" fill="#fbb33c"/>`;
+    }
+  } else if(streak>=7){
+    // a closed bud on top
+    s+=`<circle cx="60" cy="${topY-2}" r="${5+g*3}" fill="#806cbf"/>`;
+    s+=`<path d="M55 ${topY} Q60 ${topY-10} 65 ${topY}" fill="#6accb1"/>`;
+  } else {
+    // young tip
+    s+=`<circle cx="60" cy="${topY}" r="4" fill="#6accb1"/>`;
+  }
+  s+=`</svg>`;return s;
+}
+const stageLabels=[
+  {min:0,label:"Ein Same wartet im Boden"},
+  {min:1,label:"Ein zartes Sprießen"},
+  {min:3,label:"Erste kleine Blätter"},
+  {min:7,label:"Eine Knospe zeigt sich"},
+  {min:14,label:"Die erste Blüte öffnet sich"},
+  {min:30,label:"Sie blüht in voller Pracht"},
+  {min:60,label:"Kräftig gewachsen, stark dran geblieben"}
+];
+function labelFor(s){let l=stageLabels[0];for(const x of stageLabels)if(s>=x.min)l=x;return l.label;}
+function renderPlant(streak){
+  document.getElementById('potTop').innerHTML=plantSVG(streak);
+  document.getElementById('potBig').innerHTML=plantSVG(streak);
+  document.getElementById('streakTop').textContent=streak;
+  document.getElementById('streakBig').textContent=streak;
+  const nx=nextMilestone(streak), pv=prevMilestone(streak);
+  document.getElementById('plantNext').textContent = nx
+    ? `${labelFor(streak)} · noch ${nx-streak} ${nx-streak===1?'Tag':'Tage'} bis zur nächsten Stufe`
+    : `${labelFor(streak)}`;
+  const fill=nx? ((streak-pv)/(nx-pv))*100 : 100;
+  document.getElementById('growfill').style.width=fill+'%';
+  const bestEl=document.getElementById('bestVal');
+  if(bestEl)bestEl.textContent=state.best+' '+(state.best===1?'Tag':'Tage');
+}
+renderPlant(state.streak);
+
+/* reset progress (with confirm) */
+const resetBtn=document.getElementById('resetBtn');
+if(resetBtn)resetBtn.addEventListener('click',()=>{
+  if(confirm('Möchtest du deinen Fortschritt wirklich zurücksetzen? Deine Serie, abgehakten To-dos und Reflexionen auf diesem Gerät werden gelöscht.')){
+    state={streak:0,best:0,lastActive:null,doneDays:[],tasks:{},reflect:{}};
+    saveState();renderTimeline();renderPlant(0);
+  }
+});
+
+/* ---------------- faq / pills ---------------- */
+document.querySelectorAll('.faq .q').forEach(q=>q.addEventListener('click',()=>q.parentElement.classList.toggle('open')));
+document.querySelectorAll('.pills button').forEach(b=>b.addEventListener('click',()=>{
+  b.parentElement.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+}));
+
+/* ---------------- calendar ---------------- */
+/* Real events. Keyed by "YYYY-M" (month is 1-based) -> { day: [events] } */
+const zoom="https://us06web.zoom.us/j/83644835358";
+const freshForm="https://forms.gle/ZnVJ3JBvr9jUi8FL6";
+const ringbar="https://www.ringana.com/ringbar/";
+
+function teamCall(){return {t:'20:00',n:'Team Call',d:'Für alle, gemeinsam online',type:'call',
+  link:zoom,linkLabel:'Zoom beitreten',meta:'Meeting-ID 836 4483 5358'};}
+function freshDate(){return {t:'15:00',n:'Fresh Date am Campus',d:'Ab 10 Uhr offenes Team-Meeting für alle',type:'fresh',
+  link:freshForm,linkLabel:'Anmelden (bis Fr davor)',
+  link2:ringbar,link2Label:'Mittagessen bestellen',
+  meta:'Anmeldung 1 Woche vorher · Essen 1 Woche vorher bestellen'};}
+
+const eventsByMonth={
+  '2026-9':{ 1:[teamCall()], 25:[freshDate()] },
+  '2026-10':{ 1:[teamCall()], 9:[freshDate()], 23:[freshDate()] },
+  '2026-11':{ 1:[teamCall()], 6:[freshDate()], 27:[freshDate()] },
+  '2026-12':{ 1:[teamCall()], 4:[freshDate()], 26:[freshDate()] }
+};
+
+const monthNames=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+let curY=2026, curM=9;          // 1-based month
+const realToday={y:2026,m:9,d:1}; // highlight next team call area; adjust as needed
+
+const grid=document.getElementById('caldays');
+const dsel=document.getElementById('dsel');
+const moLabel=document.getElementById('calMo');
+
+function monthKey(y,m){return y+'-'+m;}
+function daysInMonth(y,m){return new Date(y,m,0).getDate();}
+function firstDowMon(y,m){return (new Date(y,m-1,1).getDay()+6)%7;} // Mon=0
+
+function eventsFor(y,m,d){const mm=eventsByMonth[monthKey(y,m)];return mm&&mm[d]?mm[d]:null;}
+
+function renderMonth(){
+  moLabel.textContent=monthNames[curM-1]+' '+curY;
+  const fd=firstDowMon(curY,curM), dn=daysInMonth(curY,curM);
+  let h='';
+  for(let i=0;i<fd;i++)h+='<div class="cd mute"></div>';
+  for(let d=1;d<=dn;d++){
+    const ev=eventsFor(curY,curM,d);
+    let dot=ev?'<div class="dt">'+ev.map(e=>'<i class="'+(e.type==='fresh'?'l':'')+'"></i>').join('')+'</div>':'';
+    const isToday=(curY===realToday.y&&curM===realToday.m&&d===realToday.d);
+    h+=`<div class="cd ${isToday?'today':''}" data-d="${d}">${d}${dot}</div>`;
+  }
+  grid.innerHTML=h;
+  grid.querySelectorAll('.cd:not(.mute)').forEach(c=>c.addEventListener('click',()=>pick(+c.dataset.d)));
+  // auto-select first day with an event, else clear
+  const mm=eventsByMonth[monthKey(curY,curM)];
+  const firstEv=mm?Math.min(...Object.keys(mm).map(Number)):null;
+  if(firstEv)pick(firstEv); else dsel.innerHTML='<div class="noev">Diesen Monat keine festen Termine.</div>';
+}
+function pick(d){
+  document.querySelectorAll('.cd').forEach(c=>c.classList.toggle('sel',+c.dataset.d===d));
+  const ev=eventsFor(curY,curM,d);
+  dsel.innerHTML='<div class="dh">'+d+'. '+monthNames[curM-1]+'</div>'+(ev?ev.map(e=>{
+    const links=[
+      e.link?`<a class="evlink" href="${e.link}" target="_blank" rel="noopener">${e.linkLabel} ↗</a>`:'',
+      e.link2?`<a class="evlink alt" href="${e.link2}" target="_blank" rel="noopener">${e.link2Label} ↗</a>`:''
+    ].join('');
+    return `<div class="evc ${e.type}">
+      <div class="et">${e.t}</div>
+      <div class="ei"><div class="en">${e.n}</div><div class="ed">${e.d}</div>
+      ${e.meta?`<div class="emeta">${e.meta}</div>`:''}
+      ${links?`<div class="evlinks">${links}</div>`:''}</div>
+    </div>`;}).join('')
+    :'<div class="noev">Kein Termin an diesem Tag.</div>');
+}
+document.getElementById('calPrev').addEventListener('click',()=>{curM--;if(curM<1){curM=12;curY--;}renderMonth();});
+document.getElementById('calNext').addEventListener('click',()=>{curM++;if(curM>12){curM=1;curY++;}renderMonth();});
+renderMonth();
+</script>
+</body>
+</html>
