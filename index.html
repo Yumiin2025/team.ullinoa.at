@@ -138,6 +138,8 @@
   .intro-prose .lead{font-family:'Fraunces';font-style:italic;font-size:18px;color:var(--teal);line-height:1.45}
   .lvideo-soon{display:flex;align-items:center;gap:9px;border:1.5px dashed var(--line);border-radius:12px;padding:13px 15px;margin:16px 0 4px;font-size:13.5px;font-weight:700;color:var(--muted)}
   .lvideo-soon span{font-size:17px}
+  .lvideo{position:relative;aspect-ratio:16/9;margin:16px 0 6px;border-radius:12px;overflow:hidden;background:#000}
+  .lvideo iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
   .todo-h{font-family:'Fraunces';font-size:15px;color:var(--purple);text-transform:uppercase;letter-spacing:.06em;margin:22px 0 12px}
   .task{display:flex;gap:13px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:10px;cursor:pointer;transition:.12s}
   .task:hover{border-color:var(--mint-d)}
@@ -585,6 +587,7 @@ navs.forEach(b=>b.addEventListener('click',()=>show(b.dataset.v)));
 /* ---------------- onboarding day data (from real ullinoa flow, "du" voice) ---------------- */
 const days=[
   {n:1,emoji:"🥳",title:"Dein erster Tag",tease:"Vier konkrete Dinge, dann bist du durch.",status:"done",
+   video:"CTu4rO3D1cQ",
    lead:"Willkommen. Wir freuen uns wirklich, dass du da bist.",
    intro:["Kein Roman heute. Kein Overwhelm. Nur vier Dinge, die heute zählen.","Weißt du, was die Menschen gemeinsam haben, die hier wirklich etwas aufgebaut haben? Sie haben nicht gewartet, bis sie alles wussten. Sie haben angefangen. Genau das tust du heute."],
    tasks:[
@@ -595,6 +598,7 @@ const days=[
    ],
    reflect:"Was hat mich heute überrascht? Was fühlt sich schon gut an und was macht mir noch ein bisschen Angst?"},
   {n:2,emoji:"💞",title:"Dein Werkzeug kennenlernen",tease:"In Ruhe, ohne alles sofort verstehen zu müssen.",status:"today",
+   video:"bCElaY1tCLE",
    lead:"Yey, du bist wieder da.",
    intro:["Die Online Academy ist nicht deine Hausaufgabe. Sie ist eher wie eine erfahrene Freundin, die dir zeigt, was funktioniert, und dich sicherer macht in Gesprächen, die du sowieso schon führst.","Online Office → Journey & Training → Online Academy"],
    tasks:[
@@ -685,7 +689,7 @@ function renderTimeline(){
         <div class="th"><span class="tlabel">Tag ${d.n}</span><span class="tstatus">${status}</span></div>
         <h3>${d.title}</h3>
         <div class="ttease">${d.tease}</div>
-        <div class="tmeta"><span>📝 ${d.tasks.length} To-dos</span><span>🎬 Video · bald</span><span>💭 Reflexion</span></div>
+        <div class="tmeta"><span>📝 ${d.tasks.length} To-dos</span><span>🎬 ${d.video?'Video':'Video · bald'}</span><span>💭 Reflexion</span></div>
       </div></div>`;
   }).join('');
   tl.querySelectorAll('.tday').forEach(el=>{
@@ -716,7 +720,9 @@ function openDay(n){
         <p class="lead">${d.lead}</p>
         ${d.intro.map(p=>`<p>${p}</p>`).join('')}
       </div>
-      <div class="lvideo-wrap"><div class="lvideo-soon"><span>🎬</span> Video zu diesem Tag kommt bald</div></div>
+      <div class="lvideo-wrap">${d.video
+        ? `<div class="lvideo"><iframe src="https://www.youtube-nocookie.com/embed/${d.video}" title="Video zu Tag ${d.n}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`
+        : `<div class="lvideo-soon"><span>🎬</span> Video zu diesem Tag kommt bald</div>`}</div>
       <div class="todo-h">Heute zählt</div>
       ${d.tasks.map((t,i)=>`<div class="task ${savedTasks[i]?'done':''}" data-i="${i}">
           <span class="cb"></span>
