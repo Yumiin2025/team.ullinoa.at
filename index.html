@@ -136,6 +136,8 @@
   .intro-prose{font-size:15px;line-height:1.7;color:var(--ink);margin-bottom:6px}
   .intro-prose p{margin-bottom:12px}
   .intro-prose .lead{font-family:'Fraunces';font-style:italic;font-size:18px;color:var(--teal);line-height:1.45}
+  .lvideo-soon{display:flex;align-items:center;gap:9px;border:1.5px dashed var(--line);border-radius:12px;padding:13px 15px;margin:16px 0 4px;font-size:13.5px;font-weight:700;color:var(--muted)}
+  .lvideo-soon span{font-size:17px}
   .todo-h{font-family:'Fraunces';font-size:15px;color:var(--purple);text-transform:uppercase;letter-spacing:.06em;margin:22px 0 12px}
   .task{display:flex;gap:13px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 15px;margin-bottom:10px;cursor:pointer;transition:.12s}
   .task:hover{border-color:var(--mint-d)}
@@ -682,7 +684,7 @@ function renderTimeline(){
         <div class="th"><span class="tlabel">Tag ${d.n}</span><span class="tstatus">${status}</span></div>
         <h3>${d.title}</h3>
         <div class="ttease">${d.tease}</div>
-        <div class="tmeta"><span>📝 ${d.tasks.length} To-dos</span><span>🎬 Video</span><span>💭 Reflexion</span></div>
+        <div class="tmeta"><span>📝 ${d.tasks.length} To-dos</span><span>🎬 Video · bald</span><span>💭 Reflexion</span></div>
       </div></div>`;
   }).join('');
   tl.querySelectorAll('.tday').forEach(el=>{
@@ -713,7 +715,7 @@ function openDay(n){
         <p class="lead">${d.lead}</p>
         ${d.intro.map(p=>`<p>${p}</p>`).join('')}
       </div>
-      <div class="lvideo-wrap"></div>
+      <div class="lvideo-wrap"><div class="lvideo-soon"><span>🎬</span> Video zu diesem Tag kommt bald</div></div>
       <div class="todo-h">Heute zählt</div>
       ${d.tasks.map((t,i)=>`<div class="task ${savedTasks[i]?'done':''}" data-i="${i}">
           <span class="cb"></span>
