@@ -211,6 +211,7 @@
   .ll{display:inline-block;text-decoration:none;font-weight:700;font-size:12px;padding:7px 12px;border-radius:9px}
   .ll.vid{background:var(--teal);color:#fff}
   .ll.pdf{background:#fdeccb;color:var(--terra)}
+  .ll.xls{background:#d7efe4;color:var(--teal2)}
   .ll:hover{opacity:.9}
 
   /* ---- podcast ---- */
@@ -242,7 +243,10 @@
   .calwrap{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px}
   .calbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
   .calbar .mo{font-family:'Fraunces';font-size:19px;color:var(--teal)}
+  .calbar-r{display:flex;align-items:center;gap:8px}
   .calbar button{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--teal);font-weight:700}
+  .calbar button.cal-today{width:auto;padding:0 13px;font-size:12.5px;background:var(--sage-bg);border-color:var(--mint-d)}
+  .calbar button.cal-today[hidden]{display:none}
   .calhd{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:7px}
   .calhd div{text-align:center;font-size:11px;font-weight:700;color:var(--muted)}
   .caldays{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
@@ -400,6 +404,7 @@
       <div class="learnrow"><span class="ri">📊</span><div><div class="rt">Target-Plan Basics</div><div class="rd">Wie sich die Zielstufen aufbauen</div><div class="learn-links"><a class="ll vid" href="https://youtu.be/3vBzi6TsVd8" target="_blank" rel="noopener">▶ Video</a><a class="ll pdf" href="Onboarding-01-Target-Plan-Basics.pdf" target="_blank" rel="noopener">PDF</a></div></div></div>
       <div class="learnrow"><span class="ri">🚀</span><div><div class="rt">Fast Track & Bonus</div><div class="rd">Was in deinen ersten Monaten zählt</div><div class="learn-links"><a class="ll vid" href="https://youtu.be/IQfHdKU_CC8" target="_blank" rel="noopener">▶ Video</a><a class="ll pdf" href="Onboarding-02-Fast-Track-Bonus.pdf" target="_blank" rel="noopener">PDF</a></div></div></div>
       <div class="learnrow"><span class="ri">💶</span><div><div class="rt">Teamumsatz & Provision</div><div class="rd">Wie sich dein Einkommen zusammensetzt</div><div class="learn-links"><a class="ll vid" href="https://youtu.be/Uvh2FDx9424" target="_blank" rel="noopener">▶ Video</a><a class="ll pdf" href="Onboarding-03-Teamumsatz-Provision.pdf" target="_blank" rel="noopener">PDF</a></div></div></div>
+      <div class="learnrow"><span class="ri">🗓️</span><div><div class="rt">Aufbauplan September–Dezember</div><div class="rd">Dein Fahrplan bis Jahresende</div><div class="learn-links"><a class="ll pdf" href="RINGANA_Aufbauplan_Sep_bis_Dez.pdf" target="_blank" rel="noopener">PDF</a><a class="ll xls" href="RINGANA_Aufbauplan_Sep_bis_Dez.xlsx" rel="noopener">Excel</a></div></div></div>
 
       <div class="rescat">Produkte</div>
       <div class="soon-card"><span class="si">🎬</span><div><div class="st">Kurze Produktvideos</div><div class="sd">In Arbeit</div></div><span class="sbadge">Bald</span></div>
@@ -444,7 +449,7 @@
     <div class="view" data-v="cal">
       <div class="vhead"><div class="ey">Termine</div><h2>Kalender</h2><p>Tippe einen Tag an, um die Termine zu sehen.</p></div>
       <div class="calwrap">
-        <div class="calbar"><button id="calPrev">‹</button><span class="mo" id="calMo">September 2026</span><button id="calNext">›</button></div>
+        <div class="calbar"><button id="calPrev">‹</button><span class="mo" id="calMo">September 2026</span><span class="calbar-r"><button id="calToday" class="cal-today" hidden>Heute</button><button id="calNext">›</button></span></div>
         <div class="calhd"><div>Mo</div><div>Di</div><div>Mi</div><div>Do</div><div>Fr</div><div>Sa</div><div>So</div></div>
         <div class="caldays" id="caldays"></div>
         <div class="dsel" id="dsel"></div>
@@ -597,7 +602,7 @@ navs.forEach(b=>b.addEventListener('click',()=>show(b.dataset.v)));
 
 /* ---------------- onboarding day data (from real ullinoa flow, "du" voice) ---------------- */
 const days=[
-  {n:1,emoji:"🥳",title:"Dein erster Tag",tease:"Vier konkrete Dinge, dann bist du durch.",status:"done",
+  {n:1,emoji:"🥳",title:"Dein erster Tag",tease:"Vier konkrete Dinge, dann bist du durch.",
    video:"CTu4rO3D1cQ",
    lead:"Willkommen. Wir freuen uns wirklich, dass du da bist.",
    intro:["Kein Roman heute. Kein Overwhelm. Nur vier Dinge, die heute zählen.","Weißt du, was die Menschen gemeinsam haben, die hier wirklich etwas aufgebaut haben? Sie haben nicht gewartet, bis sie alles wussten. Sie haben angefangen. Genau das tust du heute."],
@@ -608,7 +613,7 @@ const days=[
      {t:"Einmal mit jemandem reden oder teilen",d:"Offline oder online. Eine ehrliche Nachricht, so wie du es einer Freundin oder einem Freund erzählen würdest. Kein Skript. Nur du."}
    ],
    reflect:"Was hat mich heute überrascht? Was fühlt sich schon gut an und was macht mir noch ein bisschen Angst?"},
-  {n:2,emoji:"💞",title:"Dein Werkzeug kennenlernen",tease:"In Ruhe, ohne alles sofort verstehen zu müssen.",status:"today",
+  {n:2,emoji:"💞",title:"Dein Werkzeug kennenlernen",tease:"In Ruhe, ohne alles sofort verstehen zu müssen.",
    video:"bCElaY1tCLE",
    lead:"Yey, du bist wieder da.",
    intro:["Die Online Academy ist nicht deine Hausaufgabe. Sie ist eher wie jemand Erfahrenes an deiner Seite, der dir zeigt, was funktioniert, und dich sicherer macht in Gesprächen, die du sowieso schon führst.","Online Office → Journey & Training → Online Academy"],
@@ -619,7 +624,7 @@ const days=[
      {t:"Noch ein Moment mit jemandem",d:"Offline oder online. Nicht perfekt, nicht groß. Einfach da sein. Jeden Tag ein kleiner Schritt."}
    ],
    reflect:"Was hat mir die Academy heute gezeigt, das ich noch nicht wusste? Und was davon kann ich morgen schon ausprobieren?"},
-  {n:3,emoji:"🤝",title:"Heute wird's konkret",tease:"Du bist bereit. Nicht irgendwann. Jetzt.",status:"locked",
+  {n:3,emoji:"🤝",title:"Heute wird's konkret",tease:"Du bist bereit. Nicht irgendwann. Jetzt.",
    lead:"Du bist bereit. Nicht irgendwann. Jetzt.",
    intro:["Heute verkaufst du nicht. Du teilst etwas, das du selbst gerade erlebst, und gibst jemandem die Chance, selbst zu entscheiden. Das ist kein Pitch, das ist ein Gespräch."],
    tasks:[
@@ -628,7 +633,7 @@ const days=[
      {t:"5 Menschen kontaktieren, so wie du bist",d:"Nachricht, Anruf oder persönlich.",ex:"„Hey du 🤍 ich musste grad an dich denken. Du achtest doch so auf deine Haut, oder? Ich teste gerade etwas, das mich wirklich überrascht hat. Darf ich dir kurz zeigen, was ich meine?“"}
    ],
    reflect:"Wie hat es sich angefühlt, jemanden anzusprechen? Was hat mich aufgehalten und was hat mir Mut gemacht?"},
-  {n:4,emoji:"🌟",title:"Zuhören statt verkaufen",tease:"Wer wirklich zuhört, muss nie pitchen.",status:"locked",
+  {n:4,emoji:"🌟",title:"Zuhören statt verkaufen",tease:"Wer wirklich zuhört, muss nie pitchen.",
    lead:"Heute ist deine Aufgabe nicht verkaufen. Zuhören.",
    intro:["Stell dir vor, du triffst jemanden beim Kaffee. Diese Person erzählt von ihrer Müdigkeit, davon dass sie nicht in die Gänge kommt. Und du hörst wirklich zu. Und dann weißt du plötzlich genau, was ihr helfen könnte.","Wer wirklich zuhört, muss nie pitchen, sondern empfiehlt einfach."],
    tasks:[
@@ -637,7 +642,7 @@ const days=[
      {t:"Erstes FRESH Date fixieren",d:"Kaffee, kurzes Online-Treffen, gemeinsam stöbern. Kein Verkaufsgespräch. Datum ist alles, Format ist egal."}
    ],
    reflect:"Wann habe ich heute wirklich zugehört? Und was habe ich dabei über diese Person erfahren, das ich vorher nicht wusste?"},
-  {n:5,emoji:"🤗",title:"Menschen, nicht Kund:innen",tease:"Wer in deinem Leben sucht gerade nach mehr?",status:"locked",
+  {n:5,emoji:"🤗",title:"Menschen, nicht Kund:innen",tease:"Wer in deinem Leben sucht gerade nach mehr?",
    lead:"Nicht mehr Arbeit. Mehr Luft. Mehr Sinn.",
    intro:["Heute geht es um Menschen, nicht um Kund:innen. Wer in deinem Leben sucht gerade nach etwas, das sich nach mehr anfühlt? Du musst das nicht perfekt angehen. Du musst nur anfangen."],
    tasks:[
@@ -646,7 +651,7 @@ const days=[
      {t:"Eine Person heute einladen",d:"Nicht mit einem Skript, sondern so wie du ihr wirklich schreiben würdest.",ex:"„Ich mach nächste Woche was Cooles mit, willst du kurz reinhören? Dauert 20 Minuten und du verstehst danach genau, was ich gerade nebenbei aufbaue.“"}
    ],
    reflect:"Wer ist die Person, die mir heute als Erstes eingefallen ist, und habe ich sie schon kontaktiert?"},
-  {n:6,emoji:"💗",title:"Dein Warum",tease:"Nach innen statt nach außen.",status:"locked",
+  {n:6,emoji:"💗",title:"Dein Warum",tease:"Nach innen statt nach außen.",
    lead:"Heute geht es nicht nach außen. Nach innen.",
    intro:["Simon Sinek hat sein Leben lang eine Frage erforscht: warum tun Menschen, was sie tun? Die stärksten Verbindungen entstehen nicht durch das, was jemand anbietet, sondern durch das Warum. Wer sein Warum kennt, redet einfach. Und die Menschen spüren den Unterschied.","Dein Warum muss heute nicht fertig sein. Aber es lohnt sich, ehrlich hinzuschauen."],
    tasks:[
@@ -655,7 +660,7 @@ const days=[
      {t:"Dein ehrlicher Woche-1-Überblick",d:"Nicht um dich zu bewerten, sondern um zu sehen, was du wirklich getan hast. Was offen ist? Kein Drama, Woche 2 wartet."}
    ],
    reflect:"Was hat sich diese Woche in mir verändert? Auch wenn es sich noch klein anfühlt."},
-  {n:7,emoji:"🌿",title:"Innehalten & festlegen",tease:"Ein konkreter Plan bringt dich ans Ziel.",status:"locked",
+  {n:7,emoji:"🌿",title:"Innehalten & festlegen",tease:"Ein konkreter Plan bringt dich ans Ziel.",
    lead:"Heute halten wir kurz inne.",
    intro:["Schau zurück auf die letzten Tage. Die Nachricht, die du geschickt hast, obwohl sich die innere Stimme gemeldet hat. Das Gespräch, das länger gedauert hat, weil du wirklich zugehört hast. Das warst du.","Menschen, die genau aufschreiben wann, wo und mit wem sie etwas tun, halten sich zu 91% häufiger daran. Motivation bringt dich zum Starten, ein konkreter Plan bringt dich ans Ziel."],
    tasks:[
@@ -663,7 +668,7 @@ const days=[
      {t:"Drei Dinge konkret festlegen, heute",d:"Namen. Daten. Uhrzeiten.",ex:"Mein FRESH Date ist am ___ um ___ mit ___. · Das Event, das ich mitnehme, ist am ___ und ich frage ___. · Die eine Person, die ich diese Woche wirklich einlade, ist ___."}
    ],
    reflect:"Wo war ich in den letzten Tagen mutig? Was nehme ich mit und was darf ich loslassen?"},
-  {n:8,emoji:"✨",title:"Woche 2 · Tiefer, nicht schneller",tease:"Nicht was du erreichen willst. Wer du dabei wirst.",status:"locked",
+  {n:8,emoji:"✨",title:"Woche 2 · Tiefer, nicht schneller",tease:"Nicht was du erreichen willst. Wer du dabei wirst.",
    lead:"Woche 2 geht tiefer. Nicht schneller. Tiefer.",
    intro:["Wenn du in einem Jahr auf diesen Moment zurückschaust, was willst du dir dann sagen können? Nicht was du erreicht hast, sondern wie du diese Zeit genutzt hast."],
    tasks:[
@@ -982,12 +987,14 @@ const eventsByMonth={
 };
 
 const monthNames=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
-let curY=2026, curM=9;          // 1-based month
-const realToday={y:2026,m:9,d:1}; // highlight next team call area; adjust as needed
+const _now=new Date();
+const realToday={y:_now.getFullYear(),m:_now.getMonth()+1,d:_now.getDate()}; // echtes Datum des Geräts
+let curY=realToday.y, curM=realToday.m; // Kalender startet im aktuellen Monat
 
 const grid=document.getElementById('caldays');
 const dsel=document.getElementById('dsel');
 const moLabel=document.getElementById('calMo');
+const todayBtn=document.getElementById('calToday');
 
 function monthKey(y,m){return y+'-'+m;}
 function daysInMonth(y,m){return new Date(y,m,0).getDate();}
@@ -1008,10 +1015,14 @@ function renderMonth(){
   }
   grid.innerHTML=h;
   grid.querySelectorAll('.cd:not(.mute)').forEach(c=>c.addEventListener('click',()=>pick(+c.dataset.d)));
-  // auto-select first day with an event, else clear
+  const onCurrentMonth=(curY===realToday.y&&curM===realToday.m);
+  if(todayBtn)todayBtn.hidden=onCurrentMonth;
+  // Auswahl: im aktuellen Monat der heutige Tag, sonst der erste Termin-Tag, sonst leer
   const mm=eventsByMonth[monthKey(curY,curM)];
   const firstEv=mm?Math.min(...Object.keys(mm).map(Number)):null;
-  if(firstEv)pick(firstEv); else dsel.innerHTML='<div class="noev">Diesen Monat keine festen Termine.</div>';
+  if(onCurrentMonth)pick(realToday.d);
+  else if(firstEv)pick(firstEv);
+  else dsel.innerHTML='<div class="noev">Diesen Monat keine festen Termine.</div>';
 }
 function pick(d){
   document.querySelectorAll('.cd').forEach(c=>c.classList.toggle('sel',+c.dataset.d===d));
@@ -1031,6 +1042,7 @@ function pick(d){
 }
 document.getElementById('calPrev').addEventListener('click',()=>{curM--;if(curM<1){curM=12;curY--;}renderMonth();});
 document.getElementById('calNext').addEventListener('click',()=>{curM++;if(curM>12){curM=1;curY++;}renderMonth();});
+if(todayBtn)todayBtn.addEventListener('click',()=>{curY=realToday.y;curM=realToday.m;renderMonth();});
 renderMonth();
 </script>
 </body>
