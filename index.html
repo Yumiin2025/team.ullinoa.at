@@ -526,7 +526,7 @@
     </div>
     <div class="box quotebox">
       <h4>Gedanke des Tages</h4>
-      <div class="qt">Fortschritt, den man nicht festhält, fühlt sich irgendwann nicht mehr wie Fortschritt an. Schreib heute Abend einen Satz auf. 🌱</div>
+      <div class="qt" id="qotd">Fortschritt, den man nicht festhält, fühlt sich irgendwann nicht mehr wie Fortschritt an. Schreib heute Abend einen Satz auf. 🌱</div>
     </div>
   </aside>
 </div>
@@ -964,6 +964,48 @@ document.querySelectorAll('.folder-h').forEach(h=>h.addEventListener('click',()=
 document.querySelectorAll('.pills button').forEach(b=>b.addEventListener('click',()=>{
   b.parentElement.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
 }));
+
+/* ---------------- Gedanke des Tages · wechselt täglich ---------------- */
+/* Themen: feministisch, empowernd, Persönlichkeitsentwicklung, Wachstum, Veränderung */
+const gedanken=[
+  "Fortschritt, den man nicht festhält, fühlt sich irgendwann nicht mehr wie Fortschritt an. Schreib heute Abend einen Satz auf. 🌱",
+  "Du musst nicht laut sein, um gehört zu werden. Klarheit ist lauter als Lautstärke.",
+  "Wachstum fühlt sich selten bequem an. Genau daran erkennst du, dass es echt ist.",
+  "Frag dich heute einmal: Wovon rede ich mich gerade klein?",
+  "Eine Frau, die für sich selbst sorgt, nimmt niemandem etwas weg. Sie zeigt, dass es geht.",
+  "Veränderung beginnt nicht mit einem großen Sprung, sondern mit einer ehrlichen Frage an dich selbst.",
+  "Du darfst Dinge wollen, ohne sie dir erst verdienen zu müssen.",
+  "Vergleich ist der schnellste Weg, den eigenen Weg nicht mehr zu sehen.",
+  "Selbstständigkeit heißt auch: Deine Zeit gehört wieder dir. Womit füllst du sie heute?",
+  "Die Version von dir, die du sein willst, entsteht durch die kleinen Entscheidungen von heute.",
+  "Nein sagen ist ein vollständiger Satz. Übe ihn.",
+  "Nicht jede:r wird deinen Weg verstehen. Das ist okay. Es ist deiner.",
+  "Mut ist nicht die Abwesenheit von Angst, sondern der Schritt trotzdem.",
+  "Was würdest du heute tun, wenn du dir selbst voll vertraust?",
+  "Frauen, die andere Frauen fördern, verändern mehr als jede einzelne allein.",
+  "Du bist nicht „zu viel“. Du warst vielleicht nur zu lange am falschen Ort.",
+  "Kleine Schritte, jeden Tag, schlagen große Vorsätze, die nie starten.",
+  "Deine Geschichte muss nicht perfekt sein, um jemand anderem Mut zu machen.",
+  "Erlaube dir, mitten im Prozess stolz auf dich zu sein. Nicht erst am Ziel.",
+  "Persönliche Entwicklung heißt oft: dieselbe Situation, neue Reaktion.",
+  "Finanzielle Unabhängigkeit ist keine Gier. Sie ist die Freiheit, Nein sagen zu können.",
+  "Der innere Kritiker ist nicht die Wahrheit. Er ist nur eine alte Gewohnheit.",
+  "Du wächst nicht, indem du wartest, bis du bereit bist. Du wächst, indem du anfängst. ☀️",
+  "Setz dir heute eine Grenze, die du dir gestern noch nicht zugetraut hättest.",
+  "Sichtbarkeit ist unbequem und notwendig. Zeig dich, auch unfertig.",
+  "Was dich früher überfordert hat, machst du heute nebenbei. Halt das mal fest.",
+  "Du schuldest niemandem eine Erklärung dafür, dass du dich weiterentwickelst.",
+  "Ruhe ist kein Rückschritt. Auch Pausen gehören zum Wachsen.",
+  "Frag dich: Treffe ich diese Entscheidung aus Angst oder aus Klarheit?",
+  "Die Frau, die du bewunderst, hat auch mal klein angefangen und einfach nicht aufgehört. 🤍"
+];
+(function(){
+  const el=document.getElementById('qotd');
+  if(!el)return;
+  const n=new Date();
+  const dayNum=Math.floor(Date.UTC(n.getFullYear(),n.getMonth(),n.getDate())/86400000);
+  el.textContent=gedanken[((dayNum%gedanken.length)+gedanken.length)%gedanken.length];
+})();
 
 /* ---------------- calendar ---------------- */
 /* Real events. Keyed by "YYYY-M" (month is 1-based) -> { day: [events] } */
