@@ -308,8 +308,8 @@
   .plantbox .pd{font-family:'Fraunces';font-size:30px;color:var(--purple);margin-top:8px}
   .plantbox .pl{font-size:13px;color:var(--muted);font-weight:600}
   .plantbox .pnext{font-size:12.5px;color:var(--muted);margin-top:10px;font-style:italic;line-height:1.4}
-  .growbar{height:7px;background:var(--lilac);border-radius:99px;overflow:hidden;margin:12px 4px 0}
-  .growbar span{display:block;height:100%;background:linear-gradient(90deg,var(--green),var(--purple));border-radius:99px;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+  .growbar{height:8px;background:rgba(128,108,191,.16);border-radius:99px;overflow:hidden;margin:12px 4px 0}
+  .growbar span{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--green),var(--purple));border-radius:99px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
   .pbest{margin-top:12px;font-size:12.5px;color:var(--muted);font-weight:600}
   .pbest b{color:var(--purple);font-weight:700}
   .preset{margin-top:12px;background:none;border:none;color:var(--muted);font-size:11.5px;text-decoration:underline;cursor:pointer;font-weight:600}
@@ -421,7 +421,7 @@
       </div>
 
       <div class="folder">
-        <button class="folder-h"><span class="folder-i">☀️</span><span class="folder-t">Best Summer of our Lives</span><span class="folder-c">9</span><span class="folder-tri">›</span></button>
+        <button class="folder-h"><span class="folder-i">☀️</span><span class="folder-t">Best Summer of our Lives</span><span class="folder-c">10</span><span class="folder-tri">›</span></button>
         <div class="folder-b">
           <a class="vrow" href="https://youtu.be/5shUcnoMJ5w" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">1. Call</span></a>
           <a class="vrow" href="https://youtu.be/qcrOQDnCwbo" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">2. Call</span></a>
@@ -432,6 +432,7 @@
           <a class="vrow" href="https://youtu.be/_PNB5_Xthoo" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">7. Call</span></a>
           <a class="vrow" href="https://youtu.be/PaRdteLsC9s" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">8. Call</span></a>
           <a class="vrow" href="https://youtu.be/DWfxb3g0qpM" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">9. Call</span></a>
+          <a class="vrow" href="https://youtu.be/Kf9zYinLsJk" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">10. Call</span></a>
         </div>
       </div>
 
@@ -869,13 +870,14 @@ if(introCard)introCard.addEventListener('click',openWelcome);
 /* Milestones purely for the label + progress bar; the drawing itself scales continuously. */
 const milestones=[0,3,7,14,30,60,100];
 function nextMilestone(s){for(const m of milestones)if(m>s)return m;return null;}
-function prevMilestone(s){let p=0;for(const m of milestones)if(m<=s)p=m;return p;}
+/* Wachstum 0..1 – vorne steiler, damit man schon in den ersten Tagen etwas sieht; voll ab ~55 Tagen */
+function grow(streak){return streak<=0?0:Math.min(Math.pow(streak/55,0.5),1);}
 
 /* build an SVG plant whose size/leaves/flowers depend on `g` (0..1 growth) */
 function plantSVG(streak){
-  const g=Math.min(streak/60,1);                 // full grown at 60 days
+  const g=grow(streak);
   const potTop=118, potBot=150;
-  const stemH=18+g*84;                            // stem grows upward
+  const stemH=20+g*92;                            // stem grows upward
   const topY=potTop-stemH;
   const sway=0;
   let s=`<svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">`;
@@ -891,13 +893,13 @@ function plantSVG(streak){
   // stem
   s+=`<path d="M60 ${potTop-6} Q${60+sway} ${(potTop-6+topY)/2} 60 ${topY}" stroke="#4bb597" stroke-width="${3+g*2.5}" fill="none" stroke-linecap="round"/>`;
   // leaves appear progressively along the stem
-  const leaves=Math.min(Math.floor(streak/2),8);  // more days = more leaves
+  const leaves=Math.max(1,Math.min(1+Math.floor(streak/2),8));  // more days = more leaves
   for(let i=0;i<leaves;i++){
     const t=(i+1)/(leaves+1);
     const ly=potTop-6-stemH*t;
     const side=i%2===0?1:-1;
     const lx=60;
-    const size=7+g*7;
+    const size=6+g*9;
     const col=i%3===0?'#6accb1':'#4bb597';
     s+=`<path d="M${lx} ${ly} q${side*size} ${-size*0.7} ${side*size*2} ${-size*0.2} q${-side*size} ${size*0.9} ${-side*size*2} ${size*0.2} Z" fill="${col}"/>`;
   }
@@ -940,12 +942,12 @@ function renderPlant(streak){
   document.getElementById('potBig').innerHTML=plantSVG(streak);
   document.getElementById('streakTop').textContent=streak;
   document.getElementById('streakBig').textContent=streak;
-  const nx=nextMilestone(streak), pv=prevMilestone(streak);
+  const nx=nextMilestone(streak);
   document.getElementById('plantNext').textContent = nx
     ? `${labelFor(streak)} · noch ${nx-streak} ${nx-streak===1?'Tag':'Tage'} bis zur nächsten Stufe`
     : `${labelFor(streak)}`;
-  const fill=nx? ((streak-pv)/(nx-pv))*100 : 100;
-  document.getElementById('growfill').style.width=fill+'%';
+  // Balken zeigt das Gesamtwachstum der Pflanze (gleiche Kurve), damit beides zusammenpasst
+  document.getElementById('growfill').style.width=(grow(streak)*100).toFixed(1)+'%';
   const bestEl=document.getElementById('bestVal');
   if(bestEl)bestEl.textContent=state.best+' '+(state.best===1?'Tag':'Tage');
 }
