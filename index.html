@@ -333,6 +333,14 @@
   .bnav button.active{color:var(--teal)}
 
   .foot-note{max-width:1040px;margin:0 auto;padding:6px 20px 0;text-align:center;color:var(--muted);font-size:12.5px;font-style:italic}
+  .foot-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 16px;margin-bottom:7px;font-style:normal}
+  .foot-actions button{background:none;border:none;color:var(--muted);font-size:12px;font-weight:700;text-decoration:underline;cursor:pointer;padding:2px}
+  .foot-actions button:hover{color:var(--purple)}
+  .code-box{width:100%;min-height:110px;border:1px solid var(--line);border-radius:12px;padding:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.5;resize:vertical;background:#fff;color:var(--ink);word-break:break-all}
+  .code-box:focus{outline:none;border-color:var(--lav)}
+  .code-hint{font-size:13px;color:var(--muted);line-height:1.6;margin:2px 0 14px}
+  .code-msg{font-size:13px;font-weight:700;margin-top:10px;min-height:18px}
+  .code-msg.ok{color:var(--green-d)}.code-msg.err{color:var(--terra)}
 </style>
 </head>
 <body>
@@ -534,7 +542,14 @@
   </aside>
 </div>
 
-<p class="foot-note">Dein persönlicher Fortschritt wird nur auf diesem Gerät gespeichert · Werbung | RINGANA Partner:in</p>
+<div class="foot-note">
+  <div class="foot-actions">
+    <button type="button" id="saveBtn">Fortschritt sichern</button>
+    <button type="button" id="loadBtn">Code laden</button>
+    <button type="button" id="resetBtn2">Zurücksetzen</button>
+  </div>
+  Dein Fortschritt wird nur auf diesem Gerät gespeichert · Werbung | RINGANA Partner:in
+</div>
 
 <div class="overlay" id="overlay"><div class="sheet" id="sheet"></div></div>
 
@@ -953,14 +968,94 @@ function renderPlant(streak){
 }
 renderPlant(state.streak);
 
-/* reset progress (with confirm) */
-const resetBtn=document.getElementById('resetBtn');
-if(resetBtn)resetBtn.addEventListener('click',()=>{
+/* ---------------- Fortschritt: zurücksetzen / sichern / laden ---------------- */
+/* Alles bleibt lokal auf diesem Gerät. Der Code ist eine private Kopie NUR dieses
+   Fortschritts – nichts wird hochgeladen, es gibt keinen gemeinsamen Speicher. */
+function resetProgress(){
   if(confirm('Möchtest du deinen Fortschritt wirklich zurücksetzen? Deine Serie, abgehakten To-dos und Reflexionen auf diesem Gerät werden gelöscht.')){
-    state={streak:0,best:0,lastActive:null,doneDays:[],tasks:{},reflect:{}};
+    state={streak:0,best:0,lastActive:null,doneDays:[],dayDone:{},tasks:{},reflect:{}};
     saveState();renderTimeline();renderPlant(0);
+    toast('Fortschritt zurückgesetzt.');
   }
-});
+}
+['resetBtn','resetBtn2'].forEach(id=>{const b=document.getElementById(id);if(b)b.addEventListener('click',resetProgress);});
+
+function progressCode(){
+  try{return 'UN1~'+btoa(unescape(encodeURIComponent(localStorage.getItem(STORE_KEY)||JSON.stringify(state))));}
+  catch(e){return null;}
+}
+function applyProgressCode(raw){
+  let t=(raw||'').trim();
+  if(t.startsWith('UN1~'))t=t.slice(4);
+  t=t.replace(/\s+/g,'');
+  let obj;
+  try{obj=JSON.parse(decodeURIComponent(escape(atob(t))));}
+  catch(e){return {ok:false,msg:'Code nicht lesbar. Bitte den ganzen Code kopieren und einfügen.'};}
+  if(!obj||typeof obj!=='object'||!Array.isArray(obj.doneDays))
+    return {ok:false,msg:'Das sieht nicht nach einem gültigen Fortschritts-Code aus.'};
+  state={
+    streak:Math.max(0,parseInt(obj.streak,10)||0),
+    best:Math.max(0,parseInt(obj.best,10)||0),
+    lastActive:typeof obj.lastActive==='string'?obj.lastActive:null,
+    doneDays:obj.doneDays.filter(n=>Number.isInteger(n)),
+    dayDone:(obj.dayDone&&typeof obj.dayDone==='object')?obj.dayDone:{},
+    tasks:(obj.tasks&&typeof obj.tasks==='object')?obj.tasks:{},
+    reflect:(obj.reflect&&typeof obj.reflect==='object')?obj.reflect:{}
+  };
+  saveState();reconcileStreak();renderTimeline();renderPlant(state.streak);
+  return {ok:true};
+}
+
+function openSave(){
+  const code=progressCode();
+  sheet.innerHTML=`
+    <div class="sheet-hd">
+      <button class="close" onclick="closeDay()">✕</button>
+      <div class="ey">Nur für dich</div>
+      <h3>Fortschritt sichern</h3>
+    </div>
+    <div class="sheet-bd">
+      <div class="code-hint">Das ist dein persönlicher Sicherungs-Code – eine Kopie <b>nur deines</b> Fortschritts von diesem Gerät. Speichere ihn dir (Notizen, an dich selbst schicken). Mit „Code laden“ holst du ihn auf einem neuen Gerät oder nach dem Löschen der Browserdaten zurück. Er wird nirgends hochgeladen.</div>
+      <textarea class="code-box" id="codeOut" readonly>${(code||'').replace(/</g,'&lt;')}</textarea>
+      <button class="l-done" id="copyBtn" style="background:var(--teal)">Code kopieren</button>
+      <div class="code-msg" id="saveMsg"></div>
+    </div>`;
+  overlay.classList.add('show');document.body.style.overflow='hidden';sheet.scrollTop=0;
+  const ta=sheet.querySelector('#codeOut'), msg=sheet.querySelector('#saveMsg');
+  sheet.querySelector('#copyBtn').addEventListener('click',async()=>{
+    ta.focus();ta.select();
+    let done=false;
+    try{ if(navigator.clipboard&&navigator.clipboard.writeText){ await navigator.clipboard.writeText(ta.value); done=true; } }catch(e){}
+    if(!done){ try{ done=document.execCommand('copy'); }catch(e){} }
+    msg.textContent=done?'Kopiert ✓ – jetzt an einem sicheren Ort speichern.':'Der Code ist markiert – kopier ihn mit ⌘/Strg + C.';
+    msg.className='code-msg'+(done?' ok':'');
+  });
+}
+function openLoad(){
+  sheet.innerHTML=`
+    <div class="sheet-hd">
+      <button class="close" onclick="closeDay()">✕</button>
+      <div class="ey">Auf dieses Gerät</div>
+      <h3>Code laden</h3>
+    </div>
+    <div class="sheet-bd">
+      <div class="code-hint">Füge hier deinen Sicherungs-Code ein. Das ersetzt den Fortschritt auf <b>diesem</b> Gerät durch den aus dem Code.</div>
+      <textarea class="code-box" id="codeIn" placeholder="UN1~..."></textarea>
+      <button class="l-done" id="applyBtn">Fortschritt übernehmen</button>
+      <div class="code-msg" id="loadMsg"></div>
+    </div>`;
+  overlay.classList.add('show');document.body.style.overflow='hidden';sheet.scrollTop=0;
+  const ta=sheet.querySelector('#codeIn'), msg=sheet.querySelector('#loadMsg');
+  sheet.querySelector('#applyBtn').addEventListener('click',()=>{
+    if(!ta.value.trim()){msg.textContent='Bitte zuerst einen Code einfügen.';msg.className='code-msg err';return;}
+    if(!confirm('Fortschritt auf diesem Gerät durch den Code ersetzen?'))return;
+    const r=applyProgressCode(ta.value);
+    if(r.ok){ closeDay(); toast('Fortschritt geladen ✓'); }
+    else { msg.textContent=r.msg; msg.className='code-msg err'; }
+  });
+}
+const saveBtn=document.getElementById('saveBtn'); if(saveBtn)saveBtn.addEventListener('click',openSave);
+const loadBtn=document.getElementById('loadBtn'); if(loadBtn)loadBtn.addEventListener('click',openLoad);
 
 /* ---------------- faq / pills / folders ---------------- */
 document.querySelectorAll('.faq .q').forEach(q=>q.addEventListener('click',()=>q.parentElement.classList.toggle('open')));
