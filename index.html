@@ -267,6 +267,7 @@
   .evc .emeta{font-size:11.5px;color:var(--muted);margin-top:5px}
   .evc.call .et{background:var(--purple)}
   .evc.fresh .et{background:var(--green-d)}
+  .evc.event .et{background:var(--gold)}
   .evlinks{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
   .evlink{display:inline-block;background:var(--purple);color:#fff;text-decoration:none;font-weight:700;font-size:12px;padding:7px 12px;border-radius:9px}
   .evlink.alt{background:var(--green-d)}
@@ -1092,16 +1093,27 @@ const zoom="https://us06web.zoom.us/j/83644835358";
 const freshForm="https://forms.gle/ZnVJ3JBvr9jUi8FL6";
 const ringbar="https://www.ringana.com/ringbar/";
 
+const runWienUrl='https://ringanaevents.flave.world/users/47410319-d2b7-440a-a698-ba941ac9fd5c/events/06e08e6b-58cb-4118-8413-5f718f7da2f8';
+const conventionTicket='https://ringanaevents.flave.world/users/47410319-d2b7-440a-a698-ba941ac9fd5c/events/f61caca0-e047-46f3-9d97-8baed0c84cb5';
+const conventionStream='https://ringanaevents.flave.world/users/47410319-d2b7-440a-a698-ba941ac9fd5c/events/5968eaa7-cc93-4401-8176-c82ff03a9487';
+
 function teamCall(){return {t:'20:00',n:'Team Call',d:'Für alle, gemeinsam online',type:'call',
   link:zoom,linkLabel:'Zoom beitreten',meta:'Meeting-ID 836 4483 5358'};}
 function freshDate(){return {t:'15:00',n:'Fresh Date am Campus',d:'Ab 10 Uhr offenes Team-Meeting für alle',type:'fresh',
   link:freshForm,linkLabel:'Anmelden (bis Fr davor)',
   link2:ringbar,link2Label:'Mittagessen bestellen',
   meta:'Anmeldung 1 Woche vorher · Essen 1 Woche vorher bestellen'};}
+function runWien(){return {t:'10:00',n:'RUN 3 · Wien',d:'Hyatt Regency Wien · 10:00–16:30 Uhr',type:'event',
+  link:runWienUrl,linkLabel:'Zum Event'};}
+function convention(day){return {t:day===1?'08:00':'Tag 2',n:'RINGANA Convention 2026',
+  d:day===1?'CONFEX Köln · Tag 1 von 2, ab 08:00 Uhr':'CONFEX Köln · Tag 2 von 2, bis 16:00 Uhr',type:'event',
+  meta:'CONFEX, Barmer Straße 20, 50679 Köln, Deutschland',
+  link:conventionTicket,linkLabel:'Tickets',
+  link2:conventionStream,link2Label:'Livestream'};}
 
 const eventsByMonth={
-  '2026-9':{ 1:[teamCall()], 25:[freshDate()] },
-  '2026-10':{ 1:[teamCall()], 9:[freshDate()], 23:[freshDate()] },
+  '2026-9':{ 1:[teamCall()], 19:[convention(1)], 20:[convention(2)], 25:[freshDate()] },
+  '2026-10':{ 1:[teamCall()], 3:[runWien()], 9:[freshDate()], 23:[freshDate()] },
   '2026-11':{ 1:[teamCall()], 6:[freshDate()], 27:[freshDate()] },
   '2026-12':{ 1:[teamCall()], 4:[freshDate()], 26:[freshDate()] }
 };
