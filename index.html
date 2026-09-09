@@ -520,9 +520,7 @@
     </div>
     <div class="box">
       <h4>Als Nächstes</h4>
-      <div class="mini-ev"><div class="md">1.<br>20:00</div><div><div class="mt">Team Call</div><div class="ms">Jeden Monat, für alle</div></div></div>
-      <div class="mini-ev"><div class="md">25.9.<br>15:00</div><div><div class="mt">Fresh Date am Campus</div><div class="ms">Anmeldung bis Fr davor</div></div></div>
-      <div class="mini-ev"><div class="md">9.10.<br>15:00</div><div><div class="mt">Fresh Date am Campus</div><div class="ms">Ab 10 Uhr offen für alle</div></div></div>
+      <div id="nextUp"></div>
     </div>
     <div class="box quotebox">
       <h4>Gedanke des Tages</h4>
@@ -1184,6 +1182,30 @@ document.getElementById('calPrev').addEventListener('click',()=>{curM--;if(curM<
 document.getElementById('calNext').addEventListener('click',()=>{curM++;if(curM>12){curM=1;curY++;}renderMonth();});
 if(todayBtn)todayBtn.addEventListener('click',()=>{curY=realToday.y;curM=realToday.m;renderMonth();});
 renderMonth();
+
+/* "Als Nächstes" im Rail: immer die nächsten Termine ab heute, direkt aus eventsByMonth */
+function renderNextUp(){
+  const box=document.getElementById('nextUp');
+  if(!box)return;
+  const todayNum=realToday.y*10000+realToday.m*100+realToday.d;
+  const all=[];
+  for(const key in eventsByMonth){
+    const parts=key.split('-'); const y=+parts[0], m=+parts[1];
+    const daysObj=eventsByMonth[key];
+    for(const dStr in daysObj){
+      const d=+dStr, dateNum=y*10000+m*100+d;
+      if(dateNum<todayNum)continue;
+      daysObj[dStr].forEach(e=>all.push({m,d,dateNum,e}));
+    }
+  }
+  all.sort((a,b)=>a.dateNum-b.dateNum);
+  const seen=new Set();
+  const next=all.filter(x=>{ if(seen.has(x.e.n))return false; seen.add(x.e.n); return true; }).slice(0,3);
+  box.innerHTML = next.length
+    ? next.map(({m,d,e})=>`<div class="mini-ev"><div class="md">${d}.${m}.<br>${e.t}</div><div><div class="mt">${e.n}</div><div class="ms">${e.d}</div></div></div>`).join('')
+    : '<div class="ms" style="padding:8px 0;font-style:italic">Aktuell keine Termine eingetragen.</div>';
+}
+renderNextUp();
 </script>
 </body>
 </html>
