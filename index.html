@@ -255,9 +255,11 @@
   .caldays{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
   .cd{aspect-ratio:1;border-radius:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:600;font-size:13.5px;cursor:pointer;position:relative}
   .cd:hover{background:#eceae6}.cd.mute{opacity:0}
-  .cd.today{background:var(--mint);color:var(--teal)}.cd.sel{background:var(--teal);color:#fff}
-  .cd .dt{display:flex;gap:2px;position:absolute;bottom:6px}
-  .cd .dt i{width:5px;height:5px;border-radius:50%;background:var(--terra)}.cd .dt i.l{background:var(--lav)}.cd.sel .dt i{background:#fff}
+  .cd.ev{background:#fdeccb;color:var(--teal2);box-shadow:inset 0 0 0 1.5px rgba(251,179,60,.55)}
+  .cd.ev:hover{background:#fbdfa8}
+  .cd.today{background:var(--mint);color:var(--teal)}.cd.sel{background:var(--teal);color:#fff;box-shadow:none}
+  .cd .dt{display:flex;gap:3px;position:absolute;bottom:6px}
+  .cd .dt i{width:5px;height:5px;border-radius:50%;background:var(--teal)}.cd .dt i.l{background:var(--lav)}.cd.sel .dt i{background:#fff}
   .dsel{margin-top:16px}
   .dsel .dh{font-family:'Fraunces';font-size:16px;color:var(--teal);margin-bottom:10px}
   .evc{display:flex;gap:13px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px 15px;margin-bottom:9px}
@@ -499,7 +501,7 @@
 
       <div class="faqcat">Team & Termine</div>
       <div class="faq"><div class="q">Wann sind die Team Calls? <span class="tri">›</span></div><div class="a">Immer am 1. des Monats um 20 Uhr, online über Zoom. Den Link findest du im Kalender. Einfach dazukommen, du musst dich nicht anmelden.</div></div>
-      <div class="faq"><div class="q">Wie melde ich mich fürs Fresh Date am Campus an? <span class="tri">›</span></div><div class="a">Über das Anmeldeformular im Kalender, spätestens den Freitag der Woche davor. Mittagessen kannst du dort ebenfalls bis eine Woche vorher über die RingBar bestellen. Ab 10 Uhr ist offenes Team-Meeting für alle, da darfst du einfach vorbeikommen.</div></div>
+      <div class="faq"><div class="q">Wie melde ich mich fürs Fresh Date am Campus an? <span class="tri">›</span></div><div class="a">Über das Anmeldeformular im Kalender, spätestens am Donnerstag die Woche davor. Ab 10 Uhr ist offenes Team-Meeting für alle, da darfst du einfach vorbeikommen. Essen gibt es um 13 Uhr: bis spätestens Donnerstag die Woche davor über die RingBar bestellen und dort bezahlen, dann mit dem Essens-Markerl in die Mensa. Schau dir das Datum genau an – die Deadline ist immer der Donnerstag der Vorwoche.</div></div>
       <div class="faq"><div class="q">An wen wende ich mich, wenn ich nicht weiterweiß? <span class="tri">›</span></div><div class="a">Zuerst an deine direkte Mentor:in – die ist genau dafür da. Für alles Offizielle gibt es außerdem den RINGANA Support im Online Office. Du musst nichts allein lösen.</div></div>
     </div>
 
@@ -1115,10 +1117,10 @@ const conventionStream='https://ringanaevents.flave.world/users/47410319-d2b7-44
 
 function teamCall(){return {t:'20:00',n:'Team Call',d:'Für alle, gemeinsam online',type:'call',
   link:zoom,linkLabel:'Zoom beitreten',meta:'Meeting-ID 836 4483 5358'};}
-function freshDate(){return {t:'15:00',n:'Fresh Date am Campus',d:'Ab 10 Uhr offenes Team-Meeting für alle',type:'fresh',
-  link:freshForm,linkLabel:'Anmelden (bis Fr davor)',
-  link2:ringbar,link2Label:'Mittagessen bestellen',
-  meta:'Anmeldung 1 Woche vorher · Essen 1 Woche vorher bestellen'};}
+function freshDate(){return {t:'15:00',n:'Fresh Date am Campus',d:'Ab 10 Uhr offenes Team-Meeting für alle · Essen um 13 Uhr',type:'fresh',
+  link:freshForm,linkLabel:'Anmelden (bis Do die Woche davor)',
+  link2:ringbar,link2Label:'Essen bestellen',
+  meta:'Essen: spätestens Donnerstag die Woche davor über die RingBar bestellen und dort bezahlen, dann mit dem Essens-Markerl in die Mensa. Datum genau anschauen – Deadline ist immer der Donnerstag der Vorwoche.'};}
 function runWien(){return {t:'10:00',n:'RUN 3 · Wien',d:'Hyatt Regency Wien · 10:00–16:30 Uhr',type:'event',
   link:runWienUrl,linkLabel:'Zum Event'};}
 function convention(day){return {t:day===1?'08:00':'Tag 2',n:'RINGANA Convention 2026',
@@ -1159,7 +1161,7 @@ function renderMonth(){
     const ev=eventsFor(curY,curM,d);
     let dot=ev?'<div class="dt">'+ev.map(e=>'<i class="'+(e.type==='fresh'?'l':'')+'"></i>').join('')+'</div>':'';
     const isToday=(curY===realToday.y&&curM===realToday.m&&d===realToday.d);
-    h+=`<div class="cd ${isToday?'today':''}" data-d="${d}">${d}${dot}</div>`;
+    h+=`<div class="cd${isToday?' today':''}${ev?' ev':''}" data-d="${d}">${d}${dot}</div>`;
   }
   grid.innerHTML=h;
   grid.querySelectorAll('.cd:not(.mute)').forEach(c=>c.addEventListener('click',()=>pick(+c.dataset.d)));
