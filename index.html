@@ -159,6 +159,7 @@
   .evening{background:var(--teal);color:var(--cream);border-radius:14px;padding:15px 17px;margin:16px 0;font-size:14px;line-height:1.55;display:flex;gap:11px}
   .evening .e{font-size:19px;flex:none}
   .evening b{color:var(--butter)}
+  .l-outro{font-family:'Fraunces';font-style:italic;font-size:15.5px;color:var(--teal);text-align:center;margin:18px 6px 2px;line-height:1.5}
   .l-done{width:100%;background:var(--mint-d);color:#fff;border:none;border-radius:14px;padding:16px;font-weight:700;font-size:16px;font-family:'Fraunces';margin-top:14px;transition:.12s}
   .l-done:active{transform:scale(.98)}
   .l-done:disabled{background:#cfe0da;color:#fff;cursor:not-allowed}
@@ -656,14 +657,21 @@ const days=[
    ],
    reflect:"Wer ist die Person, die mir heute als Erstes eingefallen ist, und habe ich sie schon kontaktiert?"},
   {n:6,emoji:"💗",title:"Dein Warum",tease:"Nach innen statt nach außen.",
-   lead:"Heute geht es nicht nach außen. Nach innen.",
-   intro:["Simon Sinek hat sein Leben lang eine Frage erforscht: warum tun Menschen, was sie tun? Die stärksten Verbindungen entstehen nicht durch das, was jemand anbietet, sondern durch das Warum. Wer sein Warum kennt, redet einfach. Und die Menschen spüren den Unterschied.","Dein Warum muss heute nicht fertig sein. Aber es lohnt sich, ehrlich hinzuschauen."],
+   lead:"Heute mal was anderes. Keine Checkliste zuerst, keine Aufgabe oben – erst eine Frage.",
+   intro:[
+     "Stell dir vor, du sitzt in einem Jahr an einem Sonntag, genau wie heute. Kaffee in der Hand. Und du schaust zurück auf diese erste Woche: auf die Nachrichten, die du geschickt hast, obwohl es sich komisch angefühlt hat. Auf die Gespräche, die du geführt hast. Auf den Moment, wo du einfach angefangen hast. Was willst du dir dann sagen können?",
+     "Heute geht es nicht nach außen. Nach innen.",
+     "Simon Sinek hat eine einzige Frage sein Leben lang erforscht: warum tun Menschen, was sie tun? Die stärksten Verbindungen entstehen nicht durch das, was jemand anbietet, sondern durch das Warum. Wer sein Warum kennt, redet einfach – und die Menschen spüren den Unterschied.",
+     "Dein Warum muss heute nicht fertig sein. Aber es lohnt sich schon jetzt, ehrlich hinzuschauen."
+   ],
    tasks:[
      {t:"Academy: Company & Values",d:"Anschauen."},
-     {t:"Für dich schreiben, ohne Zensur",d:"„Ich teile Ringana weil…“ · „Mir ist wichtig dass…“ · „Ich wünsche mir durch dieses Business…“ · „Ich liebe Ringana weil…“"},
-     {t:"Dein ehrlicher Woche-1-Überblick",d:"Nicht um dich zu bewerten, sondern um zu sehen, was du wirklich getan hast. Was offen ist? Kein Drama, Woche 2 wartet."}
+     {t:"Für dich schreiben, ohne Zensur",d:"Vier Satzanfänge, ehrlich zu Ende bringen. Nur für dich – aber das nächste Gespräch, das du führst, wird sich anders anfühlen. Versprochen.",ex:"„Ich teile RINGANA weil…“ · „Mir ist wichtig, dass…“ · „Ich wünsche mir durch dieses Business…“ · „Ich liebe RINGANA weil…“"},
+     {t:"Dein ehrlicher Woche-1-Überblick",d:"Nicht um dich zu bewerten, sondern um zu sehen, was du wirklich getan hast. Was noch offen ist? Kein Drama, Woche 2 wartet. Was du geschafft hast, feierst du heute. 🥳",ex:"☑️ Welcome Call angemeldet<br>☑️ myRINGANA App heruntergeladen<br>☑️ Paket ausgepackt und wirklich getestet<br>☑️ FRESH Start angeschaut<br>☑️ 30 Namen aufgeschrieben<br>☑️ 5 Menschen kontaktiert<br>☑️ Follow-ups geschickt<br>☑️ FRESH Date fixiert<br>☑️ 2 Events eingetragen<br>☑️ Jeden Abend einen Satz aufgeschrieben"}
    ],
-   reflect:"Was hat sich diese Woche in mir verändert? Auch wenn es sich noch klein anfühlt."},
+   reflect:"Was hat sich diese Woche in mir verändert? Auch wenn es sich noch klein anfühlt.",
+   evening:"Heute Abend nicht <b>„Was habe ich getan?“</b> – sondern: <b>Was bin ich diese Woche geworden?</b> Schreib dir einen Satz auf. Nur für dich.",
+   outro:"Woche 1 gehört dir. 🌱"},
   {n:7,emoji:"🌿",title:"Innehalten & festlegen",tease:"Ein konkreter Plan bringt dich ans Ziel.",
    lead:"Heute halten wir kurz inne.",
    intro:["Schau zurück auf die letzten Tage. Die Nachricht, die du geschickt hast, obwohl sich die innere Stimme gemeldet hat. Das Gespräch, das länger gedauert hat, weil du wirklich zugehört hast. Das warst du.","Menschen, die genau aufschreiben wann, wo und mit wem sie etwas tun, halten sich zu 91% häufiger daran. Motivation bringt dich zum Starten, ein konkreter Plan bringt dich ans Ziel."],
@@ -754,7 +762,8 @@ function openDay(n){
         <div class="rq">${d.reflect}</div>
         <textarea id="reflectBox" placeholder="Schreib, was kommt... (bleibt privat auf deinem Gerät)">${savedReflect.replace(/</g,'&lt;')}</textarea>
       </div>
-      <div class="evening"><span class="e">🌱</span><div>Heute Abend: <b>ein Satz.</b> Was hast du heute getan? Nur für dich. Wer seinen Fortschritt festhält, sieht ihn auch, und wer ihn sieht, bleibt dran.</div></div>
+      <div class="evening"><span class="e">🌱</span><div>${d.evening||'Heute Abend: <b>ein Satz.</b> Was hast du heute getan? Nur für dich. Wer seinen Fortschritt festhält, sieht ihn auch, und wer ihn sieht, bleibt dran.'}</div></div>
+      ${d.outro?`<div class="l-outro">${d.outro}</div>`:''}
       <button class="l-done" id="doneBtn">${alreadyDone?'Tag '+d.n+' erledigt ✓':'Tag '+d.n+' abschließen 🌿'}</button>
       <div class="done-hint" id="doneHint"></div>
     </div>`;
