@@ -48,6 +48,9 @@
   .streak .pot{font-size:20px;line-height:1}
   .streak .sval{font-family:'Fraunces';font-weight:600;font-size:16px;color:var(--purple)}
   .streak .slab{font-size:11px;color:var(--muted);font-weight:600;margin-top:-2px}
+  .langsw{display:flex;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
+  .langsw button{border:none;background:none;border-radius:999px;padding:5px 10px;font-size:11.5px;font-weight:700;color:var(--muted);cursor:pointer}
+  .langsw button.on{background:var(--teal);color:#fff}
 
   /* ---- layout ---- */
   .shell{max-width:1040px;margin:0 auto;display:flex;gap:26px;padding:26px 20px 120px}
@@ -355,9 +358,13 @@
 <div class="topbar">
   <div class="topbar-inner">
     <div class="logo">ulli. noa. <span>so. we.</span></div>
+    <div class="langsw" id="langsw">
+      <button type="button" data-lang="de">DE</button>
+      <button type="button" data-lang="en">EN</button>
+    </div>
     <div class="streak">
       <span class="pot" id="potTop"></span>
-      <div><div class="sval" id="streakTop">0</div><div class="slab">Tage dran</div></div>
+      <div><div class="sval" id="streakTop">0</div><div class="slab" data-i18n="tage_dran">Tage dran</div></div>
     </div>
   </div>
 </div>
@@ -368,23 +375,23 @@
     <!-- ============ ONBOARDING (journal) ============ -->
     <div class="view active" data-v="path">
       <div class="welcome-card">
-        <div class="ey">Willkommen</div>
-        <h2>Schön, dass du da bist.</h2>
-        <p>Das hier ist kein Kurs den du zuerst abschließen musst. Es ist ein Weg, ein Tag nach dem anderen. Du musst nicht bereit sein um anzufangen.</p>
-        <p class="wq">Du wirst bereit, indem du anfängst.</p>
+        <div class="ey" data-i18n="wc_ey">Willkommen</div>
+        <h2 data-i18n="wc_h2">Schön, dass du da bist.</h2>
+        <p data-i18n="wc_p">Das hier ist kein Kurs den du zuerst abschließen musst. Es ist ein Weg, ein Tag nach dem anderen. Du musst nicht bereit sein um anzufangen.</p>
+        <p class="wq" data-i18n="wc_wq">Du wirst bereit, indem du anfängst.</p>
       </div>
 
       <button class="intro-card" id="introCard">
         <span class="ic-photo" id="icPhoto"><img src="ulli-noa.jpg" alt="Ulli und Noa" onerror="document.getElementById('icPhoto').classList.add('noimg')"></span>
         <span class="ic-txt">
-          <span class="ic-ey">Von uns an dich</span>
-          <span class="ic-h">Lies das, bevor du startest ☀️</span>
-          <span class="ic-d">Ein persönliches Willkommen von Ulli &amp; Noa · und der Link zur Onboarding-Gruppe</span>
+          <span class="ic-ey" data-i18n="ic_ey">Von uns an dich</span>
+          <span class="ic-h" data-i18n="ic_h">Lies das, bevor du startest ☀️</span>
+          <span class="ic-d" data-i18n-html="ic_d">Ein persönliches Willkommen von Ulli &amp; Noa · und der Link zur Onboarding-Gruppe</span>
         </span>
         <span class="ic-arrow">›</span>
       </button>
 
-      <div class="week-sep">Woche 1 · Ankommen & anfangen</div>
+      <div class="week-sep" data-i18n="week1_sep">Woche 1 · Ankommen & anfangen</div>
       <div class="timeline" id="timeline">
         <!-- days injected by JS -->
       </div>
@@ -392,24 +399,24 @@
 
     <!-- ============ LINKS & RESSOURCEN (merged) ============ -->
     <div class="view" data-v="res">
-      <div class="vhead"><div class="ey">Alles an einem Ort</div><h2>Links & Ressourcen</h2><p>Deine Tools, Pläne und Videos. Nimm dir raus, was du gerade brauchst.</p></div>
+      <div class="vhead"><div class="ey" data-i18n="res_ey">Alles an einem Ort</div><h2 data-i18n="res_h2">Links & Ressourcen</h2><p data-i18n="res_p">Deine Tools, Pläne und Videos. Nimm dir raus, was du gerade brauchst.</p></div>
 
-      <div class="rescat">Womit du täglich arbeitest</div>
+      <div class="rescat" data-i18n="res_cat1">Womit du täglich arbeitest</div>
       <div class="lgrid">
-        <a class="lcard" href="daily-checkliste.pdf" target="_blank" rel="noopener"><div class="lh"><span class="lb" style="background:#fbb33c">✓</span><div><div class="lt">Tägliche Checkliste</div><div class="ld">Deine Punkte für jeden Tag · PDF</div></div></div></a>
-        <a class="lcard"><div class="lh"><span class="lb" style="background:#6accb1">O</span><div><div class="lt">Online Office</div><div class="ld">Journey, Academy, Events & Booking</div></div></div></a>
-        <a class="lcard"><div class="lh"><span class="lb" style="background:#fbb33c">📱</span><div><div class="lt">myRINGANA App</div><div class="ld">Fast Track und Umsätze im Blick</div></div></div></a>
-        <a class="lcard" href="https://ullinoa.at" target="_blank" rel="noopener"><div class="lh"><span class="lb" style="background:#2f6f60">W</span><div><div class="lt">ullinoa.at</div><div class="ld">Unsere Website</div></div></div></a>
+        <a class="lcard" href="daily-checkliste.pdf" target="_blank" rel="noopener"><div class="lh"><span class="lb" style="background:#fbb33c">✓</span><div><div class="lt" data-i18n="res_checklist_t">Tägliche Checkliste</div><div class="ld" data-i18n="res_checklist_d">Deine Punkte für jeden Tag · PDF</div></div></div></a>
+        <a class="lcard"><div class="lh"><span class="lb" style="background:#6accb1">O</span><div><div class="lt">Online Office</div><div class="ld" data-i18n="res_office_d">Journey, Academy, Events & Booking</div></div></div></a>
+        <a class="lcard"><div class="lh"><span class="lb" style="background:#fbb33c">📱</span><div><div class="lt">myRINGANA App</div><div class="ld" data-i18n="res_app_d">Fast Track und Umsätze im Blick</div></div></div></a>
+        <a class="lcard" href="https://ullinoa.at" target="_blank" rel="noopener"><div class="lh"><span class="lb" style="background:#2f6f60">W</span><div><div class="lt">ullinoa.at</div><div class="ld" data-i18n="res_website_d">Unsere Website</div></div></div></a>
         <a class="lcard" href="https://instagram.com/ulli.noa.so.we" target="_blank" rel="noopener"><div class="lh"><span class="lb" style="background:#806cbf">IG</span><div><div class="lt">Instagram</div><div class="ld">@ulli.noa.so.we</div></div></div></a>
-        <div class="lcard lcard-links"><div class="lh"><span class="lb" style="background:#6accb1">🗓️</span><div><div class="lt">Aufbauplan Sep–Dez</div><div class="ld">Dein Fahrplan bis Jahresende</div></div></div><div class="lcard-btns"><a class="ll pdf" href="RINGANA_Aufbauplan_Sep_bis_Dez.pdf" target="_blank" rel="noopener">PDF</a><a class="ll xls" href="RINGANA_Aufbauplan_Sep_bis_Dez.xlsx" rel="noopener">Excel</a></div></div>
+        <div class="lcard lcard-links"><div class="lh"><span class="lb" style="background:#6accb1">🗓️</span><div><div class="lt" data-i18n="res_plan_t">Aufbauplan Sep–Dez</div><div class="ld" data-i18n="res_plan_d">Dein Fahrplan bis Jahresende</div></div></div><div class="lcard-btns"><a class="ll pdf" href="RINGANA_Aufbauplan_Sep_bis_Dez.pdf" target="_blank" rel="noopener">PDF</a><a class="ll xls" href="RINGANA_Aufbauplan_Sep_bis_Dez.xlsx" rel="noopener">Excel</a></div></div>
       </div>
 
-      <div class="rescat">Unser Podcast</div>
+      <div class="rescat" data-i18n="res_cat2">Unser Podcast</div>
       <div class="podrow">
         <span class="ri">🎙️</span>
         <div>
           <div class="rt">Her Turn. Her Impact</div>
-          <div class="rd">Mit Ulli & Noa · über Business, Haltung und den Weg</div>
+          <div class="rd" data-i18n="res_podcast_d">Mit Ulli & Noa · über Business, Haltung und den Weg</div>
           <div class="podlinks">
             <a class="podlink sp" href="https://open.spotify.com/show/3MH7NMO1nOKX4afIQUmdbi" target="_blank" rel="noopener">Spotify ↗</a>
             <a class="podlink ap" href="https://podcasts.apple.com/at/podcast/her-turn-her-impact-mit-ulli-noa/id1894191663" target="_blank" rel="noopener">Apple Podcasts ↗</a>
@@ -417,57 +424,57 @@
         </div>
       </div>
 
-      <div class="rescat">Verstehen & planen</div>
-      <div class="learnrow"><span class="ri">📊</span><div><div class="rt">Target-Plan Basics</div><div class="rd">Wie sich die Zielstufen aufbauen</div><div class="learn-links"><a class="ll vid" href="https://youtu.be/3vBzi6TsVd8" target="_blank" rel="noopener">▶ Video</a><a class="ll pdf" href="Onboarding-01-Target-Plan-Basics.pdf" target="_blank" rel="noopener">PDF</a></div></div></div>
-      <div class="learnrow"><span class="ri">🚀</span><div><div class="rt">Fast Track & Bonus</div><div class="rd">Was in deinen ersten Monaten zählt</div><div class="learn-links"><a class="ll vid" href="https://youtu.be/IQfHdKU_CC8" target="_blank" rel="noopener">▶ Video</a><a class="ll pdf" href="Onboarding-02-Fast-Track-Bonus.pdf" target="_blank" rel="noopener">PDF</a></div></div></div>
-      <div class="learnrow"><span class="ri">💶</span><div><div class="rt">Teamumsatz & Provision</div><div class="rd">Wie sich dein Einkommen zusammensetzt</div><div class="learn-links"><a class="ll vid" href="https://youtu.be/Uvh2FDx9424" target="_blank" rel="noopener">▶ Video</a><a class="ll pdf" href="Onboarding-03-Teamumsatz-Provision.pdf" target="_blank" rel="noopener">PDF</a></div></div></div>
+      <div class="rescat" data-i18n="res_cat3">Verstehen & planen</div>
+      <div class="learnrow"><span class="ri">📊</span><div><div class="rt" data-i18n="res_l1_t">Target-Plan Basics</div><div class="rd" data-i18n="res_l1_d">Wie sich die Zielstufen aufbauen</div><div class="learn-links"><a class="ll vid" href="https://youtu.be/3vBzi6TsVd8" target="_blank" rel="noopener" data-i18n="res_video">▶ Video</a><a class="ll pdf" href="Onboarding-01-Target-Plan-Basics.pdf" target="_blank" rel="noopener">PDF</a></div></div></div>
+      <div class="learnrow"><span class="ri">🚀</span><div><div class="rt">Fast Track & Bonus</div><div class="rd" data-i18n="res_l2_d">Was in deinen ersten Monaten zählt</div><div class="learn-links"><a class="ll vid" href="https://youtu.be/IQfHdKU_CC8" target="_blank" rel="noopener" data-i18n="res_video">▶ Video</a><a class="ll pdf" href="Onboarding-02-Fast-Track-Bonus.pdf" target="_blank" rel="noopener">PDF</a></div></div></div>
+      <div class="learnrow"><span class="ri">💶</span><div><div class="rt" data-i18n="res_l3_t">Teamumsatz & Provision</div><div class="rd" data-i18n="res_l3_d">Wie sich dein Einkommen zusammensetzt</div><div class="learn-links"><a class="ll vid" href="https://youtu.be/Uvh2FDx9424" target="_blank" rel="noopener" data-i18n="res_video">▶ Video</a><a class="ll pdf" href="Onboarding-03-Teamumsatz-Provision.pdf" target="_blank" rel="noopener">PDF</a></div></div></div>
 
-      <div class="rescat">Produkte</div>
-      <div class="soon-card"><span class="si">🎬</span><div><div class="st">Kurze Produktvideos</div><div class="sd">In Arbeit</div></div><span class="sbadge">Bald</span></div>
+      <div class="rescat" data-i18n="res_cat4">Produkte</div>
+      <div class="soon-card"><span class="si">🎬</span><div><div class="st" data-i18n="res_soon_t">Kurze Produktvideos</div><div class="sd" data-i18n="res_soon_d">In Arbeit</div></div><span class="sbadge" data-i18n="res_soon_badge">Bald</span></div>
 
-      <div class="rescat">Aufzeichnungen</div>
+      <div class="rescat" data-i18n="res_cat5">Aufzeichnungen</div>
 
       <div class="folder">
         <button class="folder-h"><span class="folder-i">📱</span><span class="folder-t">Social Media</span><span class="folder-c">2</span><span class="folder-tri">›</span></button>
         <div class="folder-b">
-          <a class="vrow" href="https://youtu.be/jiYM5PB5jzU" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">Social Media Start</span></a>
-          <a class="vrow" href="https://youtu.be/tteUZMwTK-U" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">Social Media Ins &amp; Outs mit Alisa</span></a>
+          <a class="vrow" href="https://youtu.be/jiYM5PB5jzU" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt" data-i18n="res_sm1">Social Media Start</span></a>
+          <a class="vrow" href="https://youtu.be/tteUZMwTK-U" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt" data-i18n="res_sm2">Social Media Ins &amp; Outs mit Alisa</span></a>
         </div>
       </div>
 
       <div class="folder">
         <button class="folder-h"><span class="folder-i">☀️</span><span class="folder-t">Best Summer of our Lives</span><span class="folder-c">10</span><span class="folder-tri">›</span></button>
         <div class="folder-b">
-          <a class="vrow" href="https://youtu.be/5shUcnoMJ5w" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">1. Call</span></a>
-          <a class="vrow" href="https://youtu.be/qcrOQDnCwbo" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">2. Call</span></a>
-          <a class="vrow" href="https://youtu.be/9_gPYwiW3Zo" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">3. Call</span></a>
-          <a class="vrow" href="https://youtu.be/wQ5tQy_4DA4" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">4. Call</span></a>
-          <a class="vrow" href="https://youtu.be/WVsQA1BbLWk" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">5. Call</span></a>
-          <a class="vrow" href="https://youtu.be/rv-yx_oo_Xw" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">6. Call</span></a>
-          <a class="vrow" href="https://youtu.be/_PNB5_Xthoo" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">7. Call</span></a>
-          <a class="vrow" href="https://youtu.be/PaRdteLsC9s" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">8. Call</span></a>
-          <a class="vrow" href="https://youtu.be/DWfxb3g0qpM" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">9. Call</span></a>
-          <a class="vrow" href="https://youtu.be/Kf9zYinLsJk" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">10. Call</span></a>
+          <a class="vrow" href="https://youtu.be/5shUcnoMJ5w" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt" data-i18n="res_call1">1. Call</span></a>
+          <a class="vrow" href="https://youtu.be/qcrOQDnCwbo" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt" data-i18n="res_call2">2. Call</span></a>
+          <a class="vrow" href="https://youtu.be/9_gPYwiW3Zo" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt" data-i18n="res_call3">3. Call</span></a>
+          <a class="vrow" href="https://youtu.be/wQ5tQy_4DA4" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt" data-i18n="res_call4">4. Call</span></a>
+          <a class="vrow" href="https://youtu.be/WVsQA1BbLWk" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt" data-i18n="res_call5">5. Call</span></a>
+          <a class="vrow" href="https://youtu.be/rv-yx_oo_Xw" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt" data-i18n="res_call6">6. Call</span></a>
+          <a class="vrow" href="https://youtu.be/_PNB5_Xthoo" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt" data-i18n="res_call7">7. Call</span></a>
+          <a class="vrow" href="https://youtu.be/PaRdteLsC9s" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt" data-i18n="res_call8">8. Call</span></a>
+          <a class="vrow" href="https://youtu.be/DWfxb3g0qpM" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt" data-i18n="res_call9">9. Call</span></a>
+          <a class="vrow" href="https://youtu.be/Kf9zYinLsJk" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt" data-i18n="res_call10">10. Call</span></a>
         </div>
       </div>
 
       <div class="folder">
         <button class="folder-h"><span class="folder-i">💼</span><span class="folder-t">Business Info Calls</span><span class="folder-c">4</span><span class="folder-tri">›</span></button>
         <div class="folder-b">
-          <a class="vrow" href="https://youtu.be/ASQHzwSoOFw" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">Business Info Call mit Noa</span></a>
-          <a class="vrow" href="https://youtu.be/CbfLj2tVAd8" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">Let’s talk Business mit Alexa &amp; Noa</span></a>
-          <a class="vrow" href="https://youtu.be/NqnaVfvuB-A" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">Business Info Call mit Thomas &amp; Noa</span></a>
-          <a class="vrow" href="https://youtu.be/gZdkPxD9Shs" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt">Business Info Call · 9. September</span></a>
+          <a class="vrow" href="https://youtu.be/ASQHzwSoOFw" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt" data-i18n-html="res_bic1">Business Info Call mit Noa</span></a>
+          <a class="vrow" href="https://youtu.be/CbfLj2tVAd8" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt" data-i18n-html="res_bic2">Let’s talk Business mit Alexa &amp; Noa</span></a>
+          <a class="vrow" href="https://youtu.be/NqnaVfvuB-A" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt" data-i18n-html="res_bic3">Business Info Call mit Thomas &amp; Noa</span></a>
+          <a class="vrow" href="https://youtu.be/gZdkPxD9Shs" target="_blank" rel="noopener"><span class="vic">▶</span><span class="vtt" data-i18n="res_bic4">Business Info Call · 9. September</span></a>
         </div>
       </div>
     </div>
 
     <!-- ============ KALENDER ============ -->
     <div class="view" data-v="cal">
-      <div class="vhead"><div class="ey">Termine</div><h2>Kalender</h2><p>Tippe einen Tag an, um die Termine zu sehen.</p></div>
+      <div class="vhead"><div class="ey" data-i18n="cal_ey">Termine</div><h2 data-i18n="cal_h2">Kalender</h2><p data-i18n="cal_p">Tippe einen Tag an, um die Termine zu sehen.</p></div>
       <div class="calwrap">
-        <div class="calbar"><button id="calPrev">‹</button><span class="mo" id="calMo">September 2026</span><span class="calbar-r"><button id="calToday" class="cal-today" hidden>Heute</button><button id="calNext">›</button></span></div>
-        <div class="calhd"><div>Mo</div><div>Di</div><div>Mi</div><div>Do</div><div>Fr</div><div>Sa</div><div>So</div></div>
+        <div class="calbar"><button id="calPrev">‹</button><span class="mo" id="calMo">September 2026</span><span class="calbar-r"><button id="calToday" class="cal-today" hidden data-i18n="cal_today">Heute</button><button id="calNext">›</button></span></div>
+        <div class="calhd" id="calhd"><div>Mo</div><div>Di</div><div>Mi</div><div>Do</div><div>Fr</div><div>Sa</div><div>So</div></div>
         <div class="caldays" id="caldays"></div>
         <div class="dsel" id="dsel"></div>
       </div>
@@ -475,35 +482,35 @@
 
     <!-- ============ FAQ ============ -->
     <div class="view" data-v="faq">
-      <div class="vhead"><div class="ey">Häufige Fragen</div><h2>Fragen, die am Anfang oft kommen</h2><p>Ganz ehrlich beantwortet. Und wenn deine Frage fehlt, schreib einfach deiner Mentor:in.</p></div>
+      <div class="vhead"><div class="ey" data-i18n="faq_ey">Häufige Fragen</div><h2 data-i18n="faq_h2">Fragen, die am Anfang oft kommen</h2><p data-i18n="faq_p">Ganz ehrlich beantwortet. Und wenn deine Frage fehlt, schreib einfach deiner Mentor:in.</p></div>
 
-      <div class="faqcat">Der Anfang</div>
-      <div class="faq"><div class="q">Ich weiß nicht, wo ich anfangen soll. <span class="tri">›</span></div><div class="a">Musst du auch nicht wissen. Geh einfach in Tag 1 und mach das, was dort steht. Ein Tag nach dem anderen, in deinem Tempo. Du wirst bereit, indem du anfängst, nicht vorher.</div></div>
-      <div class="faq"><div class="q">Ich hab kaum Follower. Geht das trotzdem? <span class="tri">›</span></div><div class="a">Ja, und ehrlich gesagt fangen die meisten genau so an. Es geht nicht um Reichweite, sondern um echte Gespräche. Deine ersten Kund:innen kommen fast immer aus deinem ganz normalen Umfeld, offline wie online.</div></div>
-      <div class="faq"><div class="q">Wie viel Zeit brauche ich dafür? <span class="tri">›</span></div><div class="a">Weniger, als du denkst. Wenn du am Tag einmal wirklich für jemanden da bist und einmal wirklich zuhörst, hast du das Wichtigste schon getan. Dranbleiben zählt mehr als viele Stunden.</div></div>
-      <div class="faq"><div class="q">Ich bin schüchtern. Ist das ein Problem? <span class="tri">›</span></div><div class="a">Überhaupt nicht. Zuhören ist hier wichtiger als Reden, und leise Menschen sind darin oft die Besten. Du brauchst keine große Show, nur ehrliches Interesse an der Person vor dir.</div></div>
+      <div class="faqcat" data-i18n="faq_cat1">Der Anfang</div>
+      <div class="faq"><div class="q" data-i18n-html="faq_q1">Ich weiß nicht, wo ich anfangen soll. <span class="tri">›</span></div><div class="a" data-i18n="faq_a1">Musst du auch nicht wissen. Geh einfach in Tag 1 und mach das, was dort steht. Ein Tag nach dem anderen, in deinem Tempo. Du wirst bereit, indem du anfängst, nicht vorher.</div></div>
+      <div class="faq"><div class="q" data-i18n-html="faq_q2">Ich hab kaum Follower. Geht das trotzdem? <span class="tri">›</span></div><div class="a" data-i18n="faq_a2">Ja, und ehrlich gesagt fangen die meisten genau so an. Es geht nicht um Reichweite, sondern um echte Gespräche. Deine ersten Kund:innen kommen fast immer aus deinem ganz normalen Umfeld, offline wie online.</div></div>
+      <div class="faq"><div class="q" data-i18n-html="faq_q3">Wie viel Zeit brauche ich dafür? <span class="tri">›</span></div><div class="a" data-i18n="faq_a3">Weniger, als du denkst. Wenn du am Tag einmal wirklich für jemanden da bist und einmal wirklich zuhörst, hast du das Wichtigste schon getan. Dranbleiben zählt mehr als viele Stunden.</div></div>
+      <div class="faq"><div class="q" data-i18n-html="faq_q4">Ich bin schüchtern. Ist das ein Problem? <span class="tri">›</span></div><div class="a" data-i18n="faq_a4">Überhaupt nicht. Zuhören ist hier wichtiger als Reden, und leise Menschen sind darin oft die Besten. Du brauchst keine große Show, nur ehrliches Interesse an der Person vor dir.</div></div>
 
-      <div class="faqcat">Ums Geld</div>
-      <div class="faq"><div class="q">Wie verdiene ich eigentlich? <span class="tri">›</span></div><div class="a">Über deine eigenen Verkäufe und, wenn du magst, über dein Team (das nennt sich FAIRsale): 19% ab Target 1, 29% ab Target 2, 39% ab Target 3. Wie viel dabei rauskommt, hängt von deinem Einsatz ab. Es ist kein passives Einkommen und keine Garantie, aber es ist fair und nachvollziehbar.</div></div>
-      <div class="faq"><div class="q">Ist das nicht so ein Schneeball-Ding? <span class="tri">›</span></div><div class="a">Nein. Du zahlst nichts dafür, jemanden ins Team zu holen, und du verdienst nichts fürs bloße Anwerben. Alles baut auf echtem Produktumsatz auf. Genau das ist der Unterschied.</div></div>
-      <div class="faq"><div class="q">Muss ich Leute überreden? <span class="tri">›</span></div><div class="a">Bitte nicht. Wer wirklich zuhört, muss nie überreden, sondern empfiehlt einfach das, was passt. Kein Druck, kein Hype. Die andere Person spürt sofort, ob du verkaufst oder ob du sie meinst.</div></div>
-      <div class="faq"><div class="q">Was, wenn jemand Nein sagt? <span class="tri">›</span></div><div class="a">Dann ist das völlig okay. Kein Nein ist persönlich und keins ist für immer. Es sagt nichts über dich aus. Weiter zur nächsten Person, so einfach ist das.</div></div>
+      <div class="faqcat" data-i18n="faq_cat2">Ums Geld</div>
+      <div class="faq"><div class="q" data-i18n-html="faq_q5">Wie verdiene ich eigentlich? <span class="tri">›</span></div><div class="a" data-i18n="faq_a5">Über deine eigenen Verkäufe und, wenn du magst, über dein Team (das nennt sich FAIRsale): 19% ab Target 1, 29% ab Target 2, 39% ab Target 3. Wie viel dabei rauskommt, hängt von deinem Einsatz ab. Es ist kein passives Einkommen und keine Garantie, aber es ist fair und nachvollziehbar.</div></div>
+      <div class="faq"><div class="q" data-i18n-html="faq_q6">Ist das nicht so ein Schneeball-Ding? <span class="tri">›</span></div><div class="a" data-i18n="faq_a6">Nein. Du zahlst nichts dafür, jemanden ins Team zu holen, und du verdienst nichts fürs bloße Anwerben. Alles baut auf echtem Produktumsatz auf. Genau das ist der Unterschied.</div></div>
+      <div class="faq"><div class="q" data-i18n-html="faq_q7">Muss ich Leute überreden? <span class="tri">›</span></div><div class="a" data-i18n="faq_a7">Bitte nicht. Wer wirklich zuhört, muss nie überreden, sondern empfiehlt einfach das, was passt. Kein Druck, kein Hype. Die andere Person spürt sofort, ob du verkaufst oder ob du sie meinst.</div></div>
+      <div class="faq"><div class="q" data-i18n-html="faq_q8">Was, wenn jemand Nein sagt? <span class="tri">›</span></div><div class="a" data-i18n="faq_a8">Dann ist das völlig okay. Kein Nein ist persönlich und keins ist für immer. Es sagt nichts über dich aus. Weiter zur nächsten Person, so einfach ist das.</div></div>
 
-      <div class="faqcat">Kund:innen & Webshop</div>
-      <div class="faq"><div class="q">Wo finde ich meinen Promocode und für wen ist der? <span class="tri">›</span></div><div class="a">Dein Promocode ist für die <b>erste Bestellung neuer Kund:innen</b>. Sobald sie ihn eingeben, sind sie direkt bei dir gespeichert. Du findest ihn im Shop unter Partner Exclusives → Digital Vouchers.</div></div>
-      <div class="faq"><div class="q">Wie werden Kund:innen bei mir gespeichert? <span class="tri">›</span></div><div class="a">Dazu gibt es im Onboarding mehr Details. Kurz: es gibt vier Wege.<ol><li>Die Kund:in geht auf ringana.com, erstellt ein Kundenkonto und gibt bei der Frage „Von wem kennst du es?" deinen Namen an.</li><li>Du legst die Kund:in selbst an: Online Office → Statistiken und Abfragen → Team und Kunden → Neuen Kunden anlegen.</li><li>Du gibst deinen personalisierten Promocode weiter. Die Kund:in gibt ihn bei der Bestellung im Gutschein-Feld ein — damit ist sie direkt bei dir gespeichert.</li><li>Du teilst deinen personalisierten Webshop-Link. Wer darüber bestellt, ist ebenfalls direkt bei dir gespeichert.</li></ol></div></div>
-      <div class="faq"><div class="q">Wo erstelle ich meinen personalisierten Webshop? <span class="tri">›</span></div><div class="a">Im Online Office unter Tools and more → Mein Partner Webshop.</div></div>
+      <div class="faqcat" data-i18n="faq_cat3">Kund:innen & Webshop</div>
+      <div class="faq"><div class="q" data-i18n-html="faq_q9">Wo finde ich meinen Promocode und für wen ist der? <span class="tri">›</span></div><div class="a" data-i18n-html="faq_a9">Dein Promocode ist für die <b>erste Bestellung neuer Kund:innen</b>. Sobald sie ihn eingeben, sind sie direkt bei dir gespeichert. Du findest ihn im Shop unter Partner Exclusives → Digital Vouchers.</div></div>
+      <div class="faq"><div class="q" data-i18n-html="faq_q10">Wie werden Kund:innen bei mir gespeichert? <span class="tri">›</span></div><div class="a" data-i18n-html="faq_a10">Dazu gibt es im Onboarding mehr Details. Kurz: es gibt vier Wege.<ol><li>Die Kund:in geht auf ringana.com, erstellt ein Kundenkonto und gibt bei der Frage „Von wem kennst du es?" deinen Namen an.</li><li>Du legst die Kund:in selbst an: Online Office → Statistiken und Abfragen → Team und Kunden → Neuen Kunden anlegen.</li><li>Du gibst deinen personalisierten Promocode weiter. Die Kund:in gibt ihn bei der Bestellung im Gutschein-Feld ein — damit ist sie direkt bei dir gespeichert.</li><li>Du teilst deinen personalisierten Webshop-Link. Wer darüber bestellt, ist ebenfalls direkt bei dir gespeichert.</li></ol></div></div>
+      <div class="faq"><div class="q" data-i18n-html="faq_q11">Wo erstelle ich meinen personalisierten Webshop? <span class="tri">›</span></div><div class="a" data-i18n="faq_a11">Im Online Office unter Tools and more → Mein Partner Webshop.</div></div>
 
-      <div class="faqcat">Produkte & was ich sagen darf</div>
-      <div class="faq"><div class="q">Ich kenn mich mit den Produkten noch nicht aus. <span class="tri">›</span></div><div class="a">Das kommt mit der Zeit ganz von allein. Fang mit den ein, zwei Produkten an, die du selbst benutzt und liebst. Über die erzählst du automatisch am echtesten. Für Details gibt es die Produktvideos unter Ressourcen.</div></div>
-      <div class="faq"><div class="q">Was macht RINGANA besonders? <span class="tri">›</span></div><div class="a">Frische Formulierungen, ein klarer Fokus auf Wirkstoffe und Nachhaltigkeit. Für genaue Aussagen zu Inhaltsstoffen, Haltbarkeit und Wirkung nutz immer die offiziellen RINGANA-Infos und vereinfache nichts.</div></div>
-      <div class="faq"><div class="q">Darf ich sagen, dass etwas „wirkt"? <span class="tri">›</span></div><div class="a">Nur, was wirklich belegt ist. Kein „klinisch bewiesen" ohne Nachweis, keine Heilversprechen. Und auf jeden Werbe-Post gehört: Werbung | RINGANA Partner:in. Im Zweifel lieber einmal zu viel bei deiner Mentor:in nachfragen.</div></div>
-      <div class="faq"><div class="q">Für was sind die RINGANA LIVES gut? <span class="tri">›</span></div><div class="a">Das ist im Grunde ein Fresh Date online – oft mit den Gründern Andreas und Ulla höchstpersönlich, zusammen mit jemandem aus dem Research &amp; Development Team, also den Wissenschaftler:innen hinter den Produkten. Sie erklären, warum die Produkte so sind, wie sie sind, und erzählen viel Behind the Scenes zur Entwicklung. Für dich, um die Produkte kennenzulernen – und ein starkes Tool, um es an Kund:innen weiterzuschicken oder gemeinsam mit ihnen anzuschauen und die Produkte zusammen lieben zu lernen.</div></div>
+      <div class="faqcat" data-i18n="faq_cat4">Produkte & was ich sagen darf</div>
+      <div class="faq"><div class="q" data-i18n-html="faq_q12">Ich kenn mich mit den Produkten noch nicht aus. <span class="tri">›</span></div><div class="a" data-i18n="faq_a12">Das kommt mit der Zeit ganz von allein. Fang mit den ein, zwei Produkten an, die du selbst benutzt und liebst. Über die erzählst du automatisch am echtesten. Für Details gibt es die Produktvideos unter Ressourcen.</div></div>
+      <div class="faq"><div class="q" data-i18n-html="faq_q13">Was macht RINGANA besonders? <span class="tri">›</span></div><div class="a" data-i18n="faq_a13">Frische Formulierungen, ein klarer Fokus auf Wirkstoffe und Nachhaltigkeit. Für genaue Aussagen zu Inhaltsstoffen, Haltbarkeit und Wirkung nutz immer die offiziellen RINGANA-Infos und vereinfache nichts.</div></div>
+      <div class="faq"><div class="q" data-i18n-html="faq_q14">Darf ich sagen, dass etwas „wirkt"? <span class="tri">›</span></div><div class="a" data-i18n="faq_a14">Nur, was wirklich belegt ist. Kein „klinisch bewiesen" ohne Nachweis, keine Heilversprechen. Und auf jeden Werbe-Post gehört: Werbung | RINGANA Partner:in. Im Zweifel lieber einmal zu viel bei deiner Mentor:in nachfragen.</div></div>
+      <div class="faq"><div class="q" data-i18n-html="faq_q15">Für was sind die RINGANA LIVES gut? <span class="tri">›</span></div><div class="a" data-i18n-html="faq_a15">Das ist im Grunde ein Fresh Date online – oft mit den Gründern Andreas und Ulla höchstpersönlich, zusammen mit jemandem aus dem Research &amp; Development Team, also den Wissenschaftler:innen hinter den Produkten. Sie erklären, warum die Produkte so sind, wie sie sind, und erzählen viel Behind the Scenes zur Entwicklung. Für dich, um die Produkte kennenzulernen – und ein starkes Tool, um es an Kund:innen weiterzuschicken oder gemeinsam mit ihnen anzuschauen und die Produkte zusammen lieben zu lernen.</div></div>
 
-      <div class="faqcat">Team & Termine</div>
-      <div class="faq"><div class="q">Wann sind die Team Calls? <span class="tri">›</span></div><div class="a">Immer am 1. des Monats um 20 Uhr, online über Zoom. Den Link findest du im Kalender. Einfach dazukommen, du musst dich nicht anmelden.</div></div>
-      <div class="faq"><div class="q">Wie melde ich mich fürs Fresh Date am Campus an? <span class="tri">›</span></div><div class="a">Über das Anmeldeformular im Kalender, spätestens am Donnerstag die Woche davor. Ab 10 Uhr ist offenes Team-Meeting für alle, da darfst du einfach vorbeikommen. Essen gibt es um 13 Uhr: bis spätestens Donnerstag die Woche davor über die RingBar-Seite bestellen und dann am Tag direkt bei der RingBar bezahlen, dann mit dem Essens-Markerl in die Mensa. * Schau dir das Datum genau an – die Deadline ist immer der Donnerstag der Vorwoche.</div></div>
-      <div class="faq"><div class="q">An wen wende ich mich, wenn ich nicht weiterweiß? <span class="tri">›</span></div><div class="a">Zuerst an deine direkte Mentor:in – die ist genau dafür da. Für alles Offizielle gibt es außerdem den RINGANA Support im Online Office. Du musst nichts allein lösen.</div></div>
+      <div class="faqcat" data-i18n="faq_cat5">Team & Termine</div>
+      <div class="faq"><div class="q" data-i18n-html="faq_q16">Wann sind die Team Calls? <span class="tri">›</span></div><div class="a" data-i18n="faq_a16">Immer am 1. des Monats um 20 Uhr, online über Zoom. Den Link findest du im Kalender. Einfach dazukommen, du musst dich nicht anmelden.</div></div>
+      <div class="faq"><div class="q" data-i18n-html="faq_q17">Wie melde ich mich fürs Fresh Date am Campus an? <span class="tri">›</span></div><div class="a" data-i18n="faq_a17">Über das Anmeldeformular im Kalender, spätestens am Donnerstag die Woche davor. Ab 10 Uhr ist offenes Team-Meeting für alle, da darfst du einfach vorbeikommen. Essen gibt es um 13 Uhr: bis spätestens Donnerstag die Woche davor über die RingBar-Seite bestellen und dann am Tag direkt bei der RingBar bezahlen, dann mit dem Essens-Markerl in die Mensa. * Schau dir das Datum genau an – die Deadline ist immer der Donnerstag der Vorwoche.</div></div>
+      <div class="faq"><div class="q" data-i18n-html="faq_q18">An wen wende ich mich, wenn ich nicht weiterweiß? <span class="tri">›</span></div><div class="a" data-i18n="faq_a18">Zuerst an deine direkte Mentor:in – die ist genau dafür da. Für alles Offizielle gibt es außerdem den RINGANA Support im Online Office. Du musst nichts allein lösen.</div></div>
     </div>
 
     <!-- Community-Ansicht ausgeblendet – Austausch läuft aktuell über die WhatsApp-Gruppe -->
@@ -513,21 +520,21 @@
   <!-- ============ RAIL ============ -->
   <aside class="rail">
     <div class="box plantbox">
-      <h4>Deine Serie</h4>
+      <h4 data-i18n="rail_series_h">Deine Serie</h4>
       <div class="big" id="potBig"></div>
       <div class="pd" id="streakBig">0</div>
-      <div class="pl">Tage in Folge dran</div>
+      <div class="pl" data-i18n="rail_series_days">Tage in Folge dran</div>
       <div class="pnext" id="plantNext"></div>
       <div class="growbar"><span id="growfill"></span></div>
-      <div class="pbest">🏆 Deine beste Serie: <b id="bestVal">0 Tage</b></div>
-      <button class="preset" id="resetBtn">Fortschritt zurücksetzen</button>
+      <div class="pbest">🏆 <span data-i18n="rail_best">Deine beste Serie:</span> <b id="bestVal">0 Tage</b></div>
+      <button class="preset" id="resetBtn" data-i18n="btn_reset">Fortschritt zurücksetzen</button>
     </div>
     <div class="box">
-      <h4>Als Nächstes</h4>
+      <h4 data-i18n="rail_next_h">Als Nächstes</h4>
       <div id="nextUp"></div>
     </div>
     <div class="box quotebox">
-      <h4>Gedanke des Tages</h4>
+      <h4 data-i18n="rail_quote_h">Gedanke des Tages</h4>
       <div class="qt" id="qotd">Fortschritt, den man nicht festhält, fühlt sich irgendwann nicht mehr wie Fortschritt an. Schreib heute Abend einen Satz auf. 🌱</div>
     </div>
   </aside>
@@ -535,20 +542,20 @@
 
 <div class="foot-note">
   <div class="foot-actions">
-    <button type="button" id="saveBtn">Fortschritt sichern</button>
-    <button type="button" id="loadBtn">Code laden</button>
-    <button type="button" id="resetBtn2">Zurücksetzen</button>
+    <button type="button" id="saveBtn" data-i18n="btn_save">Fortschritt sichern</button>
+    <button type="button" id="loadBtn" data-i18n="btn_load">Code laden</button>
+    <button type="button" id="resetBtn2" data-i18n="btn_reset">Zurücksetzen</button>
   </div>
-  Dein Fortschritt wird nur auf diesem Gerät gespeichert
+  <span data-i18n="foot_note">Dein Fortschritt wird nur auf diesem Gerät gespeichert</span>
 </div>
 
 <div class="overlay" id="overlay"><div class="sheet" id="sheet"></div></div>
 
 <div class="bnav" id="bnav">
-  <button class="active" data-v="path"><span class="bi">🌱</span>Weg</button>
-  <button data-v="res"><span class="bi">📚</span>Ressourcen</button>
-  <button data-v="cal"><span class="bi">📅</span>Kalender</button>
-  <button data-v="faq"><span class="bi">💡</span>FAQ</button>
+  <button class="active" data-v="path"><span class="bi">🌱</span><span data-i18n="nav_weg">Weg</span></button>
+  <button data-v="res"><span class="bi">📚</span><span data-i18n="nav_res">Ressourcen</span></button>
+  <button data-v="cal"><span class="bi">📅</span><span data-i18n="nav_cal">Kalender</span></button>
+  <button data-v="faq"><span class="bi">💡</span><span data-i18n="nav_faq">FAQ</span></button>
 </div>
 
 <script>
@@ -556,6 +563,276 @@
    ullinoa Partner-Hub · Fortschritt bleibt auf dem Gerät
    (localStorage, kein Login, keine Kosten)
    ============================================================ */
+
+/* ---------------- Sprache / i18n ---------------- */
+let LANG = (localStorage.getItem('ullinoa_lang')==='en') ? 'en' : 'de';
+const UI = {
+  de:{
+    nav_weg:"Weg", nav_res:"Ressourcen", nav_cal:"Kalender", nav_faq:"FAQ",
+    tage_dran:"Tage dran",
+    wc_ey:"Willkommen", wc_h2:"Schön, dass du da bist.",
+    wc_p:"Das hier ist kein Kurs den du zuerst abschließen musst. Es ist ein Weg, ein Tag nach dem anderen. Du musst nicht bereit sein um anzufangen.",
+    wc_wq:"Du wirst bereit, indem du anfängst.",
+    ic_ey:"Von uns an dich", ic_h:"Lies das, bevor du startest ☀️",
+    ic_d:"Ein persönliches Willkommen von Ulli &amp; Noa · und der Link zur Onboarding-Gruppe",
+    week1_sep:"Woche 1 · Ankommen & anfangen", week2_sep:"Woche 2 · Tiefer gehen",
+    res_ey:"Alles an einem Ort", res_h2:"Links & Ressourcen", res_p:"Deine Tools, Pläne und Videos. Nimm dir raus, was du gerade brauchst.",
+    res_cat1:"Womit du täglich arbeitest", res_checklist_t:"Tägliche Checkliste", res_checklist_d:"Deine Punkte für jeden Tag · PDF",
+    res_office_d:"Journey, Academy, Events & Booking", res_app_d:"Fast Track und Umsätze im Blick", res_website_d:"Unsere Website",
+    res_plan_t:"Aufbauplan Sep–Dez", res_plan_d:"Dein Fahrplan bis Jahresende",
+    res_cat2:"Unser Podcast", res_podcast_d:"Mit Ulli & Noa · über Business, Haltung und den Weg",
+    res_cat3:"Verstehen & planen", res_l1_t:"Target-Plan Basics", res_l1_d:"Wie sich die Zielstufen aufbauen", res_video:"▶ Video",
+    res_l2_d:"Was in deinen ersten Monaten zählt", res_l3_t:"Teamumsatz & Provision", res_l3_d:"Wie sich dein Einkommen zusammensetzt",
+    res_cat4:"Produkte", res_soon_t:"Kurze Produktvideos", res_soon_d:"In Arbeit", res_soon_badge:"Bald",
+    res_cat5:"Aufzeichnungen", res_sm1:"Social Media Start", res_sm2:"Social Media Ins &amp; Outs mit Alisa",
+    res_call1:"1. Call",res_call2:"2. Call",res_call3:"3. Call",res_call4:"4. Call",res_call5:"5. Call",
+    res_call6:"6. Call",res_call7:"7. Call",res_call8:"8. Call",res_call9:"9. Call",res_call10:"10. Call",
+    res_bic1:"Business Info Call mit Noa", res_bic2:"Let’s talk Business mit Alexa &amp; Noa",
+    res_bic3:"Business Info Call mit Thomas &amp; Noa", res_bic4:"Business Info Call · 9. September",
+    cal_ey:"Termine", cal_h2:"Kalender", cal_p:"Tippe einen Tag an, um die Termine zu sehen.", cal_today:"Heute",
+    faq_ey:"Häufige Fragen", faq_h2:"Fragen, die am Anfang oft kommen", faq_p:"Ganz ehrlich beantwortet. Und wenn deine Frage fehlt, schreib einfach deiner Mentor:in.",
+    faq_cat1:"Der Anfang",
+    faq_q1:'Ich weiß nicht, wo ich anfangen soll. <span class="tri">›</span>',
+    faq_a1:"Musst du auch nicht wissen. Geh einfach in Tag 1 und mach das, was dort steht. Ein Tag nach dem anderen, in deinem Tempo. Du wirst bereit, indem du anfängst, nicht vorher.",
+    faq_q2:'Ich hab kaum Follower. Geht das trotzdem? <span class="tri">›</span>',
+    faq_a2:"Ja, und ehrlich gesagt fangen die meisten genau so an. Es geht nicht um Reichweite, sondern um echte Gespräche. Deine ersten Kund:innen kommen fast immer aus deinem ganz normalen Umfeld, offline wie online.",
+    faq_q3:'Wie viel Zeit brauche ich dafür? <span class="tri">›</span>',
+    faq_a3:"Weniger, als du denkst. Wenn du am Tag einmal wirklich für jemanden da bist und einmal wirklich zuhörst, hast du das Wichtigste schon getan. Dranbleiben zählt mehr als viele Stunden.",
+    faq_q4:'Ich bin schüchtern. Ist das ein Problem? <span class="tri">›</span>',
+    faq_a4:"Überhaupt nicht. Zuhören ist hier wichtiger als Reden, und leise Menschen sind darin oft die Besten. Du brauchst keine große Show, nur ehrliches Interesse an der Person vor dir.",
+    faq_cat2:"Ums Geld",
+    faq_q5:'Wie verdiene ich eigentlich? <span class="tri">›</span>',
+    faq_a5:"Über deine eigenen Verkäufe und, wenn du magst, über dein Team (das nennt sich FAIRsale): 19% ab Target 1, 29% ab Target 2, 39% ab Target 3. Wie viel dabei rauskommt, hängt von deinem Einsatz ab. Es ist kein passives Einkommen und keine Garantie, aber es ist fair und nachvollziehbar.",
+    faq_q6:'Ist das nicht so ein Schneeball-Ding? <span class="tri">›</span>',
+    faq_a6:"Nein. Du zahlst nichts dafür, jemanden ins Team zu holen, und du verdienst nichts fürs bloße Anwerben. Alles baut auf echtem Produktumsatz auf. Genau das ist der Unterschied.",
+    faq_q7:'Muss ich Leute überreden? <span class="tri">›</span>',
+    faq_a7:"Bitte nicht. Wer wirklich zuhört, muss nie überreden, sondern empfiehlt einfach das, was passt. Kein Druck, kein Hype. Die andere Person spürt sofort, ob du verkaufst oder ob du sie meinst.",
+    faq_q8:'Was, wenn jemand Nein sagt? <span class="tri">›</span>',
+    faq_a8:"Dann ist das völlig okay. Kein Nein ist persönlich und keins ist für immer. Es sagt nichts über dich aus. Weiter zur nächsten Person, so einfach ist das.",
+    faq_cat3:"Kund:innen & Webshop",
+    faq_q9:'Wo finde ich meinen Promocode und für wen ist der? <span class="tri">›</span>',
+    faq_a9:"Dein Promocode ist für die <b>erste Bestellung neuer Kund:innen</b>. Sobald sie ihn eingeben, sind sie direkt bei dir gespeichert. Du findest ihn im Shop unter Partner Exclusives → Digital Vouchers.",
+    faq_q10:'Wie werden Kund:innen bei mir gespeichert? <span class="tri">›</span>',
+    faq_a10:'Dazu gibt es im Onboarding mehr Details. Kurz: es gibt vier Wege.<ol><li>Die Kund:in geht auf ringana.com, erstellt ein Kundenkonto und gibt bei der Frage „Von wem kennst du es?" deinen Namen an.</li><li>Du legst die Kund:in selbst an: Online Office → Statistiken und Abfragen → Team und Kunden → Neuen Kunden anlegen.</li><li>Du gibst deinen personalisierten Promocode weiter. Die Kund:in gibt ihn bei der Bestellung im Gutschein-Feld ein — damit ist sie direkt bei dir gespeichert.</li><li>Du teilst deinen personalisierten Webshop-Link. Wer darüber bestellt, ist ebenfalls direkt bei dir gespeichert.</li></ol>',
+    faq_q11:'Wo erstelle ich meinen personalisierten Webshop? <span class="tri">›</span>',
+    faq_a11:"Im Online Office unter Tools and more → Mein Partner Webshop.",
+    faq_cat4:"Produkte & was ich sagen darf",
+    faq_q12:'Ich kenn mich mit den Produkten noch nicht aus. <span class="tri">›</span>',
+    faq_a12:"Das kommt mit der Zeit ganz von allein. Fang mit den ein, zwei Produkten an, die du selbst benutzt und liebst. Über die erzählst du automatisch am echtesten. Für Details gibt es die Produktvideos unter Ressourcen.",
+    faq_q13:'Was macht RINGANA besonders? <span class="tri">›</span>',
+    faq_a13:"Frische Formulierungen, ein klarer Fokus auf Wirkstoffe und Nachhaltigkeit. Für genaue Aussagen zu Inhaltsstoffen, Haltbarkeit und Wirkung nutz immer die offiziellen RINGANA-Infos und vereinfache nichts.",
+    faq_q14:'Darf ich sagen, dass etwas „wirkt"? <span class="tri">›</span>',
+    faq_a14:"Nur, was wirklich belegt ist. Kein „klinisch bewiesen\" ohne Nachweis, keine Heilversprechen. Und auf jeden Werbe-Post gehört: Werbung | RINGANA Partner:in. Im Zweifel lieber einmal zu viel bei deiner Mentor:in nachfragen.",
+    faq_q15:'Für was sind die RINGANA LIVES gut? <span class="tri">›</span>',
+    faq_a15:"Das ist im Grunde ein Fresh Date online – oft mit den Gründern Andreas und Ulla höchstpersönlich, zusammen mit jemandem aus dem Research &amp; Development Team, also den Wissenschaftler:innen hinter den Produkten. Sie erklären, warum die Produkte so sind, wie sie sind, und erzählen viel Behind the Scenes zur Entwicklung. Für dich, um die Produkte kennenzulernen – und ein starkes Tool, um es an Kund:innen weiterzuschicken oder gemeinsam mit ihnen anzuschauen und die Produkte zusammen lieben zu lernen.",
+    faq_cat5:"Team & Termine",
+    faq_q16:'Wann sind die Team Calls? <span class="tri">›</span>',
+    faq_a16:"Immer am 1. des Monats um 20 Uhr, online über Zoom. Den Link findest du im Kalender. Einfach dazukommen, du musst dich nicht anmelden.",
+    faq_q17:'Wie melde ich mich fürs Fresh Date am Campus an? <span class="tri">›</span>',
+    faq_a17:"Über das Anmeldeformular im Kalender, spätestens am Donnerstag die Woche davor. Ab 10 Uhr ist offenes Team-Meeting für alle, da darfst du einfach vorbeikommen. Essen gibt es um 13 Uhr: bis spätestens Donnerstag die Woche davor über die RingBar-Seite bestellen und dann am Tag direkt bei der RingBar bezahlen, dann mit dem Essens-Markerl in die Mensa. * Schau dir das Datum genau an – die Deadline ist immer der Donnerstag der Vorwoche.",
+    faq_q18:'An wen wende ich mich, wenn ich nicht weiterweiß? <span class="tri">›</span>',
+    faq_a18:"Zuerst an deine direkte Mentor:in – die ist genau dafür da. Für alles Offizielle gibt es außerdem den RINGANA Support im Online Office. Du musst nichts allein lösen.",
+    rail_series_h:"Deine Serie", rail_series_days:"Tage in Folge dran", rail_best:"Deine beste Serie:",
+    btn_reset:"Fortschritt zurücksetzen", rail_next_h:"Als Nächstes", rail_quote_h:"Gedanke des Tages",
+    btn_save:"Fortschritt sichern", btn_load:"Code laden", foot_note:"Dein Fortschritt wird nur auf diesem Gerät gespeichert",
+    todo_h:"Heute zählt", reflect_h:"💭 Deine Reflexion, nur für dich",
+    reflect_placeholder:"Schreib, was kommt... (bleibt privat auf deinem Gerät)",
+    video_label:"Video", video_soon_short:"Video · bald", video_soon_long:"Video zu diesem Tag kommt bald",
+    evening_default:"Heute Abend: <b>ein Satz.</b> Was hast du heute getan? Nur für dich. Wer seinen Fortschritt festhält, sieht ihn auch, und wer ihn sieht, bleibt dran.",
+    done_btn_done:"Tag {n} erledigt ✓", done_btn_todo:"Tag {n} abschließen 🌿",
+    done_hint_prefix:"Noch offen:", done_hint_tasks:"alle To-dos abhaken", done_hint_reflect:"einen Satz in die Reflexion schreiben",
+    toast_next:"Stark. Tag {n} ist morgen für dich da 🌱", toast_all_done:"Alle Tage geschafft. Wow. 🌿",
+    toast_day_waiting:"Tag {n} öffnet sich morgen für dich 🌱", toast_reset:"Fortschritt zurückgesetzt.", toast_loaded:"Fortschritt geladen ✓",
+    day_tag:"Tag", status_done:"✓ Erledigt", status_today:"Heute dran", status_waiting:"🔒 Ab morgen", status_locked:"🔒 Bald",
+    todos_label:"📝 {n} To-dos", reflexion_label:"💭 Reflexion",
+    reset_confirm:"Möchtest du deinen Fortschritt wirklich zurücksetzen? Deine Serie, abgehakten To-dos und Reflexionen auf diesem Gerät werden gelöscht.",
+    save_ey:"Nur für dich", save_h3:"Fortschritt sichern",
+    save_hint:"Das ist dein persönlicher Sicherungs-Code – eine Kopie <b>nur deines</b> Fortschritts von diesem Gerät. Speichere ihn dir (Notizen, an dich selbst schicken). Mit „Code laden“ holst du ihn auf einem neuen Gerät oder nach dem Löschen der Browserdaten zurück. Er wird nirgends hochgeladen.",
+    save_copy_btn:"Code kopieren", save_msg_ok:"Kopiert ✓ – jetzt an einem sicheren Ort speichern.",
+    save_msg_manual:"Der Code ist markiert – kopier ihn mit ⌘/Strg + C.",
+    load_ey:"Auf dieses Gerät", load_h3:"Code laden",
+    load_hint:"Füge hier deinen Sicherungs-Code ein. Das ersetzt den Fortschritt auf <b>diesem</b> Gerät durch den aus dem Code.",
+    load_placeholder:"UN1~...", load_btn:"Fortschritt übernehmen",
+    load_msg_empty:"Bitte zuerst einen Code einfügen.", load_confirm:"Fortschritt auf diesem Gerät durch den Code ersetzen?",
+    load_msg_bad_code:"Code nicht lesbar. Bitte den ganzen Code kopieren und einfügen.",
+    load_msg_bad_shape:"Das sieht nicht nach einem gültigen Fortschritts-Code aus.",
+    noev_month:"Diesen Monat keine festen Termine.", noev_day:"Kein Termin an diesem Tag.", nextup_empty:"Aktuell keine Termine eingetragen.",
+    plant_next:"{label} · noch {n} {unit} bis zur nächsten Stufe", tag_singular:"Tag", tag_plural:"Tage",
+    day_waiting_click:"Tag {n} öffnet sich morgen für dich 🌱",
+    w_ey:"Willkommen ☀️", w_h3:"Von uns an dich",
+    w_lead:"Da seid ihr. Und wir freuen uns wirklich. ☀️",
+    w_p1:"Lass uns direkt mit etwas anfangen, das alles leichter macht: RINGANA lernt man nicht zuerst und macht es dann. Man macht es und versteht es dabei. Es ist ein Business, das im echten Leben passiert. Am Markt. Beim Kaffee. Im Gespräch mit Nachbar:innen. In einer ehrlichen Nachricht. In einer Story, die sich nicht nach Werbung anfühlt. Online und offline, beides gehört dazu, beides zählt, beides funktioniert. 🫶",
+    w_p2:"Was dein Job ist? Simpel. Mit Menschen reden. Teilen, was dir gut tut. Zuhören, was andere gerade bewegt, suchen, brauchen. Das ist RINGANA. Nicht mehr, nicht weniger.",
+    w_p3:"Die Academy ist dabei deine Begleitung. Sie gibt dir Sprache für das, was du schon fühlst, Ideen für Momente, die du sowieso hast, Sicherheit für Gespräche, die du bereits führst. Aber der Startpunkt bist du. Heute. Genau so, wie du bist.",
+    w_two:"🌟 1 echter Moment mit einem Menschen<br>🌟 1 Mal wirklich zuhören, ohne schon die Antwort im Kopf zu haben",
+    w_evening:"Und eine letzte Sache, die wir wirklich ernst meinen: Schreib jeden Abend <b>einen Satz</b> auf. Was hast du heute getan. Nur für dich. Kein Roman. Einen Satz. Leonardo da Vinci hat es gemacht, die erfolgreichsten Athlet:innen der Welt machen es bis heute. Weil Fortschritt, den man nicht festhält, sich irgendwann nicht mehr wie Fortschritt anfühlt.",
+    w_p4:"Diese Gruppe gehört euch. Kein Druck. Keine Perfektion. Keine Vergleiche. Nur Menschen, die in ihrem Tempo, auf ihre Art, mit ihrer ganz eigenen Geschichte wachsen.",
+    w_p5:"Wir freuen uns, dass ihr hier seid. Wirklich. ☀️<br><em>Eure Ulli &amp; Noa</em> 🥰",
+    w_sub:"Kurz zu uns",
+    w_p6:"Wir sind Ulli und Noa. Mama und Tochter. Und wenn wir ehrlich sind, ist RINGANA bei uns weniger Business als Lebensweise. Ullis Mama Uschi hat vor 27 Jahren damit angefangen. Ulli war ihre erste Partnerin. Und ich, Noa, bin buchstäblich damit aufgewachsen.",
+    w_p7:"Aber fangen wir dort an, wo es wirklich begonnen hat. Ulli war Tennisprofi, auf dem Weg zur Trainerin. Und schwanger mit mir. Einer dieser Momente im Leben, wo sich in kürzester Zeit alles verändert und man sich ganz still eine Frage stellt: <em>Was kommt jetzt?</em> Nicht aus Angst. Aus Ehrlichkeit. Sie hat gespürt, wie sich Wege schließen. Und dann stand da RINGANA. Keine große Garantie. Kein fertiger Plan. Nur eine Frage: könnte das meine Freiheit sein? Sie hat Ja gesagt. Und dieses Ja hat unser Leben verändert. 🤍",
+    w_p8:"Ich bin mit 18 Partnerin geworden. Neben Bachelor, Praktika, erstem Job. Niemand hätte damals gesagt, dass genau dieses Nebenbei eines Tages mein Anker wird. Aber es war da, als ich es gebraucht habe. Als ich ein Arbeitsumfeld verlassen musste, das mir nicht gut getan hat. Als ich letztes Jahr jeden Moment bei meiner Hündin Hope sein wollte, als sie gegangen ist. 🍂🤍 RINGANA hat mir nicht das Leben gerettet. Aber es hat mir Spielraum gegeben. Und Spielraum ist manchmal alles.",
+    w_p9:"Warum erzählen wir das? Weil wir wissen, dass viele von euch ihre eigene Version dieser Geschichte kennen. Den eigenen Moment, wo sich eine Tür geschlossen hat. Die eigene stille Frage. Den eigenen Grund, warum ihr heute hier seid. Und der verdient es, gesehen zu werden. Das ist RINGANA. Nicht die Produkte allein. Nicht das Business allein. Die Menschen. 🌟",
+    w_cta_p:"🌿 Stell dich in unserer Onboarding-Gruppe kurz vor: Name, woher du kommst, und ein ehrlicher Satz, warum du gestartet bist. Nicht als Pflichtübung, sondern weil dein einer Satz jemandem hier vielleicht genau den Mut gibt, den diese Person gerade braucht.",
+    w_cta_btn:"Zur WhatsApp-Gruppe ↗",
+    ev_call_n:"Team Call", ev_call_d:"Für alle, gemeinsam online", ev_call_link:"Zoom beitreten", ev_call_meta:"Meeting-ID 836 4483 5358",
+    ev_fresh_n:"Fresh Date am Campus", ev_fresh_d:"Ab 10 Uhr offenes Team-Meeting für alle · Essen um 13 Uhr",
+    ev_fresh_link:"Anmelden (bis Do die Woche davor)", ev_fresh_link2:"Essen bestellen",
+    ev_fresh_meta:"Essen: spätestens Donnerstag die Woche davor über die RingBar-Seite bestellen und dann am Tag direkt bei der RingBar bezahlen, dann mit dem Essens-Markerl in die Mensa. * Datum genau anschauen – Deadline ist immer der Donnerstag der Vorwoche.",
+    ev_run_n:"RUN 3 · Wien", ev_run_d:"Hyatt Regency Wien · 10:00–16:30 Uhr", ev_run_link:"Zum Event",
+    ev_conv_day2_t:"Tag 2", ev_conv_n:"RINGANA Convention 2026",
+    ev_conv_d1:"CONFEX Köln · Tag 1 von 2, ab 08:00 Uhr", ev_conv_d2:"CONFEX Köln · Tag 2 von 2, bis 16:00 Uhr",
+    ev_conv_meta:"CONFEX, Barmer Straße 20, 50679 Köln, Deutschland", ev_conv_link:"Tickets", ev_conv_link2:"Livestream"
+  },
+  en:{
+    nav_weg:"Path", nav_res:"Resources", nav_cal:"Calendar", nav_faq:"FAQ",
+    tage_dran:"days in a row",
+    wc_ey:"Welcome", wc_h2:"So glad you're here.",
+    wc_p:"This isn't a course you have to finish first. It's a path, one day at a time. You don't have to be ready to start.",
+    wc_wq:"You become ready by starting.",
+    ic_ey:"From us to you", ic_h:"Read this before you start ☀️",
+    ic_d:"A personal welcome from Ulli &amp; Noa · plus the link to the onboarding group",
+    week1_sep:"Week 1 · Arriving & getting started", week2_sep:"Week 2 · Going deeper",
+    res_ey:"Everything in one place", res_h2:"Links & Resources", res_p:"Your tools, plans and videos. Take whatever you need right now.",
+    res_cat1:"What you work with every day", res_checklist_t:"Daily Checklist", res_checklist_d:"Your points for every day · PDF",
+    res_office_d:"Journey, Academy, Events & Booking", res_app_d:"Fast Track and your sales at a glance", res_website_d:"Our website",
+    res_plan_t:"Growth Plan Sep–Dec", res_plan_d:"Your roadmap through the end of the year",
+    res_cat2:"Our Podcast", res_podcast_d:"With Ulli & Noa · on business, mindset, and the path",
+    res_cat3:"Understand & plan", res_l1_t:"Target Plan Basics", res_l1_d:"How the target levels build up", res_video:"▶ Video",
+    res_l2_d:"What matters in your first months", res_l3_t:"Team Revenue & Commission", res_l3_d:"How your income is made up",
+    res_cat4:"Products", res_soon_t:"Short product videos", res_soon_d:"In progress", res_soon_badge:"Soon",
+    res_cat5:"Recordings", res_sm1:"Social Media Kickoff", res_sm2:"Social Media Ins &amp; Outs with Alisa",
+    res_call1:"Call 1",res_call2:"Call 2",res_call3:"Call 3",res_call4:"Call 4",res_call5:"Call 5",
+    res_call6:"Call 6",res_call7:"Call 7",res_call8:"Call 8",res_call9:"Call 9",res_call10:"Call 10",
+    res_bic1:"Business Info Call with Noa", res_bic2:"Let’s talk Business with Alexa &amp; Noa",
+    res_bic3:"Business Info Call with Thomas &amp; Noa", res_bic4:"Business Info Call · September 9",
+    cal_ey:"Events", cal_h2:"Calendar", cal_p:"Tap a day to see what's on.", cal_today:"Today",
+    faq_ey:"Frequently Asked", faq_h2:"Questions that come up early on", faq_p:"Answered honestly. And if your question's missing, just ask your mentor.",
+    faq_cat1:"Getting started",
+    faq_q1:'I don’t know where to start. <span class="tri">›</span>',
+    faq_a1:"You don't have to. Just open Day 1 and do what's there. One day at a time, at your own pace. You become ready by starting, not before.",
+    faq_q2:'I barely have any followers. Does this still work? <span class="tri">›</span>',
+    faq_a2:"Yes, and honestly, most people start exactly like this. It's not about reach, it's about real conversations. Your first customers almost always come from your everyday circle, offline as much as online.",
+    faq_q3:'How much time does this take? <span class="tri">›</span>',
+    faq_a3:"Less than you think. If you're really there for someone once a day, and really listen once a day, you've already done the most important part. Showing up consistently matters more than many hours.",
+    faq_q4:'I'+"'"+'m shy. Is that a problem? <span class="tri">›</span>',
+    faq_a4:"Not at all. Listening matters more here than talking, and quiet people are often the best at it. You don't need a big show, just honest interest in the person in front of you.",
+    faq_cat2:"About the money",
+    faq_q5:'How do I actually earn money? <span class="tri">›</span>',
+    faq_a5:"Through your own sales and, if you like, through your team (called FAIRsale): 19% from Target 1, 29% from Target 2, 39% from Target 3. How much that adds up to depends on your effort. It's not passive income and there's no guarantee, but it's fair and transparent.",
+    faq_q6:'Isn’t this some kind of pyramid scheme? <span class="tri">›</span>',
+    faq_a6:"No. You pay nothing to bring someone onto the team, and you earn nothing from recruiting alone. Everything is built on real product sales. That's exactly the difference.",
+    faq_q7:'Do I have to talk people into it? <span class="tri">›</span>',
+    faq_a7:"Please don't. Whoever really listens never has to talk anyone into anything — they simply recommend what fits. No pressure, no hype. The other person feels immediately whether you're selling or whether you mean it.",
+    faq_q8:'What if someone says no? <span class="tri">›</span>',
+    faq_a8:"Then that's completely fine. No „no“ is personal, and none is forever. It says nothing about you. On to the next person, it's that simple.",
+    faq_cat3:"Customers & Webshop",
+    faq_q9:'Where do I find my promo code and who is it for? <span class="tri">›</span>',
+    faq_a9:"Your promo code is for a <b>new customer's first order</b>. As soon as they enter it, they're saved directly under you. You'll find it in the shop under Partner Exclusives → Digital Vouchers.",
+    faq_q10:'How do customers get saved under me? <span class="tri">›</span>',
+    faq_a10:'You'+"'"+'ll find more detail on this in onboarding. In short: there are four ways.<ol><li>The customer goes to ringana.com, creates a customer account, and enters your name at „How did you hear about us?“</li><li>You add the customer yourself: Online Office → Statistics & Queries → Team & Customers → Add New Customer.</li><li>You share your personalized promo code. The customer enters it in the voucher field at checkout — that saves them directly under you.</li><li>You share your personalized webshop link. Anyone who orders through it is also saved directly under you.</li></ol>',
+    faq_q11:'Where do I create my personalized webshop? <span class="tri">›</span>',
+    faq_a11:"In the Online Office under Tools and more → My Partner Webshop.",
+    faq_cat4:"Products & what I'm allowed to say",
+    faq_q12:'I don’t know the products well yet. <span class="tri">›</span>',
+    faq_a12:"That comes naturally with time. Start with the one or two products you use and love yourself. Those are the ones you'll talk about most authentically. For details, check the product videos under Resources.",
+    faq_q13:'What makes RINGANA special? <span class="tri">›</span>',
+    faq_a13:"Fresh formulations, a clear focus on active ingredients and sustainability. For precise claims about ingredients, shelf life, and effects, always use the official RINGANA information and don't simplify anything.",
+    faq_q14:'Am I allowed to say something „works“? <span class="tri">›</span>',
+    faq_a14:"Only what's actually backed up. No „clinically proven“ without evidence, no promises of a cure. And every promotional post needs: Ad | RINGANA Partner. When in doubt, ask your mentor once too often rather than not at all.",
+    faq_q15:'What are the RINGANA LIVES good for? <span class="tri">›</span>',
+    faq_a15:"It's basically a FRESH Date online – often with founders Andreas and Ulla in person, together with someone from the Research &amp; Development team, i.e. the scientists behind the products. They explain why the products are the way they are, and share a lot of behind-the-scenes stories about how they're developed. It's a great way for you to get to know the products – and a strong tool to forward to customers or watch together with them, so you fall in love with the products together.",
+    faq_cat5:"Team & Events",
+    faq_q16:'When are the Team Calls? <span class="tri">›</span>',
+    faq_a16:"Always on the 1st of the month at 8pm, online via Zoom. You'll find the link in the calendar. Just join in, no need to sign up.",
+    faq_q17:'How do I sign up for the Fresh Date at Campus? <span class="tri">›</span>',
+    faq_a17:"Via the sign-up form in the calendar, by Thursday the week before at the latest. There's an open team meeting for everyone from 10am, feel free to just drop by. Lunch is at 1pm: order via the RingBar site by Thursday the week before at the latest, then pay in person at the RingBar on the day, then take your meal token to the canteen. * Check the date carefully – the deadline is always the Thursday of the week before.",
+    faq_q18:'Who do I turn to if I'+"'"+'m stuck? <span class="tri">›</span>',
+    faq_a18:"First, your direct mentor – that's exactly what they're there for. For anything official, there's also RINGANA Support in the Online Office. You don't have to solve anything on your own.",
+    rail_series_h:"Your Streak", rail_series_days:"days in a row", rail_best:"Your best streak:",
+    btn_reset:"Reset progress", rail_next_h:"Coming Up", rail_quote_h:"Thought of the Day",
+    btn_save:"Save progress", btn_load:"Load code", foot_note:"Your progress is only saved on this device",
+    todo_h:"What counts today", reflect_h:"💭 Your reflection, just for you",
+    reflect_placeholder:"Write whatever comes... (stays private on your device)",
+    video_label:"Video", video_soon_short:"Video · soon", video_soon_long:"Video for this day is coming soon",
+    evening_default:"Tonight: <b>one sentence.</b> What did you do today? Just for you. Whoever tracks their progress can see it, and whoever sees it, sticks with it.",
+    done_btn_done:"Day {n} done ✓", done_btn_todo:"Complete Day {n} 🌿",
+    done_hint_prefix:"Still to do:", done_hint_tasks:"check off all to-dos", done_hint_reflect:"write a sentence in your reflection",
+    toast_next:"Nice work. Day {n} will be here tomorrow 🌱", toast_all_done:"All days complete. Wow. 🌿",
+    toast_day_waiting:"Day {n} opens up for you tomorrow 🌱", toast_reset:"Progress reset.", toast_loaded:"Progress loaded ✓",
+    day_tag:"Day", status_done:"✓ Done", status_today:"Today's the day", status_waiting:"🔒 Tomorrow", status_locked:"🔒 Soon",
+    todos_label:"📝 {n} to-dos", reflexion_label:"💭 Reflection",
+    reset_confirm:"Do you really want to reset your progress? Your streak, checked-off to-dos, and reflections on this device will be deleted.",
+    save_ey:"Just for you", save_h3:"Save Progress",
+    save_hint:"This is your personal backup code – a copy of <b>only your</b> progress from this device. Save it somewhere (notes, message it to yourself). Use „Load code“ to get it back on a new device or after clearing your browser data. It's never uploaded anywhere.",
+    save_copy_btn:"Copy code", save_msg_ok:"Copied ✓ – now save it somewhere safe.",
+    save_msg_manual:"The code is selected – copy it with ⌘/Ctrl + C.",
+    load_ey:"Onto this device", load_h3:"Load Code",
+    load_hint:"Paste your backup code here. This replaces the progress on <b>this</b> device with the one from the code.",
+    load_placeholder:"UN1~...", load_btn:"Apply progress",
+    load_msg_empty:"Please paste a code first.", load_confirm:"Replace the progress on this device with the code?",
+    load_msg_bad_code:"Code not readable. Please copy and paste the whole code.",
+    load_msg_bad_shape:"This doesn't look like a valid progress code.",
+    noev_month:"No fixed events this month.", noev_day:"No event on this day.", nextup_empty:"No upcoming events right now.",
+    plant_next:"{label} · {n} more {unit} to the next stage", tag_singular:"day", tag_plural:"days",
+    day_waiting_click:"Day {n} opens up for you tomorrow 🌱",
+    w_ey:"Welcome ☀️", w_h3:"From us to you",
+    w_lead:"There you are. And we're genuinely happy about it. ☀️",
+    w_p1:"Let's start with something that makes everything easier: you don't learn RINGANA first and then do it. You do it, and understand it along the way. It's a business that happens in real life. At the market. Over coffee. In a chat with neighbors. In an honest message. In a story that doesn't feel like advertising. Online and offline, both belong, both count, both work. 🫶",
+    w_p2:"What's your job? Simple. Talk to people. Share what's good for you. Listen to what moves others, what they're looking for, what they need. That's RINGANA. Nothing more, nothing less.",
+    w_p3:"The Academy is your companion along the way. It gives you words for what you already feel, ideas for moments you're already having, confidence for conversations you're already leading. But the starting point is you. Today. Exactly as you are.",
+    w_two:"🌟 1 real moment with one person<br>🌟 1 time really listening, without already having the answer in your head",
+    w_evening:"And one last thing we really mean: write <b>one sentence</b> every evening. What did you do today. Just for you. Not a novel. One sentence. Leonardo da Vinci did it, the world's most successful athletes still do it today. Because progress you don't hold onto eventually stops feeling like progress.",
+    w_p4:"This group belongs to you. No pressure. No perfection. No comparisons. Just people growing at their own pace, in their own way, with their own story.",
+    w_p5:"We're genuinely glad you're here. ☀️<br><em>Your Ulli &amp; Noa</em> 🥰",
+    w_sub:"A little about us",
+    w_p6:"We're Ulli and Noa. Mother and daughter. And honestly, for us RINGANA is less a business than a way of life. Ulli's mom Uschi started 27 years ago. Ulli was her first partner. And I, Noa, literally grew up with it.",
+    w_p7:"But let's start where it really began. Ulli was a professional tennis player, on her way to becoming a coach. And pregnant with me. One of those moments in life where everything changes in an instant, and you quietly ask yourself: <em>What now?</em> Not out of fear. Out of honesty. She felt doors closing. And then there was RINGANA. No big guarantee. No finished plan. Just one question: could this be my freedom? She said yes. And that yes changed our lives. 🤍",
+    w_p8:"I became a partner at 18. Alongside my bachelor's degree, internships, my first job. No one would have said back then that this side thing would one day become my anchor. But it was there when I needed it. When I had to leave a work environment that wasn't good for me. When, last year, I wanted to spend every moment with my dog Hope as she was leaving us. 🍂🤍 RINGANA didn't save my life. But it gave me room to breathe. And sometimes room to breathe is everything.",
+    w_p9:"Why are we telling you this? Because we know many of you have your own version of this story. Your own moment when a door closed. Your own quiet question. Your own reason for being here today. And it deserves to be seen. That's RINGANA. Not just the products. Not just the business. The people. 🌟",
+    w_cta_p:"🌿 Introduce yourself in our onboarding group: your name, where you're from, and one honest sentence about why you started. Not as an obligation, but because your one sentence might give someone here exactly the courage they need right now.",
+    w_cta_btn:"Go to the WhatsApp group ↗",
+    ev_call_n:"Team Call", ev_call_d:"For everyone, together online", ev_call_link:"Join Zoom", ev_call_meta:"Meeting ID 836 4483 5358",
+    ev_fresh_n:"Fresh Date at Campus", ev_fresh_d:"Open team meeting for everyone from 10am · lunch at 1pm",
+    ev_fresh_link:"Register (by Thu the week before)", ev_fresh_link2:"Order lunch",
+    ev_fresh_meta:"Lunch: order via the RingBar site by Thursday the week before at the latest, then pay in person at the RingBar on the day, then take your meal token to the canteen. * Check the date carefully – the deadline is always the Thursday of the week before.",
+    ev_run_n:"RUN 3 · Vienna", ev_run_d:"Hyatt Regency Vienna · 10:00am–4:30pm", ev_run_link:"Go to event",
+    ev_conv_day2_t:"Day 2", ev_conv_n:"RINGANA Convention 2026",
+    ev_conv_d1:"CONFEX Cologne · Day 1 of 2, from 8:00am", ev_conv_d2:"CONFEX Cologne · Day 2 of 2, until 4:00pm",
+    ev_conv_meta:"CONFEX, Barmer Straße 20, 50679 Cologne, Germany", ev_conv_link:"Tickets", ev_conv_link2:"Livestream"
+  }
+};
+function T(key){return (UI[LANG]&&UI[LANG][key]!==undefined)?UI[LANG][key]:(UI.de[key]!==undefined?UI.de[key]:key);}
+function Tf(key,vars){let s=T(key);for(const k in vars)s=s.split('{'+k+'}').join(vars[k]);return s;}
+function applyI18n(root){
+  (root||document).querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=T(el.getAttribute('data-i18n'));});
+  (root||document).querySelectorAll('[data-i18n-html]').forEach(el=>{el.innerHTML=T(el.getAttribute('data-i18n-html'));});
+}
+document.documentElement.lang=LANG;
+applyI18n();
+document.querySelectorAll('#langsw button').forEach(b=>{
+  b.classList.toggle('on', b.dataset.lang===LANG);
+  b.addEventListener('click',()=>setLang(b.dataset.lang));
+});
+/* setLang wird erst bei Klick aufgerufen (nach vollem Skript-Durchlauf) -> keine TDZ-Probleme mit later consts */
+function setLang(l){
+  if(l!==LANG){
+    LANG=(l==='en')?'en':'de';
+    try{localStorage.setItem('ullinoa_lang',LANG);}catch(e){}
+  }
+  document.documentElement.lang=LANG;
+  document.querySelectorAll('#langsw button').forEach(b=>b.classList.toggle('on', b.dataset.lang===LANG));
+  applyI18n();
+  days=DAYS[LANG];
+  closeDay();
+  renderTimeline();
+  renderPlant(state.streak);
+  if(typeof renderWeekdayHeader==='function')renderWeekdayHeader();
+  renderMonth();
+  renderNextUp();
+  if(typeof renderQuote==='function')renderQuote();
+}
+
 const STORE_KEY='ullinoa_v1';
 const todayISO=()=>new Date().toISOString().slice(0,10);
 function loadState(){
@@ -607,8 +884,9 @@ function show(v){
 }
 navs.forEach(b=>b.addEventListener('click',()=>show(b.dataset.v)));
 
-/* ---------------- onboarding day data (from real ullinoa flow, "du" voice) ---------------- */
-const days=[
+/* ---------------- onboarding day data (from real ullinoa flow, "du"/"you" voice) ---------------- */
+const DAYS={
+ de:[
   {n:1,emoji:"🥳",title:"Dein erster Tag",tease:"Vier konkrete Dinge, dann bist du durch.",
    video:"CTu4rO3D1cQ",
    lead:"Willkommen. Wir freuen uns wirklich, dass du da bist.",
@@ -693,20 +971,118 @@ const days=[
    ],
    reflect:"Was will ich in 30 Tagen spüren? Und welcher eine Satz fühlt sich am wahrsten an?"},
   {n:9,emoji:"☕",title:"Kaffee, Kuchen & Verkostung",tease:"Freund:innen einladen, ein Live schauen, zusammen testen.",
-   lead:"Dein erstes kleines Event. Ganz ohne Bühne.",
+   lead:"Dein erstes kleines Event.",
    intro:[
      "Lad ein paar Menschen ein, die du magst – Freund:innen, Familie, Nachbar:innen. Kaffee, Kuchen, gemütlich. Kein Verkaufstermin, einfach ein Nachmittag.",
      "Ihr schaut zusammen ein RINGANA Live an – live oder als Aufzeichnung. Such eins aus, das zu dem passt, was du zeigen möchtest. Danach testet oder verkostet ihr gemeinsam die Produkte zum Thema, so weit du sie zuhause hast.",
      "Alle bisherigen Lives und die, die als Nächstes kommen, findest du hier: <a href=\"https://www.ringana.com/live/\" target=\"_blank\" rel=\"noopener\">ringana.com/live</a>"
    ],
    tasks:[
-     {t:"Datum festlegen und 3–5 Leute einladen",d:"Kaffee & Kuchen, bei dir oder online. Persönlich, so wie du wirklich schreiben würdest.",ex:"Idee 1:<br>„Ich mach am ___ einen gemütlichen Nachmittag mit Kaffee, Kuchen und einer kleinen Verkostung. Wir schauen zusammen ein kurzes Video und probieren danach ein paar Sachen. Kein Druck, einfach ausprobieren – magst du dazukommen?“<br><br>Idee 2:<br>„Hey du 🤍 ich teste gerade RINGANA und würd das gern mit ein paar Leuten machen, die ich mag. Kaffee, Kuchen, wir schauen ein Live und testen zusammen. ___ bei mir – bist du dabei?“"},
+     {t:"Datum festlegen und 3–5 Leute einladen",d:"Kaffee & Kuchen, bei dir. Persönlich, so wie du wirklich schreiben würdest.",ex:"Idee 1:<br>„Ich mach am ___ einen gemütlichen Nachmittag mit Kaffee, Kuchen und einer kleinen Verkostung. Wir schauen zusammen ein kurzes Video und probieren danach ein paar Sachen. Kein Druck, einfach ausprobieren – magst du dazukommen?“<br><br>Idee 2:<br>„Hey du 🤍 ich teste gerade RINGANA und würd das gern mit ein paar Leuten machen, die ich mag. Kaffee, Kuchen, wir schauen ein Live und testen zusammen. ___ bei mir – bist du dabei?“"},
      {t:"Ein Live aussuchen, das zu deinem Thema passt",d:"Auf ringana.com/live stöbern. Nimm eins, das zu den Produkten passt, die du zuhause hast.",ex:"Themen-Ideen: Gesichtspflege / FRESH Skincare · CAPS zur Nahrungsergänzung (fem, cerebro, protect, immu) · Sport &amp; Energy · Sonnenpflege · Haarpflege · Longevity &amp; Anti-Aging"},
      {t:"Produkte bereitlegen und gemeinsam testen",d:"Leg die Produkte zum Live-Thema raus, die du hast. Nach dem Schauen probiert ihr zusammen – auftragen, riechen, schmecken. Weniger erklären, mehr erleben lassen."}
    ],
    reflect:"Wie war es, RINGANA im entspannten Rahmen zu teilen? Was hat den Gästen am meisten Spaß gemacht?",
    outro:"Ein Nachmittag reicht, um Produkte zusammen lieben zu lernen. 🫶"}
-];
+ ],
+ en:[
+  {n:1,emoji:"🥳",title:"Your First Day",tease:"Four concrete things, then you're done.",
+   lead:"Welcome. We're genuinely happy you're here.",
+   intro:["No novel today. No overwhelm. Just four things that count today.","Do you know what the people who've really built something here have in common? They didn't wait until they knew everything. They started. That's exactly what you're doing today."],
+   tasks:[
+     {t:"Register for the Welcome Call",d:"Your official starting point. Online Office → Journey & Training → Partner Journey → Welcome Call. Pick a time, sign up, done."},
+     {t:"Download the myRINGANA app",d:"In the App Store or Google Play. This is where you see your Fast Track, your sales and everything that matters. One quick look is enough today."},
+     {t:"Unpack your package and really try it",d:"Don't just tick it off, really experience it. Smell it, feel it, try it. You're building a business on things you love."},
+     {t:"Talk to or share with someone, just once",d:"Offline or online. An honest message, the way you'd tell a friend. No script. Just you."}
+   ],
+   reflect:"What surprised me today? What already feels good, and what makes me a little nervous?"},
+  {n:2,emoji:"💞",title:"Getting to Know Your Tools",tease:"Take your time, no need to understand it all right away.",
+   lead:"Yay, you're back.",
+   intro:["The Online Academy isn't homework. It's more like someone experienced by your side, showing you what works and making you more confident in conversations you're already having.","Online Office → Journey & Training → Online Academy"],
+   tasks:[
+     {t:"Watch FRESH Start",d:"Just take a look, browse, get an overview. Nothing to memorize."},
+     {t:"Explore the myRINGANA app briefly",d:"Your daily companion. Progress, Fast Track, tips. Five minutes is enough today."},
+     {t:"Write down your questions",d:"Really, anything goes, no question is too small. Then send them to your mentor. You don't have to figure this out alone."},
+     {t:"One more moment with someone",d:"Offline or online. Not perfect, not big. Just show up. One small step every day."}
+   ],
+   reflect:"What did the Academy show me today that I didn't know before? And what can I already try tomorrow?"},
+  {n:3,emoji:"🤝",title:"Today It Gets Real",tease:"You're ready. Not someday. Now.",
+   lead:"You're ready. Not someday. Now.",
+   intro:["Today you're not selling. You're sharing something you're genuinely experiencing right now, and giving someone the chance to decide for themselves. That's not a pitch, that's a conversation."],
+   tasks:[
+     {t:"Academy: Customer Acquisition BASIC (#goforRUN3)",d:"Watch it before you send the messages. You'll understand afterward why this exact moment is right."},
+     {t:"Set a 5-minute timer, write down 30 names",d:"Don't overthink, don't filter, don't decide for other people. Just write down who comes to mind."},
+     {t:"Reach out to 5 people, just as you are",d:"Message, call, or in person.",ex:"„Hey 🤍 you just crossed my mind. You take good care of your skin, right? I'm trying something that's genuinely surprised me. Can I show you quickly what I mean?“"}
+   ],
+   reflect:"How did it feel to reach out to someone? What held me back, and what gave me courage?"},
+  {n:4,emoji:"🌟",title:"Listen, Don't Sell",tease:"Whoever really listens never has to pitch.",
+   lead:"Today your job isn't to sell. It's to listen.",
+   intro:["Imagine meeting someone for coffee. This person talks about being tired, about not getting going. And you really listen. And suddenly you know exactly what could help them.","Whoever really listens never has to pitch — they simply recommend."],
+   tasks:[
+     {t:"Academy: Customer Acquisition ADVANCED",d:"Freshly updated by RINGANA. Worth it for everyone, not just newcomers."},
+     {t:"Reach out to someone with a question",d:"Not with a product.",ex:"„I was thinking of you today. How are you actually doing, really?“"},
+     {t:"Fix your first FRESH Date",d:"Coffee, a quick call, browsing together. Not a sales pitch. The date is what matters, the format doesn't."}
+   ],
+   reflect:"When did I really listen today? And what did I learn about this person that I didn't know before?"},
+  {n:5,emoji:"🤗",title:"People, Not Customers",tease:"Who in your life is looking for more right now?",
+   lead:"Not more work. More room to breathe. More meaning.",
+   intro:["Today is about people, not customers. Who in your life is looking for something that feels like more right now? You don't have to get this perfect. You just have to start."],
+   tasks:[
+     {t:"Academy: Partner Acquisition BASIC",d:"Watch it."},
+     {t:"Lock in two events",d:"Online Office → Events & Booking. Not someday. Today."},
+     {t:"Invite one person today",d:"Not with a script, but the way you'd genuinely write to them.",ex:"„I'm doing something cool next week, want to sit in for a bit? It's 20 minutes and you'll get exactly what I'm building on the side.“"}
+   ],
+   reflect:"Who's the person who came to mind first today, and have I already reached out to them?"},
+  {n:6,emoji:"💗",title:"Your Why",tease:"Inward instead of outward.",
+   lead:"Something different today. No checklist first, no task up top – just a question.",
+   intro:[
+     "Imagine sitting a year from now, on a Sunday just like this one. Coffee in hand. And you look back on this first week: on the messages you sent even though it felt strange. On the conversations you had. On the moment you simply started. What do you want to be able to tell yourself then?",
+     "Today isn't about the outside. It's about the inside.",
+     "Simon Sinek spent his life researching one single question: why do people do what they do? The strongest connections don't come from what someone offers, but from their why. Whoever knows their why speaks with ease – and people feel the difference.",
+     "Your why doesn't have to be finished today. But it's worth looking at honestly, starting now."
+   ],
+   tasks:[
+     {t:"Academy: Company & Values",d:"Watch it."},
+     {t:"Write for yourself",d:"Four sentence starters, finish them honestly. Just for you – but the next conversation you have will feel different. Promise.",ex:"„I share RINGANA because…“ · „What matters to me is…“ · „What I hope for through this business is…“ · „I love RINGANA because…“"}
+   ],
+   reflect:"What has changed in me this week? Even if it still feels small.",
+   evening:"Tonight: a sentence about your why. Why are you really doing this?"},
+  {n:7,emoji:"🌿",title:"Pause & Plan",tease:"Looking back on Week 1, a plan for Week 2.",
+   lead:"Today we pause for a moment. Week 1 is done.",
+   intro:["Look back at the last few days. The message you sent even though your inner voice spoke up. The conversation that ran long because you really listened. The moment you simply started. That was you.","People who write down exactly when, where and with whom they'll do something stick to it 91% more often. Motivation gets you started, a concrete plan gets you there."],
+   tasks:[
+     {t:"Academy: FRESH Impact",d:"Really take the time today. Don't do it on the side. A nice way to close out this first part."},
+     {t:"Your honest Week 1 recap",d:"Not to judge yourself, but to see what you actually did. What's still open? No drama, Week 2 is waiting. What you achieved, you celebrate today. 🥳",ex:"☑️ Signed up for the Welcome Call<br>☑️ Downloaded the myRINGANA app<br>☑️ Unpacked the package and really tried it<br>☑️ Watched FRESH Start<br>☑️ Wrote down 30 names<br>☑️ Reached out to 5 people<br>☑️ Sent follow-ups<br>☑️ Fixed a FRESH Date<br>☑️ Logged 2 events<br>☑️ Wrote a sentence every evening"},
+     {t:"Lock in three concrete things today",d:"Names. Dates. Times.",ex:"My FRESH Date is on ___ at ___ with ___. · The event I'm bringing someone to is on ___ and I'll ask ___. · The one person I'm really inviting this week is ___."}
+   ],
+   reflect:"Where was I brave this week? What am I becoming? What do I take into Week 2, and what can I let go of?",
+   evening:"Tonight, not „What did I do?“ – but: What have I become this week? Write yourself a sentence. Just for you.",
+   outro:"Week 1 is yours. 🌱"},
+  {n:8,emoji:"✨",title:"Week 2 · Deeper, Not Faster",tease:"Not what you want to achieve. Who you become along the way.",
+   lead:"Week 2 goes deeper. Not faster. Deeper.",
+   intro:["If you looked back on this moment a year from now, what would you want to be able to say? Not what you achieved, but how you used this time."],
+   tasks:[
+     {t:"Academy: Mind & Goals",d:"Watch it, then really sit down with it."},
+     {t:"Set a 5-minute timer",d:"What do I want to feel in 30 days – not have, feel? And what do I need for that: structure, courage, knowledge, or someone to walk with me? Mark the one sentence that feels truest. That's your focus."}
+   ],
+   reflect:"What do I want to feel in 30 days? And which one sentence feels truest?"},
+  {n:9,emoji:"☕",title:"Coffee, Cake & Tasting",tease:"Invite friends, watch a Live, test together.",
+   lead:"Your first small event.",
+   intro:[
+     "Invite a few people you like – friends, family, neighbors. Coffee, cake, cozy. No sales appointment, just an afternoon.",
+     "Watch a RINGANA Live together – live or as a replay. Pick one that fits what you want to show. Afterward, test or taste the products on that topic together, as far as you have them at home.",
+     "You'll find every past Live and what's coming up next here: <a href=\"https://www.ringana.com/live/\" target=\"_blank\" rel=\"noopener\">ringana.com/live</a>"
+   ],
+   tasks:[
+     {t:"Set a date and invite 3–5 people",d:"Coffee & cake, at your place. Personal, the way you'd genuinely write.",ex:"Idea 1:<br>„I'm hosting a cozy afternoon on ___ with coffee, cake, and a little tasting. We'll watch a short video together and try a few things afterward. No pressure, just trying things out – want to come?“<br><br>Idea 2:<br>„Hey 🤍 I'm trying out RINGANA right now and would love to do this with a few people I like. Coffee, cake, we'll watch a Live and test together. ___ at my place – are you in?“"},
+     {t:"Pick a Live that fits your topic",d:"Browse ringana.com/live. Take one that matches the products you have at home.",ex:"Topic ideas: Skincare / FRESH Skincare · CAPS supplements (fem, cerebro, protect, immu) · Sport &amp; Energy · Suncare · Haircare · Longevity &amp; Anti-Aging"},
+     {t:"Set out the products and test together",d:"Put out the products for the Live's topic that you have. After watching, try them together – apply, smell, taste. Explain less, let people experience more."}
+   ],
+   reflect:"How did it feel to share RINGANA in a relaxed setting? What did your guests enjoy most?",
+   outro:"One afternoon is enough to fall in love with products together. 🫶"}
+ ]
+};
+let days=DAYS[LANG];
 
 /* ---------------- render timeline (status from saved progress) ---------------- */
 const tl=document.getElementById('timeline');
@@ -725,22 +1101,22 @@ function renderTimeline(){
   let w2=false;
   tl.innerHTML=days.map(d=>{
     let sep='';
-    if(d.n===8 && !w2){sep='<div class="week-sep" style="margin:22px 0 14px">Woche 2 · Tiefer gehen</div>';w2=true;}
+    if(d.n===8 && !w2){sep=`<div class="week-sep" style="margin:22px 0 14px">${T('week2_sep')}</div>`;w2=true;}
     const st=dayStatus(d.n);
-    const status=st==='done'?'✓ Erledigt':st==='today'?'Heute dran':st==='waiting'?'🔒 Ab morgen':'🔒 Bald';
+    const status=st==='done'?T('status_done'):st==='today'?T('status_today'):st==='waiting'?T('status_waiting'):T('status_locked');
     const dot=st==='done'?'✓':(st==='locked'||st==='waiting')?'🔒':d.emoji;
     return `${sep}<div class="tday ${st}" data-day="${d.n}">
       <div class="tdot">${dot}</div>
       <div class="tcard">
-        <div class="th"><span class="tlabel">Tag ${d.n}</span><span class="tstatus">${status}</span></div>
+        <div class="th"><span class="tlabel">${T('day_tag')} ${d.n}</span><span class="tstatus">${status}</span></div>
         <h3>${d.title}</h3>
         <div class="ttease">${d.tease}</div>
-        <div class="tmeta"><span>📝 ${d.tasks.length} To-dos</span><span>🎬 ${d.video?'Video':'Video · bald'}</span><span>💭 Reflexion</span></div>
+        <div class="tmeta"><span>${Tf('todos_label',{n:d.tasks.length})}</span><span>🎬 ${d.video?T('video_label'):T('video_soon_short')}</span><span>${T('reflexion_label')}</span></div>
       </div></div>`;
   }).join('');
   tl.querySelectorAll('.tday').forEach(el=>{
     el.addEventListener('click',()=>{
-      if(el.classList.contains('waiting')){toast('Tag '+el.dataset.day+' öffnet sich morgen für dich 🌱');return;}
+      if(el.classList.contains('waiting')){toast(Tf('day_waiting_click',{n:el.dataset.day}));return;}
       if(el.classList.contains('locked'))return;
       openDay(+el.dataset.day);
     });
@@ -758,7 +1134,7 @@ function openDay(n){
   sheet.innerHTML=`
     <div class="sheet-hd">
       <button class="close" onclick="closeDay()">✕</button>
-      <div class="ey">Tag ${d.n} ${d.emoji}</div>
+      <div class="ey">${T('day_tag')} ${d.n} ${d.emoji}</div>
       <h3>${d.title}</h3>
     </div>
     <div class="sheet-bd">
@@ -767,22 +1143,22 @@ function openDay(n){
         ${d.intro.map(p=>`<p>${p}</p>`).join('')}
       </div>
       <div class="lvideo-wrap">${d.video
-        ? `<div class="lvideo"><iframe src="https://www.youtube-nocookie.com/embed/${d.video}" title="Video zu Tag ${d.n}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`
-        : `<div class="lvideo-soon"><span>🎬</span> Video zu diesem Tag kommt bald</div>`}</div>
-      <div class="todo-h">Heute zählt</div>
+        ? `<div class="lvideo"><iframe src="https://www.youtube-nocookie.com/embed/${d.video}" title="${T('day_tag')} ${d.n}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`
+        : `<div class="lvideo-soon"><span>🎬</span> ${T('video_soon_long')}</div>`}</div>
+      <div class="todo-h">${T('todo_h')}</div>
       ${d.tasks.map((t,i)=>`<div class="task ${savedTasks[i]?'done':''}" data-i="${i}">
           <span class="cb"></span>
           <div><div class="tk-t">${t.t}</div>${t.d?`<div class="tk-d">${t.d}</div>`:''}
           ${t.ex?`<div class="msg-ex">${t.ex}</div>`:''}</div>
         </div>`).join('')}
       <div class="reflect">
-        <div class="rh">💭 Deine Reflexion, nur für dich</div>
+        <div class="rh">${T('reflect_h')}</div>
         <div class="rq">${d.reflect}</div>
-        <textarea id="reflectBox" placeholder="Schreib, was kommt... (bleibt privat auf deinem Gerät)">${savedReflect.replace(/</g,'&lt;')}</textarea>
+        <textarea id="reflectBox" placeholder="${T('reflect_placeholder')}">${savedReflect.replace(/</g,'&lt;')}</textarea>
       </div>
-      <div class="evening"><span class="e">🌱</span><div>${d.evening||'Heute Abend: <b>ein Satz.</b> Was hast du heute getan? Nur für dich. Wer seinen Fortschritt festhält, sieht ihn auch, und wer ihn sieht, bleibt dran.'}</div></div>
+      <div class="evening"><span class="e">🌱</span><div>${d.evening||T('evening_default')}</div></div>
       ${d.outro?`<div class="l-outro">${d.outro}</div>`:''}
-      <button class="l-done" id="doneBtn">${alreadyDone?'Tag '+d.n+' erledigt ✓':'Tag '+d.n+' abschließen 🌿'}</button>
+      <button class="l-done" id="doneBtn">${alreadyDone?Tf('done_btn_done',{n:d.n}):Tf('done_btn_todo',{n:d.n})}</button>
       <div class="done-hint" id="doneHint"></div>
     </div>`;
   overlay.classList.add('show');
@@ -801,9 +1177,9 @@ function openDay(n){
     doneBtn.disabled=!(allTasks&&hasReflect);
     if(doneBtn.disabled){
       const miss=[];
-      if(!allTasks)miss.push('alle To-dos abhaken');
-      if(!hasReflect)miss.push('einen Satz in die Reflexion schreiben');
-      doneHint.textContent='Noch offen: '+miss.join(' · ');
+      if(!allTasks)miss.push(T('done_hint_tasks'));
+      if(!hasReflect)miss.push(T('done_hint_reflect'));
+      doneHint.textContent=T('done_hint_prefix')+' '+miss.join(' · ');
       doneHint.style.display='block';
     }else{
       doneHint.textContent='';
@@ -834,7 +1210,7 @@ function openDay(n){
       renderPlant(state.streak);
       const more=days.some(x=>x.n===n+1);
       closeDay();
-      toast(more?('Stark. Tag '+(n+1)+' ist morgen für dich da 🌱'):'Alle Tage geschafft. Wow. 🌿');
+      toast(more?Tf('toast_next',{n:n+1}):T('toast_all_done'));
       return;
     }
     closeDay();
@@ -857,35 +1233,35 @@ function openWelcome(){
   sheet.innerHTML=`
     <div class="sheet-hd">
       <button class="close" onclick="closeDay()">✕</button>
-      <div class="ey">Willkommen ☀️</div>
-      <h3>Von uns an dich</h3>
+      <div class="ey">${T('w_ey')}</div>
+      <h3>${T('w_h3')}</h3>
     </div>
     <div class="sheet-bd">
       <div class="welcome-photo" id="wPhoto"><img src="ulli-noa.jpg" alt="Ulli und Noa" onerror="document.getElementById('wPhoto').classList.add('noimg')"></div>
       <div class="intro-prose">
-        <p class="lead">Da seid ihr. Und wir freuen uns wirklich. ☀️</p>
-        <p>Lass uns direkt mit etwas anfangen, das alles leichter macht: RINGANA lernt man nicht zuerst und macht es dann. Man macht es und versteht es dabei. Es ist ein Business, das im echten Leben passiert. Am Markt. Beim Kaffee. Im Gespräch mit Nachbar:innen. In einer ehrlichen Nachricht. In einer Story, die sich nicht nach Werbung anfühlt. Online und offline, beides gehört dazu, beides zählt, beides funktioniert. 🫶</p>
-        <p>Was dein Job ist? Simpel. Mit Menschen reden. Teilen, was dir gut tut. Zuhören, was andere gerade bewegt, suchen, brauchen. Das ist RINGANA. Nicht mehr, nicht weniger.</p>
-        <p>Die Academy ist dabei deine Begleitung. Sie gibt dir Sprache für das, was du schon fühlst, Ideen für Momente, die du sowieso hast, Sicherheit für Gespräche, die du bereits führst. Aber der Startpunkt bist du. Heute. Genau so, wie du bist.</p>
+        <p class="lead">${T('w_lead')}</p>
+        <p>${T('w_p1')}</p>
+        <p>${T('w_p2')}</p>
+        <p>${T('w_p3')}</p>
       </div>
-      <div class="wtwo">🌟 1 echter Moment mit einem Menschen<br>🌟 1 Mal wirklich zuhören, ohne schon die Antwort im Kopf zu haben</div>
-      <div class="evening"><span class="e">🌱</span><div>Und eine letzte Sache, die wir wirklich ernst meinen: Schreib jeden Abend <b>einen Satz</b> auf. Was hast du heute getan. Nur für dich. Kein Roman. Einen Satz. Leonardo da Vinci hat es gemacht, die erfolgreichsten Athlet:innen der Welt machen es bis heute. Weil Fortschritt, den man nicht festhält, sich irgendwann nicht mehr wie Fortschritt anfühlt.</div></div>
+      <div class="wtwo">${T('w_two')}</div>
+      <div class="evening"><span class="e">🌱</span><div>${T('w_evening')}</div></div>
       <div class="intro-prose">
-        <p>Diese Gruppe gehört euch. Kein Druck. Keine Perfektion. Keine Vergleiche. Nur Menschen, die in ihrem Tempo, auf ihre Art, mit ihrer ganz eigenen Geschichte wachsen.</p>
-        <p>Wir freuen uns, dass ihr hier seid. Wirklich. ☀️<br><em>Eure Ulli &amp; Noa</em> 🥰</p>
+        <p>${T('w_p4')}</p>
+        <p>${T('w_p5')}</p>
       </div>
 
-      <div class="wsub">Kurz zu uns</div>
+      <div class="wsub">${T('w_sub')}</div>
       <div class="intro-prose">
-        <p>Wir sind Ulli und Noa. Mama und Tochter. Und wenn wir ehrlich sind, ist RINGANA bei uns weniger Business als Lebensweise. Ullis Mama Uschi hat vor 27 Jahren damit angefangen. Ulli war ihre erste Partnerin. Und ich, Noa, bin buchstäblich damit aufgewachsen.</p>
-        <p>Aber fangen wir dort an, wo es wirklich begonnen hat. Ulli war Tennisprofi, auf dem Weg zur Trainerin. Und schwanger mit mir. Einer dieser Momente im Leben, wo sich in kürzester Zeit alles verändert und man sich ganz still eine Frage stellt: <em>Was kommt jetzt?</em> Nicht aus Angst. Aus Ehrlichkeit. Sie hat gespürt, wie sich Wege schließen. Und dann stand da RINGANA. Keine große Garantie. Kein fertiger Plan. Nur eine Frage: könnte das meine Freiheit sein? Sie hat Ja gesagt. Und dieses Ja hat unser Leben verändert. 🤍</p>
-        <p>Ich bin mit 18 Partnerin geworden. Neben Bachelor, Praktika, erstem Job. Niemand hätte damals gesagt, dass genau dieses Nebenbei eines Tages mein Anker wird. Aber es war da, als ich es gebraucht habe. Als ich ein Arbeitsumfeld verlassen musste, das mir nicht gut getan hat. Als ich letztes Jahr jeden Moment bei meiner Hündin Hope sein wollte, als sie gegangen ist. 🍂🤍 RINGANA hat mir nicht das Leben gerettet. Aber es hat mir Spielraum gegeben. Und Spielraum ist manchmal alles.</p>
-        <p>Warum erzählen wir das? Weil wir wissen, dass viele von euch ihre eigene Version dieser Geschichte kennen. Den eigenen Moment, wo sich eine Tür geschlossen hat. Die eigene stille Frage. Den eigenen Grund, warum ihr heute hier seid. Und der verdient es, gesehen zu werden. Das ist RINGANA. Nicht die Produkte allein. Nicht das Business allein. Die Menschen. 🌟</p>
+        <p>${T('w_p6')}</p>
+        <p>${T('w_p7')}</p>
+        <p>${T('w_p8')}</p>
+        <p>${T('w_p9')}</p>
       </div>
 
       <div class="wa-cta">
-        <p>🌿 Stell dich in unserer Onboarding-Gruppe kurz vor: Name, woher du kommst, und ein ehrlicher Satz, warum du gestartet bist. Nicht als Pflichtübung, sondern weil dein einer Satz jemandem hier vielleicht genau den Mut gibt, den diese Person gerade braucht.</p>
-        <a class="wa-btn" href="${WA_ONBOARDING}" target="_blank" rel="noopener">Zur WhatsApp-Gruppe ↗</a>
+        <p>${T('w_cta_p')}</p>
+        <a class="wa-btn" href="${WA_ONBOARDING}" target="_blank" rel="noopener">${T('w_cta_btn')}</a>
       </div>
     </div>`;
   overlay.classList.add('show');
@@ -956,29 +1332,41 @@ function plantSVG(streak){
   }
   s+=`</svg>`;return s;
 }
-const stageLabels=[
-  {min:0,label:"Ein Same wartet im Boden"},
-  {min:1,label:"Ein zartes Sprießen"},
-  {min:3,label:"Erste kleine Blätter"},
-  {min:7,label:"Eine Knospe zeigt sich"},
-  {min:14,label:"Die erste Blüte öffnet sich"},
-  {min:30,label:"Sie blüht in voller Pracht"},
-  {min:60,label:"Kräftig gewachsen, stark dran geblieben"}
-];
-function labelFor(s){let l=stageLabels[0];for(const x of stageLabels)if(s>=x.min)l=x;return l.label;}
+const STAGE_LABELS={
+  de:[
+    {min:0,label:"Ein Same wartet im Boden"},
+    {min:1,label:"Ein zartes Sprießen"},
+    {min:3,label:"Erste kleine Blätter"},
+    {min:7,label:"Eine Knospe zeigt sich"},
+    {min:14,label:"Die erste Blüte öffnet sich"},
+    {min:30,label:"Sie blüht in voller Pracht"},
+    {min:60,label:"Kräftig gewachsen, stark dran geblieben"}
+  ],
+  en:[
+    {min:0,label:"A seed waits in the soil"},
+    {min:1,label:"A gentle sprout"},
+    {min:3,label:"First little leaves"},
+    {min:7,label:"A bud appears"},
+    {min:14,label:"The first bloom opens"},
+    {min:30,label:"In full bloom"},
+    {min:60,label:"Strong and steady, still growing"}
+  ]
+};
+function labelFor(s){const list=STAGE_LABELS[LANG];let l=list[0];for(const x of list)if(s>=x.min)l=x;return l.label;}
 function renderPlant(streak){
   document.getElementById('potTop').innerHTML=plantSVG(streak);
   document.getElementById('potBig').innerHTML=plantSVG(streak);
   document.getElementById('streakTop').textContent=streak;
   document.getElementById('streakBig').textContent=streak;
   const nx=nextMilestone(streak);
+  const diff=nx-streak;
   document.getElementById('plantNext').textContent = nx
-    ? `${labelFor(streak)} · noch ${nx-streak} ${nx-streak===1?'Tag':'Tage'} bis zur nächsten Stufe`
-    : `${labelFor(streak)}`;
+    ? Tf('plant_next',{label:labelFor(streak),n:diff,unit:diff===1?T('tag_singular'):T('tag_plural')})
+    : labelFor(streak);
   // Balken zeigt das Gesamtwachstum der Pflanze (gleiche Kurve), damit beides zusammenpasst
   document.getElementById('growfill').style.width=(grow(streak)*100).toFixed(1)+'%';
   const bestEl=document.getElementById('bestVal');
-  if(bestEl)bestEl.textContent=state.best+' '+(state.best===1?'Tag':'Tage');
+  if(bestEl)bestEl.textContent=state.best+' '+(state.best===1?T('tag_singular'):T('tag_plural'));
 }
 renderPlant(state.streak);
 
@@ -986,10 +1374,10 @@ renderPlant(state.streak);
 /* Alles bleibt lokal auf diesem Gerät. Der Code ist eine private Kopie NUR dieses
    Fortschritts – nichts wird hochgeladen, es gibt keinen gemeinsamen Speicher. */
 function resetProgress(){
-  if(confirm('Möchtest du deinen Fortschritt wirklich zurücksetzen? Deine Serie, abgehakten To-dos und Reflexionen auf diesem Gerät werden gelöscht.')){
+  if(confirm(T('reset_confirm'))){
     state={streak:0,best:0,lastActive:null,doneDays:[],dayDone:{},tasks:{},reflect:{}};
     saveState();renderTimeline();renderPlant(0);
-    toast('Fortschritt zurückgesetzt.');
+    toast(T('toast_reset'));
   }
 }
 ['resetBtn','resetBtn2'].forEach(id=>{const b=document.getElementById(id);if(b)b.addEventListener('click',resetProgress);});
@@ -1004,9 +1392,9 @@ function applyProgressCode(raw){
   t=t.replace(/\s+/g,'');
   let obj;
   try{obj=JSON.parse(decodeURIComponent(escape(atob(t))));}
-  catch(e){return {ok:false,msg:'Code nicht lesbar. Bitte den ganzen Code kopieren und einfügen.'};}
+  catch(e){return {ok:false,msg:T('load_msg_bad_code')};}
   if(!obj||typeof obj!=='object'||!Array.isArray(obj.doneDays))
-    return {ok:false,msg:'Das sieht nicht nach einem gültigen Fortschritts-Code aus.'};
+    return {ok:false,msg:T('load_msg_bad_shape')};
   state={
     streak:Math.max(0,parseInt(obj.streak,10)||0),
     best:Math.max(0,parseInt(obj.best,10)||0),
@@ -1025,13 +1413,13 @@ function openSave(){
   sheet.innerHTML=`
     <div class="sheet-hd">
       <button class="close" onclick="closeDay()">✕</button>
-      <div class="ey">Nur für dich</div>
-      <h3>Fortschritt sichern</h3>
+      <div class="ey">${T('save_ey')}</div>
+      <h3>${T('save_h3')}</h3>
     </div>
     <div class="sheet-bd">
-      <div class="code-hint">Das ist dein persönlicher Sicherungs-Code – eine Kopie <b>nur deines</b> Fortschritts von diesem Gerät. Speichere ihn dir (Notizen, an dich selbst schicken). Mit „Code laden“ holst du ihn auf einem neuen Gerät oder nach dem Löschen der Browserdaten zurück. Er wird nirgends hochgeladen.</div>
+      <div class="code-hint">${T('save_hint')}</div>
       <textarea class="code-box" id="codeOut" readonly>${(code||'').replace(/</g,'&lt;')}</textarea>
-      <button class="l-done" id="copyBtn" style="background:var(--teal)">Code kopieren</button>
+      <button class="l-done" id="copyBtn" style="background:var(--teal)">${T('save_copy_btn')}</button>
       <div class="code-msg" id="saveMsg"></div>
     </div>`;
   overlay.classList.add('show');document.body.style.overflow='hidden';sheet.scrollTop=0;
@@ -1041,7 +1429,7 @@ function openSave(){
     let done=false;
     try{ if(navigator.clipboard&&navigator.clipboard.writeText){ await navigator.clipboard.writeText(ta.value); done=true; } }catch(e){}
     if(!done){ try{ done=document.execCommand('copy'); }catch(e){} }
-    msg.textContent=done?'Kopiert ✓ – jetzt an einem sicheren Ort speichern.':'Der Code ist markiert – kopier ihn mit ⌘/Strg + C.';
+    msg.textContent=done?T('save_msg_ok'):T('save_msg_manual');
     msg.className='code-msg'+(done?' ok':'');
   });
 }
@@ -1049,22 +1437,22 @@ function openLoad(){
   sheet.innerHTML=`
     <div class="sheet-hd">
       <button class="close" onclick="closeDay()">✕</button>
-      <div class="ey">Auf dieses Gerät</div>
-      <h3>Code laden</h3>
+      <div class="ey">${T('load_ey')}</div>
+      <h3>${T('load_h3')}</h3>
     </div>
     <div class="sheet-bd">
-      <div class="code-hint">Füge hier deinen Sicherungs-Code ein. Das ersetzt den Fortschritt auf <b>diesem</b> Gerät durch den aus dem Code.</div>
-      <textarea class="code-box" id="codeIn" placeholder="UN1~..."></textarea>
-      <button class="l-done" id="applyBtn">Fortschritt übernehmen</button>
+      <div class="code-hint">${T('load_hint')}</div>
+      <textarea class="code-box" id="codeIn" placeholder="${T('load_placeholder')}"></textarea>
+      <button class="l-done" id="applyBtn">${T('load_btn')}</button>
       <div class="code-msg" id="loadMsg"></div>
     </div>`;
   overlay.classList.add('show');document.body.style.overflow='hidden';sheet.scrollTop=0;
   const ta=sheet.querySelector('#codeIn'), msg=sheet.querySelector('#loadMsg');
   sheet.querySelector('#applyBtn').addEventListener('click',()=>{
-    if(!ta.value.trim()){msg.textContent='Bitte zuerst einen Code einfügen.';msg.className='code-msg err';return;}
-    if(!confirm('Fortschritt auf diesem Gerät durch den Code ersetzen?'))return;
+    if(!ta.value.trim()){msg.textContent=T('load_msg_empty');msg.className='code-msg err';return;}
+    if(!confirm(T('load_confirm')))return;
     const r=applyProgressCode(ta.value);
-    if(r.ok){ closeDay(); toast('Fortschritt geladen ✓'); }
+    if(r.ok){ closeDay(); toast(T('toast_loaded')); }
     else { msg.textContent=r.msg; msg.className='code-msg err'; }
   });
 }
@@ -1080,45 +1468,81 @@ document.querySelectorAll('.pills button').forEach(b=>b.addEventListener('click'
 
 /* ---------------- Gedanke des Tages · wechselt täglich ---------------- */
 /* Themen: feministisch, empowernd, Persönlichkeitsentwicklung, Wachstum, Veränderung */
-const gedanken=[
-  "Fortschritt, den man nicht festhält, fühlt sich irgendwann nicht mehr wie Fortschritt an. Schreib heute Abend einen Satz auf. 🌱",
-  "Du musst nicht laut sein, um gehört zu werden. Klarheit ist lauter als Lautstärke.",
-  "Wachstum fühlt sich selten bequem an. Genau daran erkennst du, dass es echt ist.",
-  "Frag dich heute einmal: Wovon rede ich mich gerade klein?",
-  "Eine Frau, die für sich selbst sorgt, nimmt niemandem etwas weg. Sie zeigt, dass es geht.",
-  "Veränderung beginnt nicht mit einem großen Sprung, sondern mit einer ehrlichen Frage an dich selbst.",
-  "Du darfst Dinge wollen, ohne sie dir erst verdienen zu müssen.",
-  "Vergleich ist der schnellste Weg, den eigenen Weg nicht mehr zu sehen.",
-  "Selbstständigkeit heißt auch: Deine Zeit gehört wieder dir. Womit füllst du sie heute?",
-  "Die Version von dir, die du sein willst, entsteht durch die kleinen Entscheidungen von heute.",
-  "Nein sagen ist ein vollständiger Satz. Übe ihn.",
-  "Nicht jede:r wird deinen Weg verstehen. Das ist okay. Es ist deiner.",
-  "Mut ist nicht die Abwesenheit von Angst, sondern der Schritt trotzdem.",
-  "Was würdest du heute tun, wenn du dir selbst voll vertraust?",
-  "Frauen, die andere Frauen fördern, verändern mehr als jede einzelne allein.",
-  "Du bist nicht „zu viel“. Du warst vielleicht nur zu lange am falschen Ort.",
-  "Kleine Schritte, jeden Tag, schlagen große Vorsätze, die nie starten.",
-  "Deine Geschichte muss nicht perfekt sein, um jemand anderem Mut zu machen.",
-  "Erlaube dir, mitten im Prozess stolz auf dich zu sein. Nicht erst am Ziel.",
-  "Persönliche Entwicklung heißt oft: dieselbe Situation, neue Reaktion.",
-  "Finanzielle Unabhängigkeit ist keine Gier. Sie ist die Freiheit, Nein sagen zu können.",
-  "Der innere Kritiker ist nicht die Wahrheit. Er ist nur eine alte Gewohnheit.",
-  "Du wächst nicht, indem du wartest, bis du bereit bist. Du wächst, indem du anfängst. ☀️",
-  "Setz dir heute eine Grenze, die du dir gestern noch nicht zugetraut hättest.",
-  "Sichtbarkeit ist unbequem und notwendig. Zeig dich, auch unfertig.",
-  "Was dich früher überfordert hat, machst du heute nebenbei. Halt das mal fest.",
-  "Du schuldest niemandem eine Erklärung dafür, dass du dich weiterentwickelst.",
-  "Ruhe ist kein Rückschritt. Auch Pausen gehören zum Wachsen.",
-  "Frag dich: Treffe ich diese Entscheidung aus Angst oder aus Klarheit?",
-  "Die Frau, die du bewunderst, hat auch mal klein angefangen und einfach nicht aufgehört. 🤍"
-];
-(function(){
+const QUOTES={
+  de:[
+    "Fortschritt, den man nicht festhält, fühlt sich irgendwann nicht mehr wie Fortschritt an. Schreib heute Abend einen Satz auf. 🌱",
+    "Du musst nicht laut sein, um gehört zu werden. Klarheit ist lauter als Lautstärke.",
+    "Wachstum fühlt sich selten bequem an. Genau daran erkennst du, dass es echt ist.",
+    "Frag dich heute einmal: Wovon rede ich mich gerade klein?",
+    "Eine Frau, die für sich selbst sorgt, nimmt niemandem etwas weg. Sie zeigt, dass es geht.",
+    "Veränderung beginnt nicht mit einem großen Sprung, sondern mit einer ehrlichen Frage an dich selbst.",
+    "Du darfst Dinge wollen, ohne sie dir erst verdienen zu müssen.",
+    "Vergleich ist der schnellste Weg, den eigenen Weg nicht mehr zu sehen.",
+    "Selbstständigkeit heißt auch: Deine Zeit gehört wieder dir. Womit füllst du sie heute?",
+    "Die Version von dir, die du sein willst, entsteht durch die kleinen Entscheidungen von heute.",
+    "Nein sagen ist ein vollständiger Satz. Übe ihn.",
+    "Nicht jede:r wird deinen Weg verstehen. Das ist okay. Es ist deiner.",
+    "Mut ist nicht die Abwesenheit von Angst, sondern der Schritt trotzdem.",
+    "Was würdest du heute tun, wenn du dir selbst voll vertraust?",
+    "Frauen, die andere Frauen fördern, verändern mehr als jede einzelne allein.",
+    "Du bist nicht „zu viel“. Du warst vielleicht nur zu lange am falschen Ort.",
+    "Kleine Schritte, jeden Tag, schlagen große Vorsätze, die nie starten.",
+    "Deine Geschichte muss nicht perfekt sein, um jemand anderem Mut zu machen.",
+    "Erlaube dir, mitten im Prozess stolz auf dich zu sein. Nicht erst am Ziel.",
+    "Persönliche Entwicklung heißt oft: dieselbe Situation, neue Reaktion.",
+    "Finanzielle Unabhängigkeit ist keine Gier. Sie ist die Freiheit, Nein sagen zu können.",
+    "Der innere Kritiker ist nicht die Wahrheit. Er ist nur eine alte Gewohnheit.",
+    "Du wächst nicht, indem du wartest, bis du bereit bist. Du wächst, indem du anfängst. ☀️",
+    "Setz dir heute eine Grenze, die du dir gestern noch nicht zugetraut hättest.",
+    "Sichtbarkeit ist unbequem und notwendig. Zeig dich, auch unfertig.",
+    "Was dich früher überfordert hat, machst du heute nebenbei. Halt das mal fest.",
+    "Du schuldest niemandem eine Erklärung dafür, dass du dich weiterentwickelst.",
+    "Ruhe ist kein Rückschritt. Auch Pausen gehören zum Wachsen.",
+    "Frag dich: Treffe ich diese Entscheidung aus Angst oder aus Klarheit?",
+    "Die Frau, die du bewunderst, hat auch mal klein angefangen und einfach nicht aufgehört. 🤍"
+  ],
+  en:[
+    "Progress you don't hold onto eventually stops feeling like progress. Write a sentence tonight. 🌱",
+    "You don't have to be loud to be heard. Clarity is louder than volume.",
+    "Growth rarely feels comfortable. That's exactly how you know it's real.",
+    "Ask yourself today: what am I talking myself out of right now?",
+    "A woman who takes care of herself doesn't take anything from anyone. She shows that it's possible.",
+    "Change doesn't start with a big leap, but with an honest question to yourself.",
+    "You're allowed to want things without having to earn them first.",
+    "Comparison is the fastest way to stop seeing your own path.",
+    "Being self-employed also means: your time belongs to you again. What will you fill it with today?",
+    "The version of you that you want to become is built from today's small decisions.",
+    "„No“ is a complete sentence. Practice it.",
+    "Not everyone will understand your path. That's okay. It's yours.",
+    "Courage isn't the absence of fear, it's taking the step anyway.",
+    "What would you do today if you fully trusted yourself?",
+    "Women who lift up other women change more than any one of them could alone.",
+    "You're not „too much.“ You were maybe just in the wrong place for too long.",
+    "Small steps, every day, beat big resolutions that never start.",
+    "Your story doesn't have to be perfect to give someone else courage.",
+    "Let yourself be proud of you in the middle of the process. Not just at the finish line.",
+    "Personal growth often just means: same situation, new reaction.",
+    "Financial independence isn't greed. It's the freedom to say no.",
+    "Your inner critic isn't the truth. It's just an old habit.",
+    "You don't grow by waiting until you're ready. You grow by starting. ☀️",
+    "Set a boundary today that you wouldn't have dared to set yesterday.",
+    "Visibility is uncomfortable and necessary. Show up, even unfinished.",
+    "What used to overwhelm you, you now do on the side. Take a moment to notice that.",
+    "You don't owe anyone an explanation for growing.",
+    "Rest isn't a step backward. Growth needs pauses too.",
+    "Ask yourself: am I making this decision out of fear or out of clarity?",
+    "The woman you admire also started small once — and simply didn't stop. 🤍"
+  ]
+};
+function renderQuote(){
   const el=document.getElementById('qotd');
   if(!el)return;
   const n=new Date();
   const dayNum=Math.floor(Date.UTC(n.getFullYear(),n.getMonth(),n.getDate())/86400000);
-  el.textContent=gedanken[((dayNum%gedanken.length)+gedanken.length)%gedanken.length];
-})();
+  const list=QUOTES[LANG];
+  el.textContent=list[((dayNum%list.length)+list.length)%list.length];
+}
+renderQuote();
 
 /* ---------------- calendar ---------------- */
 /* Real events. Keyed by "YYYY-M" (month is 1-based) -> { day: [events] } */
@@ -1130,28 +1554,41 @@ const runWienUrl='https://ringanaevents.flave.world/users/47410319-d2b7-440a-a69
 const conventionTicket='https://ringanaevents.flave.world/users/47410319-d2b7-440a-a698-ba941ac9fd5c/events/f61caca0-e047-46f3-9d97-8baed0c84cb5';
 const conventionStream='https://ringanaevents.flave.world/users/47410319-d2b7-440a-a698-ba941ac9fd5c/events/5968eaa7-cc93-4401-8176-c82ff03a9487';
 
-function teamCall(){return {t:'20:00',n:'Team Call',d:'Für alle, gemeinsam online',type:'call',
-  link:zoom,linkLabel:'Zoom beitreten',meta:'Meeting-ID 836 4483 5358'};}
-function freshDate(){return {t:'15:00',n:'Fresh Date am Campus',d:'Ab 10 Uhr offenes Team-Meeting für alle · Essen um 13 Uhr',type:'fresh',
-  link:freshForm,linkLabel:'Anmelden (bis Do die Woche davor)',
-  link2:ringbar,link2Label:'Essen bestellen',
-  meta:'Essen: spätestens Donnerstag die Woche davor über die RingBar-Seite bestellen und dann am Tag direkt bei der RingBar bezahlen, dann mit dem Essens-Markerl in die Mensa. * Datum genau anschauen – Deadline ist immer der Donnerstag der Vorwoche.'};}
-function runWien(){return {t:'10:00',n:'RUN 3 · Wien',d:'Hyatt Regency Wien · 10:00–16:30 Uhr',type:'event',
-  link:runWienUrl,linkLabel:'Zum Event'};}
-function convention(day){return {t:day===1?'08:00':'Tag 2',n:'RINGANA Convention 2026',
-  d:day===1?'CONFEX Köln · Tag 1 von 2, ab 08:00 Uhr':'CONFEX Köln · Tag 2 von 2, bis 16:00 Uhr',type:'event',
-  meta:'CONFEX, Barmer Straße 20, 50679 Köln, Deutschland',
-  link:conventionTicket,linkLabel:'Tickets',
-  link2:conventionStream,link2Label:'Livestream'};}
+function teamCall(){return {t:'20:00',n:T('ev_call_n'),d:T('ev_call_d'),type:'call',
+  link:zoom,linkLabel:T('ev_call_link'),meta:T('ev_call_meta')};}
+function freshDate(){return {t:'15:00',n:T('ev_fresh_n'),d:T('ev_fresh_d'),type:'fresh',
+  link:freshForm,linkLabel:T('ev_fresh_link'),
+  link2:ringbar,link2Label:T('ev_fresh_link2'),
+  meta:T('ev_fresh_meta')};}
+function runWien(){return {t:'10:00',n:T('ev_run_n'),d:T('ev_run_d'),type:'event',
+  link:runWienUrl,linkLabel:T('ev_run_link')};}
+function convention(day){return {t:day===1?'08:00':T('ev_conv_day2_t'),n:T('ev_conv_n'),
+  d:day===1?T('ev_conv_d1'):T('ev_conv_d2'),type:'event',
+  meta:T('ev_conv_meta'),
+  link:conventionTicket,linkLabel:T('ev_conv_link'),
+  link2:conventionStream,link2Label:T('ev_conv_link2')};}
+function materialize(desc){
+  switch(desc.k){
+    case 'call': return teamCall();
+    case 'fresh': return freshDate();
+    case 'run': return runWien();
+    case 'conv': return convention(desc.day);
+    default: return null;
+  }
+}
 
 const eventsByMonth={
-  '2026-9':{ 1:[teamCall()], 19:[convention(1)], 20:[convention(2)], 25:[freshDate()] },
-  '2026-10':{ 1:[teamCall()], 3:[runWien()], 9:[freshDate()], 23:[freshDate()] },
-  '2026-11':{ 1:[teamCall()], 6:[freshDate()], 27:[freshDate()] },
-  '2026-12':{ 1:[teamCall()], 4:[freshDate()], 26:[freshDate()] }
+  '2026-9':{ 1:[{k:'call'}], 19:[{k:'conv',day:1}], 20:[{k:'conv',day:2}], 25:[{k:'fresh'}] },
+  '2026-10':{ 1:[{k:'call'}], 3:[{k:'run'}], 9:[{k:'fresh'}], 23:[{k:'fresh'}] },
+  '2026-11':{ 1:[{k:'call'}], 6:[{k:'fresh'}], 27:[{k:'fresh'}] },
+  '2026-12':{ 1:[{k:'call'}], 4:[{k:'fresh'}], 26:[{k:'fresh'}] }
 };
 
-const monthNames=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+const MONTH_NAMES={
+  de:['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
+  en:['January','February','March','April','May','June','July','August','September','October','November','December']
+};
+const WEEKDAYS={de:['Mo','Di','Mi','Do','Fr','Sa','So'],en:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']};
 const _now=new Date();
 const realToday={y:_now.getFullYear(),m:_now.getMonth()+1,d:_now.getDate()}; // echtes Datum des Geräts
 let curY=realToday.y, curM=realToday.m; // Kalender startet im aktuellen Monat
@@ -1165,10 +1602,17 @@ function monthKey(y,m){return y+'-'+m;}
 function daysInMonth(y,m){return new Date(y,m,0).getDate();}
 function firstDowMon(y,m){return (new Date(y,m-1,1).getDay()+6)%7;} // Mon=0
 
-function eventsFor(y,m,d){const mm=eventsByMonth[monthKey(y,m)];return mm&&mm[d]?mm[d]:null;}
+function eventsFor(y,m,d){const mm=eventsByMonth[monthKey(y,m)];return (mm&&mm[d])?mm[d].map(materialize):null;}
+function renderWeekdayHeader(){
+  const calhd=document.getElementById('calhd');
+  if(calhd)calhd.innerHTML=WEEKDAYS[LANG].map(w=>`<div>${w}</div>`).join('');
+}
+function formatDateHeader(d){
+  return LANG==='en' ? (MONTH_NAMES.en[curM-1]+' '+d) : (d+'. '+MONTH_NAMES.de[curM-1]);
+}
 
 function renderMonth(){
-  moLabel.textContent=monthNames[curM-1]+' '+curY;
+  moLabel.textContent=MONTH_NAMES[LANG][curM-1]+' '+curY;
   const fd=firstDowMon(curY,curM), dn=daysInMonth(curY,curM);
   let h='';
   for(let i=0;i<fd;i++)h+='<div class="cd mute"></div>';
@@ -1187,12 +1631,12 @@ function renderMonth(){
   const firstEv=mm?Math.min(...Object.keys(mm).map(Number)):null;
   if(onCurrentMonth)pick(realToday.d);
   else if(firstEv)pick(firstEv);
-  else dsel.innerHTML='<div class="noev">Diesen Monat keine festen Termine.</div>';
+  else dsel.innerHTML=`<div class="noev">${T('noev_month')}</div>`;
 }
 function pick(d){
   document.querySelectorAll('.cd').forEach(c=>c.classList.toggle('sel',+c.dataset.d===d));
   const ev=eventsFor(curY,curM,d);
-  dsel.innerHTML='<div class="dh">'+d+'. '+monthNames[curM-1]+'</div>'+(ev?ev.map(e=>{
+  dsel.innerHTML='<div class="dh">'+formatDateHeader(d)+'</div>'+(ev?ev.map(e=>{
     const links=[
       e.link?`<a class="evlink" href="${e.link}" target="_blank" rel="noopener">${e.linkLabel} ↗</a>`:'',
       e.link2?`<a class="evlink alt" href="${e.link2}" target="_blank" rel="noopener">${e.link2Label} ↗</a>`:''
@@ -1203,11 +1647,12 @@ function pick(d){
       ${e.meta?`<div class="emeta">${e.meta}</div>`:''}
       ${links?`<div class="evlinks">${links}</div>`:''}</div>
     </div>`;}).join('')
-    :'<div class="noev">Kein Termin an diesem Tag.</div>');
+    :`<div class="noev">${T('noev_day')}</div>`);
 }
 document.getElementById('calPrev').addEventListener('click',()=>{curM--;if(curM<1){curM=12;curY--;}renderMonth();});
 document.getElementById('calNext').addEventListener('click',()=>{curM++;if(curM>12){curM=1;curY++;}renderMonth();});
 if(todayBtn)todayBtn.addEventListener('click',()=>{curY=realToday.y;curM=realToday.m;renderMonth();});
+renderWeekdayHeader();
 renderMonth();
 
 /* "Als Nächstes" im Rail: immer die nächsten Termine ab heute, direkt aus eventsByMonth */
@@ -1222,7 +1667,7 @@ function renderNextUp(){
     for(const dStr in daysObj){
       const d=+dStr, dateNum=y*10000+m*100+d;
       if(dateNum<todayNum)continue;
-      daysObj[dStr].forEach(e=>all.push({m,d,dateNum,e}));
+      daysObj[dStr].map(materialize).forEach(e=>all.push({m,d,dateNum,e}));
     }
   }
   all.sort((a,b)=>a.dateNum-b.dateNum);
@@ -1230,7 +1675,7 @@ function renderNextUp(){
   const next=all.filter(x=>{ if(seen.has(x.e.n))return false; seen.add(x.e.n); return true; }).slice(0,3);
   box.innerHTML = next.length
     ? next.map(({m,d,e})=>`<div class="mini-ev"><div class="md">${d}.${m}.<br>${e.t}</div><div><div class="mt">${e.n}</div><div class="ms">${e.d}</div></div></div>`).join('')
-    : '<div class="ms" style="padding:8px 0;font-style:italic">Aktuell keine Termine eingetragen.</div>';
+    : `<div class="ms" style="padding:8px 0;font-style:italic">${T('nextup_empty')}</div>`;
 }
 renderNextUp();
 </script>
