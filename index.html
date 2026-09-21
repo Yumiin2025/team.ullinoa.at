@@ -447,6 +447,7 @@
       <div class="learnrow"><span class="ri">💶</span><div><div class="rt" data-i18n="res_l3_t">Teamumsatz & Provision</div><div class="rd" data-i18n="res_l3_d">Wie sich dein Einkommen zusammensetzt</div><div class="learn-links"><a class="ll vid" href="https://youtu.be/Uvh2FDx9424" target="_blank" rel="noopener" data-i18n="res_video">▶ Video</a><a class="ll pdf" href="Onboarding-03-Teamumsatz-Provision.pdf" target="_blank" rel="noopener">PDF</a></div></div></div>
 
       <div class="rescat" data-i18n="res_cat4">Produkte</div>
+      <div class="learnrow"><span class="ri">🌿</span><div><div class="rt" data-i18n="res_fd101_t">Fresh Date 101</div><div class="rd" data-i18n="res_fd101_d">Der Einstieg zum Fresh Date</div><div class="learn-links"><a class="ll vid" href="https://youtu.be/QO6FZSdFMHE" target="_blank" rel="noopener" data-i18n="res_video">▶ Video</a></div></div></div>
       <div class="soon-card"><span class="si">🎬</span><div><div class="st" data-i18n="res_soon_t">Kurze Produktvideos</div><div class="sd" data-i18n="res_soon_d">In Arbeit</div></div><span class="sbadge" data-i18n="res_soon_badge">Bald</span></div>
 
       <div class="rescat" data-i18n="res_cat5">Aufzeichnungen</div>
@@ -600,7 +601,7 @@ const UI = {
     res_cat2:"Unser Podcast", res_podcast_d:"Mit Ulli & Noa · über Business, Haltung und den Weg",
     res_cat3:"Verstehen & planen", res_l1_t:"Target-Plan Basics", res_l1_d:"Wie sich die Zielstufen aufbauen", res_video:"▶ Video",
     res_l2_d:"Was in deinen ersten Monaten zählt", res_l3_t:"Teamumsatz & Provision", res_l3_d:"Wie sich dein Einkommen zusammensetzt",
-    res_cat4:"Produkte", res_soon_t:"Kurze Produktvideos", res_soon_d:"In Arbeit", res_soon_badge:"Bald",
+    res_cat4:"Produkte", res_fd101_t:"Fresh Date 101", res_fd101_d:"Der Einstieg zum Fresh Date", res_soon_t:"Kurze Produktvideos", res_soon_d:"In Arbeit", res_soon_badge:"Bald",
     res_cat5:"Aufzeichnungen", res_sm1:"Social Media Start", res_sm2:"Social Media Ins &amp; Outs mit Alisa",
     res_call1:"1. Call",res_call2:"2. Call",res_call3:"3. Call",res_call4:"4. Call",res_call5:"5. Call",
     res_call6:"6. Call",res_call7:"7. Call",res_call8:"8. Call",res_call9:"9. Call",res_call10:"10. Call",
@@ -720,7 +721,7 @@ const UI = {
     res_cat2:"Our Podcast", res_podcast_d:"With Ulli & Noa · on business, mindset, and the path",
     res_cat3:"Understand & plan", res_l1_t:"Target Plan Basics", res_l1_d:"How the target levels build up", res_video:"▶ Video",
     res_l2_d:"What matters in your first months", res_l3_t:"Team Revenue & Commission", res_l3_d:"How your income is made up",
-    res_cat4:"Products", res_soon_t:"Short product videos", res_soon_d:"In progress", res_soon_badge:"Soon",
+    res_cat4:"Products", res_fd101_t:"Fresh Date 101", res_fd101_d:"Your introduction to the Fresh Date", res_soon_t:"Short product videos", res_soon_d:"In progress", res_soon_badge:"Soon",
     res_cat5:"Recordings", res_sm1:"Social Media Kickoff", res_sm2:"Social Media Ins &amp; Outs with Alisa",
     res_call1:"Call 1",res_call2:"Call 2",res_call3:"Call 3",res_call4:"Call 4",res_call5:"Call 5",
     res_call6:"Call 6",res_call7:"Call 7",res_call8:"Call 8",res_call9:"Call 9",res_call10:"Call 10",
@@ -1719,6 +1720,10 @@ renderNextUp();
    weil für sie ohnehin alles neu ist. Gespeichert wird nur die zuletzt gesehene id –
    getrennt vom Fortschritt (also auch nicht im Sicherungs-Code). */
 const NEWS=[
+  {id:'2026-09-21-2',items:[   // bei mehreren Updates am selben Tag: Suffix -2, -3 ... anhängen
+    {de:'Neues Video in Ressourcen: Fresh Date 101',
+     en:'New video in Resources: Fresh Date 101',v:'res'}
+  ]},
   {id:'2026-09-21',items:[
     {de:'3 neue Fresh Dates in Wiener Neustadt (21.10., 4.11., 17.11.)',
      en:'3 new Fresh Dates in Wiener Neustadt (Oct 21, Nov 4, Nov 17)',v:'cal'},
