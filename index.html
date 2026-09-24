@@ -703,6 +703,10 @@ const UI = {
     ev_conv_meta:"CONFEX, Barmer Straße 20, 50679 Köln, Deutschland", ev_conv_link:"Tickets", ev_conv_link2:"Livestream",
     ev_wn_n:"Fresh Date Wiener Neustadt", ev_wn_d:"Einlass 18:30 · Start 19:00 Uhr", ev_wn_link:"Tickets",
     ev_wn_meta:"Hilton Garden Inn, Promenade 6, 2700 Wiener Neustadt",
+    ev_feier_n:"End of Year Team Feier", ev_feier_d:"Ein Abend zum Austauschen, Feiern und Snacken – mit ein paar Überraschungen. 10:00–17:00 Uhr.",
+    ev_feier_link:"Anmelden (bis 11.12.)", ev_feier_meta:"RINGANA Campus A, 8295 Sankt Johann in der Haide, Österreich · Plätze begrenzt (120) – bitte nur verbindlich anmelden",
+    ev_kickoff_n:"Team Kick-off 2027", ev_kickoff_d:"Ein ganzer Tag mit Insights von erfolgreichen Partner:innen, Tipps, Tricks und How-tos für deinen Business-Alltag – plus jede Menge Inspiration und Frauenpower. 9:00–18:00 Uhr · 20 €.",
+    ev_kickoff_link:"Anmelden (bis 31.12.)", ev_kickoff_meta:"RINGANA Campus A, 8295 Sankt Johann in der Haide, Österreich · Plätze begrenzt, verbindliche Anmeldung",
     news_h:"Neu für dich", news_ok:"Verstanden", news_close:"Schließen"
   },
   en:{
@@ -823,6 +827,10 @@ const UI = {
     ev_conv_meta:"CONFEX, Barmer Straße 20, 50679 Cologne, Germany", ev_conv_link:"Tickets", ev_conv_link2:"Livestream",
     ev_wn_n:"Fresh Date Wiener Neustadt", ev_wn_d:"Doors 6:30pm · starts 7:00pm", ev_wn_link:"Tickets",
     ev_wn_meta:"Hilton Garden Inn, Promenade 6, 2700 Wiener Neustadt",
+    ev_feier_n:"End of Year Team Party", ev_feier_d:"An evening to connect, celebrate and snack – with a few surprises. 10:00am–5:00pm.",
+    ev_feier_link:"Register (by Dec 11)", ev_feier_meta:"RINGANA Campus A, 8295 Sankt Johann in der Haide, Austria · Limited to 120 spots – please only register if you're sure you're coming",
+    ev_kickoff_n:"Team Kick-off 2027", ev_kickoff_d:"A full day of insights from successful partners, tips, tricks and how-tos for your everyday business – plus plenty of inspiration and women's empowerment. 9:00am–6:00pm · €20.",
+    ev_kickoff_link:"Register (by Dec 31)", ev_kickoff_meta:"RINGANA Campus A, 8295 Sankt Johann in der Haide, Austria · Limited spots, registration is binding",
     news_h:"New for you", news_ok:"Got it", news_close:"Close"
   }
 };
@@ -1600,6 +1608,10 @@ function convention(day){return {t:day===1?'08:00':T('ev_conv_day2_t'),n:T('ev_c
   link2:conventionStream,link2Label:T('ev_conv_link2')};}
 function freshWN(url){return {t:'19:00',n:T('ev_wn_n'),d:T('ev_wn_d'),type:'fresh',
   link:url,linkLabel:T('ev_wn_link'),meta:T('ev_wn_meta')};}
+function teamFeier(){return {t:'10:00',n:T('ev_feier_n'),d:T('ev_feier_d'),type:'event',
+  link:'https://eveeno.com/teamfeier',linkLabel:T('ev_feier_link'),meta:T('ev_feier_meta')};}
+function teamKickoff(){return {t:'09:00',n:T('ev_kickoff_n'),d:T('ev_kickoff_d'),type:'event',
+  link:'https://eveeno.com/teamkickoff',linkLabel:T('ev_kickoff_link'),meta:T('ev_kickoff_meta')};}
 function materialize(desc){
   switch(desc.k){
     case 'freshwn': return freshWN(desc.url);
@@ -1607,6 +1619,8 @@ function materialize(desc){
     case 'fresh': return freshDate();
     case 'run': return runWien();
     case 'conv': return convention(desc.day);
+    case 'feier': return teamFeier();
+    case 'kickoff': return teamKickoff();
     default: return null;
   }
 }
@@ -1615,7 +1629,19 @@ const eventsByMonth={
   '2026-9':{ 1:[{k:'call'}], 19:[{k:'conv',day:1}], 20:[{k:'conv',day:2}], 25:[{k:'fresh'}] },
   '2026-10':{ 1:[{k:'call'}], 3:[{k:'run'}], 9:[{k:'fresh'}], 21:[{k:'freshwn',url:'https://eveeno.com/freshdateoktober'}], 23:[{k:'fresh'}] },
   '2026-11':{ 1:[{k:'call'}], 4:[{k:'freshwn',url:'https://eveeno.com/freshdate4november'}], 6:[{k:'fresh'}], 17:[{k:'freshwn',url:'https://eveeno.com/freshdate17november'}], 27:[{k:'fresh'}] },
-  '2026-12':{ 1:[{k:'call'}], 4:[{k:'fresh'}], 21:[{k:'fresh'}] }
+  '2026-12':{ 1:[{k:'call'}], 4:[{k:'fresh'}], 21:[{k:'feier'}] },
+  '2027-1':{ 15:[{k:'kickoff'}] },
+  '2027-2':{ 5:[{k:'fresh'}], 19:[{k:'fresh'}] },
+  '2027-3':{ 5:[{k:'fresh'}], 26:[{k:'fresh'}] },
+  '2027-4':{ 9:[{k:'fresh'}], 30:[{k:'fresh'}] },
+  '2027-5':{ 14:[{k:'fresh'}], 28:[{k:'fresh'}] },
+  '2027-6':{ 4:[{k:'fresh'}], 18:[{k:'fresh'}] },
+  '2027-7':{ 2:[{k:'fresh'}], 23:[{k:'fresh'}] },
+  '2027-8':{ 6:[{k:'fresh'}], 20:[{k:'fresh'}] },
+  '2027-9':{ 3:[{k:'fresh'}], 24:[{k:'fresh'}] },
+  '2027-10':{ 8:[{k:'fresh'}], 22:[{k:'fresh'}] },
+  '2027-11':{ 5:[{k:'fresh'}], 19:[{k:'fresh'}] },
+  '2027-12':{ 3:[{k:'fresh'}], 10:[{k:'fresh'}], 17:[{k:'fresh'}] }
 };
 
 const MONTH_NAMES={
@@ -1721,6 +1747,12 @@ renderNextUp();
    weil für sie ohnehin alles neu ist. Gespeichert wird nur die zuletzt gesehene id –
    getrennt vom Fortschritt (also auch nicht im Sicherungs-Code). */
 const NEWS=[
+  {id:'2026-09-24',items:[
+    {de:'End of Year Team Feier (21.12.) und Team Kick-off 2027 (15.1.) im Kalender',
+     en:'End of Year Team Party (Dec 21) and Team Kick-off 2027 (Jan 15) added to the calendar',v:'cal'},
+    {de:'Fresh-Date-Termine am Campus für 2027 ergänzt',
+     en:'2027 Fresh Date dates at Campus added',v:'cal'}
+  ]},
   {id:'2026-09-23',items:[
     {de:'Neues Video in Onboarding Tag 7',
      en:'New German video in onboarding Day 7 (English version coming soon)',v:'path'}
