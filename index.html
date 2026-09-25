@@ -694,6 +694,7 @@ const UI = {
     w_cta_p:"🌿 Stell dich in unserer Onboarding-Gruppe kurz vor: Name, woher du kommst, und ein ehrlicher Satz, warum du gestartet bist. Nicht als Pflichtübung, sondern weil dein einer Satz jemandem hier vielleicht genau den Mut gibt, den diese Person gerade braucht.",
     w_cta_btn:"Zur WhatsApp-Gruppe ↗",
     ev_call_n:"Team Call", ev_call_d:"Für alle, gemeinsam online", ev_call_link:"Zoom beitreten", ev_call_meta:"Meeting-ID 836 4483 5358",
+    ev_callen_n:"Team Call (Englisch)", ev_callen_d:"Für alle, auf Englisch", ev_callen_link:"Zoom beitreten", ev_callen_meta:"Meeting-ID 827 1133 9043",
     ev_fresh_n:"Fresh Date am Campus", ev_fresh_d:"Ab 10 Uhr offenes Team-Meeting für alle · Essen um 13 Uhr",
     ev_fresh_link:"Anmelden (bis Do die Woche davor)", ev_fresh_link2:"Essen bestellen",
     ev_fresh_meta:"Essen: spätestens Donnerstag die Woche davor über die RingBar-Seite bestellen und dann am Tag direkt bei der RingBar bezahlen, dann mit dem Essens-Markerl in die Mensa. * Datum genau anschauen – Deadline ist immer der Donnerstag der Vorwoche.",
@@ -818,6 +819,7 @@ const UI = {
     w_cta_p:"🌿 Introduce yourself in our onboarding group: your name, where you're from, and one honest sentence about why you started. Not as an obligation, but because your one sentence might give someone here exactly the courage they need right now.",
     w_cta_btn:"Go to the WhatsApp group ↗",
     ev_call_n:"Team Call", ev_call_d:"For everyone, together online", ev_call_link:"Join Zoom", ev_call_meta:"Meeting ID 836 4483 5358",
+    ev_callen_n:"English Team Call", ev_callen_d:"For everyone, in English", ev_callen_link:"Join Zoom", ev_callen_meta:"Meeting ID 827 1133 9043",
     ev_fresh_n:"Fresh Date at Campus", ev_fresh_d:"Open team meeting for everyone from 10am · lunch at 1pm",
     ev_fresh_link:"Register (by Thu the week before)", ev_fresh_link2:"Order lunch",
     ev_fresh_meta:"Lunch: order via the RingBar site by Thursday the week before at the latest, then pay in person at the RingBar on the day, then take your meal token to the canteen. * Check the date carefully – the deadline is always the Thursday of the week before.",
@@ -1587,6 +1589,7 @@ renderQuote();
 /* ---------------- calendar ---------------- */
 /* Real events. Keyed by "YYYY-M" (month is 1-based) -> { day: [events] } */
 const zoom="https://us06web.zoom.us/j/83644835358";
+const zoomEN="https://us06web.zoom.us/j/82711339043";
 const freshForm="https://forms.gle/ZnVJ3JBvr9jUi8FL6";
 const ringbar="https://www.ringana.com/ringbar/";
 
@@ -1596,6 +1599,8 @@ const conventionStream='https://ringanaevents.flave.world/users/47410319-d2b7-44
 
 function teamCall(){return {t:'20:00',n:T('ev_call_n'),d:T('ev_call_d'),type:'call',
   link:zoom,linkLabel:T('ev_call_link'),meta:T('ev_call_meta')};}
+function teamCallEN(){return {t:'20:00',n:T('ev_callen_n'),d:T('ev_callen_d'),type:'call',
+  link:zoomEN,linkLabel:T('ev_callen_link'),meta:T('ev_callen_meta')};}
 function freshDate(){return {t:'15:00',n:T('ev_fresh_n'),d:T('ev_fresh_d'),type:'fresh',
   link:freshForm,linkLabel:T('ev_fresh_link'),
   link2:ringbar,link2Label:T('ev_fresh_link2'),
@@ -1617,6 +1622,7 @@ function materialize(desc){
   switch(desc.k){
     case 'freshwn': return freshWN(desc.url);
     case 'call': return teamCall();
+    case 'callen': return teamCallEN();
     case 'fresh': return freshDate();
     case 'run': return runWien();
     case 'conv': return convention(desc.day);
@@ -1627,22 +1633,22 @@ function materialize(desc){
 }
 
 const eventsByMonth={
-  '2026-9':{ 1:[{k:'call'}], 19:[{k:'conv',day:1}], 20:[{k:'conv',day:2}], 25:[{k:'fresh'}] },
-  '2026-10':{ 1:[{k:'call'}], 3:[{k:'run'}], 9:[{k:'fresh'}], 21:[{k:'freshwn',url:'https://eveeno.com/freshdateoktober'}], 23:[{k:'fresh'}] },
-  '2026-11':{ 1:[{k:'call'}], 4:[{k:'freshwn',url:'https://eveeno.com/freshdate4november'}], 6:[{k:'fresh'}], 17:[{k:'freshwn',url:'https://eveeno.com/freshdate17november'}], 27:[{k:'fresh'}] },
-  '2026-12':{ 1:[{k:'call'}], 4:[{k:'fresh'}], 21:[{k:'feier'}] },
-  '2027-1':{ 15:[{k:'kickoff'}] },
-  '2027-2':{ 5:[{k:'fresh'}], 19:[{k:'fresh'}] },
-  '2027-3':{ 5:[{k:'fresh'}], 26:[{k:'fresh'}] },
-  '2027-4':{ 9:[{k:'fresh'}], 30:[{k:'fresh'}] },
-  '2027-5':{ 14:[{k:'fresh'}], 28:[{k:'fresh'}] },
-  '2027-6':{ 4:[{k:'fresh'}], 18:[{k:'fresh'}] },
-  '2027-7':{ 2:[{k:'fresh'}], 23:[{k:'fresh'}] },
-  '2027-8':{ 6:[{k:'fresh'}], 20:[{k:'fresh'}] },
-  '2027-9':{ 3:[{k:'fresh'}], 24:[{k:'fresh'}] },
-  '2027-10':{ 8:[{k:'fresh'}], 22:[{k:'fresh'}] },
-  '2027-11':{ 5:[{k:'fresh'}], 19:[{k:'fresh'}] },
-  '2027-12':{ 3:[{k:'fresh'}], 10:[{k:'fresh'}], 17:[{k:'fresh'}] }
+  '2026-9':{ 1:[{k:'call'}], 15:[{k:'callen'}], 19:[{k:'conv',day:1}], 20:[{k:'conv',day:2}], 25:[{k:'fresh'}] },
+  '2026-10':{ 3:[{k:'run'}], 4:[{k:'call'}], 9:[{k:'fresh'}], 15:[{k:'callen'}], 21:[{k:'freshwn',url:'https://eveeno.com/freshdateoktober'}], 23:[{k:'fresh'}] },
+  '2026-11':{ 1:[{k:'call'}], 4:[{k:'freshwn',url:'https://eveeno.com/freshdate4november'}], 6:[{k:'fresh'}], 15:[{k:'callen'}], 17:[{k:'freshwn',url:'https://eveeno.com/freshdate17november'}], 27:[{k:'fresh'}] },
+  '2026-12':{ 1:[{k:'call'}], 4:[{k:'fresh'}], 15:[{k:'callen'}], 21:[{k:'feier'}] },
+  '2027-1':{ 15:[{k:'kickoff'},{k:'callen'}] },
+  '2027-2':{ 5:[{k:'fresh'}], 15:[{k:'callen'}], 19:[{k:'fresh'}] },
+  '2027-3':{ 5:[{k:'fresh'}], 15:[{k:'callen'}], 26:[{k:'fresh'}] },
+  '2027-4':{ 9:[{k:'fresh'}], 15:[{k:'callen'}], 30:[{k:'fresh'}] },
+  '2027-5':{ 14:[{k:'fresh'}], 15:[{k:'callen'}], 28:[{k:'fresh'}] },
+  '2027-6':{ 4:[{k:'fresh'}], 15:[{k:'callen'}], 18:[{k:'fresh'}] },
+  '2027-7':{ 2:[{k:'fresh'}], 15:[{k:'callen'}], 23:[{k:'fresh'}] },
+  '2027-8':{ 6:[{k:'fresh'}], 15:[{k:'callen'}], 20:[{k:'fresh'}] },
+  '2027-9':{ 3:[{k:'fresh'}], 15:[{k:'callen'}], 24:[{k:'fresh'}] },
+  '2027-10':{ 8:[{k:'fresh'}], 15:[{k:'callen'}], 22:[{k:'fresh'}] },
+  '2027-11':{ 5:[{k:'fresh'}], 15:[{k:'callen'}], 19:[{k:'fresh'}] },
+  '2027-12':{ 3:[{k:'fresh'}], 10:[{k:'fresh'}], 15:[{k:'callen'}], 17:[{k:'fresh'}] }
 };
 
 const MONTH_NAMES={
@@ -1748,6 +1754,12 @@ renderNextUp();
    weil für sie ohnehin alles neu ist. Gespeichert wird nur die zuletzt gesehene id –
    getrennt vom Fortschritt (also auch nicht im Sicherungs-Code). */
 const NEWS=[
+  {id:'2026-09-25',items:[
+    {de:'Team Call im Oktober verschoben: statt 1.10. jetzt Sonntag, 4.10.',
+     en:'October Team Call moved: now Sunday, Oct 4 (instead of Oct 1)',v:'cal'},
+    {de:'Neu: Team Call auf Englisch, jeden 15. im Monat, 20:00 Uhr',
+     en:'New: English Team Call, on the 15th of every month, 8 PM',v:'cal'}
+  ]},
   {id:'2026-09-24-2',items:[
     {de:'Neues Video in Onboarding Tag 8',
      en:'New German video in onboarding Day 8 (English version coming soon)',v:'path'}
