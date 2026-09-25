@@ -183,7 +183,7 @@
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
   /* ================= LINKS ================= */
-  .lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:15px}
+  .lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:15px;margin-bottom:15px}
   .lcard{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px;text-decoration:none;color:inherit;transition:.14s;display:block}
   .lcard:hover{transform:translateY(-3px);border-color:var(--mint-d);box-shadow:0 10px 26px rgba(30,61,58,.07)}
   .lcard .lh{display:flex;align-items:center;gap:12px;margin-bottom:8px}
@@ -424,13 +424,15 @@
       <div class="lgrid">
         <a class="lcard" href="daily-checkliste.pdf" target="_blank" rel="noopener"><div class="lh"><span class="lb" style="background:#fbb33c">✓</span><div><div class="lt" data-i18n="res_checklist_t">Tägliche Checkliste</div><div class="ld" data-i18n="res_checklist_d">Deine Punkte für jeden Tag · PDF</div></div></div></a>
         <a class="lcard"><div class="lh"><span class="lb" style="background:#6accb1">O</span><div><div class="lt">Online Office</div><div class="ld" data-i18n="res_office_d">Journey, Academy, Events & Booking</div></div></div></a>
-        <a class="lcard"><div class="lh"><span class="lb" style="background:#fbb33c">📱</span><div><div class="lt">myRINGANA App</div><div class="ld" data-i18n="res_app_d">Fast Track und Umsätze im Blick</div></div></div></a>
-        <a class="lcard" href="https://ullinoa.at" target="_blank" rel="noopener"><div class="lh"><span class="lb" style="background:#2f6f60">W</span><div><div class="lt">ullinoa.at</div><div class="ld" data-i18n="res_website_d">Unsere Website</div></div></div></a>
-        <a class="lcard" href="https://instagram.com/ulli.noa.so.we" target="_blank" rel="noopener"><div class="lh"><span class="lb" style="background:#806cbf">IG</span><div><div class="lt">Instagram</div><div class="ld">@ulli.noa.so.we</div></div></div></a>
+        <a class="lcard" href="https://www.ringana.com/corporate/distribution/myringana-app/" target="_blank" rel="noopener"><div class="lh"><span class="lb" style="background:#fbb33c">📱</span><div><div class="lt">myRINGANA App</div><div class="ld" data-i18n="res_app_d">Fast Track und Umsätze im Blick</div></div></div></a>
         <div class="lcard lcard-links"><div class="lh"><span class="lb" style="background:#6accb1">🗓️</span><div><div class="lt" data-i18n="res_plan_t">Aufbauplan Sep–Dez</div><div class="ld" data-i18n="res_plan_d">Dein Fahrplan bis Jahresende</div></div></div><div class="lcard-btns"><a class="ll pdf" href="RINGANA_Aufbauplan_Sep_bis_Dez.pdf" target="_blank" rel="noopener">PDF</a><a class="ll xls" href="RINGANA_Aufbauplan_Sep_bis_Dez.xlsx" rel="noopener">Excel</a></div></div>
       </div>
 
-      <div class="rescat" data-i18n="res_cat2">Unser Podcast</div>
+      <div class="rescat" data-i18n="res_cat2">Ulli & Noa</div>
+      <div class="lgrid">
+        <a class="lcard" href="https://ullinoa.at" target="_blank" rel="noopener"><div class="lh"><span class="lb" style="background:#2f6f60">W</span><div><div class="lt">ullinoa.at</div><div class="ld" data-i18n="res_website_d">Unsere Website</div></div></div></a>
+        <a class="lcard" href="https://instagram.com/ulli.noa.so.we" target="_blank" rel="noopener"><div class="lh"><span class="lb" style="background:#806cbf">IG</span><div><div class="lt">Instagram</div><div class="ld">@ulli.noa.so.we</div></div></div></a>
+      </div>
       <div class="podrow">
         <span class="ri">🎙️</span>
         <div>
@@ -605,7 +607,7 @@ const UI = {
     res_cat1:"Womit du täglich arbeitest", res_checklist_t:"Tägliche Checkliste", res_checklist_d:"Deine Punkte für jeden Tag · PDF",
     res_office_d:"Journey, Academy, Events & Booking", res_app_d:"Fast Track und Umsätze im Blick", res_website_d:"Unsere Website",
     res_plan_t:"Aufbauplan Sep–Dez", res_plan_d:"Dein Fahrplan bis Jahresende",
-    res_cat2:"Unser Podcast", res_podcast_d:"Mit Ulli & Noa · über Business, Haltung und den Weg",
+    res_cat2:"Ulli & Noa", res_podcast_d:"Mit Ulli & Noa · über Business, Haltung und den Weg",
     res_cat3:"Verstehen & planen", res_l1_t:"Target-Plan Basics", res_l1_d:"Wie sich die Zielstufen aufbauen", res_video:"▶ Video",
     res_l2_d:"Was in deinen ersten Monaten zählt", res_l3_t:"Teamumsatz & Provision", res_l3_d:"Wie sich dein Einkommen zusammensetzt",
     res_cat_gewerbe:"Gewerbeanmeldung",
@@ -735,7 +737,7 @@ const UI = {
     res_cat1:"What you work with every day", res_checklist_t:"Daily Checklist", res_checklist_d:"Your points for every day · PDF",
     res_office_d:"Journey, Academy, Events & Booking", res_app_d:"Fast Track and your sales at a glance", res_website_d:"Our website",
     res_plan_t:"Growth Plan Sep–Dec", res_plan_d:"Your roadmap through the end of the year",
-    res_cat2:"Our Podcast", res_podcast_d:"With Ulli & Noa · on business, mindset, and the path",
+    res_cat2:"Ulli & Noa", res_podcast_d:"With Ulli & Noa · on business, mindset, and the path",
     res_cat3:"Understand & plan", res_l1_t:"Target Plan Basics", res_l1_d:"How the target levels build up", res_video:"▶ Video",
     res_l2_d:"What matters in your first months", res_l3_t:"Team Revenue & Commission", res_l3_d:"How your income is made up",
     res_cat_gewerbe:"Business Registration",
