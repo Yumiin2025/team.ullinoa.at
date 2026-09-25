@@ -229,7 +229,9 @@
   .ll.vid{background:var(--teal);color:#fff}
   .ll.pdf{background:#fdeccb;color:var(--terra)}
   .ll.xls{background:#d7efe4;color:var(--teal2)}
+  .ll.link{background:var(--lilac);color:var(--lav)}
   .ll:hover{opacity:.9}
+  .resnote{font-size:12.5px;color:var(--muted);line-height:1.5;margin:-3px 2px 13px}
 
   /* ---- podcast ---- */
   .podrow{display:flex;gap:14px;align-items:flex-start;background:var(--paper);border:1px solid var(--line);border-radius:15px;padding:15px 16px;margin-bottom:11px}
@@ -446,6 +448,11 @@
       <div class="learnrow"><span class="ri">🚀</span><div><div class="rt">Fast Track & Bonus</div><div class="rd" data-i18n="res_l2_d">Was in deinen ersten Monaten zählt</div><div class="learn-links"><a class="ll vid" href="https://youtu.be/IQfHdKU_CC8" target="_blank" rel="noopener" data-i18n="res_video">▶ Video</a><a class="ll pdf" href="Onboarding-02-Fast-Track-Bonus.pdf" target="_blank" rel="noopener">PDF</a></div></div></div>
       <div class="learnrow"><span class="ri">💶</span><div><div class="rt" data-i18n="res_l3_t">Teamumsatz & Provision</div><div class="rd" data-i18n="res_l3_d">Wie sich dein Einkommen zusammensetzt</div><div class="learn-links"><a class="ll vid" href="https://youtu.be/Uvh2FDx9424" target="_blank" rel="noopener" data-i18n="res_video">▶ Video</a><a class="ll pdf" href="Onboarding-03-Teamumsatz-Provision.pdf" target="_blank" rel="noopener">PDF</a></div></div></div>
 
+      <div class="rescat" data-i18n="res_cat_gewerbe">Gewerbeanmeldung</div>
+      <div class="resnote" data-i18n="res_gewerbe_note">Für aktuelle, verbindliche Informationen und Unterstützung wende dich bitte an die jeweils zuständige Stelle (z. B. Wirtschaftskammer / Gewerbeamt).</div>
+      <div class="learnrow"><span class="ri">🇩🇪</span><div><div class="rt" data-i18n="res_gewerbe_de_t">Gewerbeanmeldung Deutschland</div><div class="rd" data-i18n="res_gewerbe_de_d">Was du für den Start als Direktvertriebspartnerin in Deutschland wissen musst.</div><div class="learn-links"><a class="ll vid" href="https://youtu.be/179dzTRr91I" target="_blank" rel="noopener" data-i18n="res_video">▶ Video</a></div></div></div>
+      <div class="learnrow"><span class="ri">🇦🇹</span><div><div class="rt" data-i18n="res_gewerbe_at_t">Gewerbeanmeldung Österreich</div><div class="rd" data-i18n="res_gewerbe_at_d">In NÖ gibt's einen Leitfaden für neue Direktberater:innen mit sehr vielen Infos für den Start. Grundsätzlich gelten die Regelungen in ganz Österreich, die Grundumlagen sind von Bundesland zu Bundesland unterschiedlich. Laut GewO braucht man schon bei der Absicht, Geld zu verdienen, einen Gewerbeschein – das spricht aber nichts dagegen, weil du dich dann auch auf legalem Weg auf Social Media präsentieren kannst.</div><div class="learn-links"><a class="ll vid" href="https://youtu.be/WMuPUAHih-8" target="_blank" rel="noopener" data-i18n="res_video">▶ Video</a><a class="ll link" href="https://www.wko.at/handel/direktvertrieb/gewerbeanmeldungspflicht" target="_blank" rel="noopener" data-i18n="res_gewerbe_wko">WKO Infoseite ↗</a><a class="ll pdf" href="begruessungsmappe-direktvertrieb_260921_164802.pdf" target="_blank" rel="noopener">PDF</a></div></div></div>
+
       <div class="rescat" data-i18n="res_cat4">Produkte</div>
       <div class="learnrow"><span class="ri">🌿</span><div><div class="rt" data-i18n="res_fd101_t">Fresh Date 101</div><div class="rd" data-i18n="res_fd101_d">Der Einstieg zum Fresh Date</div><div class="learn-links"><a class="ll vid" href="https://youtu.be/QO6FZSdFMHE" target="_blank" rel="noopener" data-i18n="res_video">▶ Video</a><a class="ll pdf" href="Onboarding-Fresh-Date-Guide.pdf" target="_blank" rel="noopener">PDF</a></div></div></div>
       <div class="soon-card"><span class="si">🎬</span><div><div class="st" data-i18n="res_soon_t">Kurze Produktvideos</div><div class="sd" data-i18n="res_soon_d">In Arbeit</div></div><span class="sbadge" data-i18n="res_soon_badge">Bald</span></div>
@@ -601,6 +608,11 @@ const UI = {
     res_cat2:"Unser Podcast", res_podcast_d:"Mit Ulli & Noa · über Business, Haltung und den Weg",
     res_cat3:"Verstehen & planen", res_l1_t:"Target-Plan Basics", res_l1_d:"Wie sich die Zielstufen aufbauen", res_video:"▶ Video",
     res_l2_d:"Was in deinen ersten Monaten zählt", res_l3_t:"Teamumsatz & Provision", res_l3_d:"Wie sich dein Einkommen zusammensetzt",
+    res_cat_gewerbe:"Gewerbeanmeldung",
+    res_gewerbe_note:"Für aktuelle, verbindliche Informationen und Unterstützung wende dich bitte an die jeweils zuständige Stelle (z. B. Wirtschaftskammer / Gewerbeamt).",
+    res_gewerbe_de_t:"Gewerbeanmeldung Deutschland", res_gewerbe_de_d:"Was du für den Start als Direktvertriebspartnerin in Deutschland wissen musst.",
+    res_gewerbe_at_t:"Gewerbeanmeldung Österreich", res_gewerbe_at_d:"In NÖ gibt's einen Leitfaden für neue Direktberater:innen mit sehr vielen Infos für den Start. Grundsätzlich gelten die Regelungen in ganz Österreich, die Grundumlagen sind von Bundesland zu Bundesland unterschiedlich. Laut GewO braucht man schon bei der Absicht, Geld zu verdienen, einen Gewerbeschein – das spricht aber nichts dagegen, weil du dich dann auch auf legalem Weg auf Social Media präsentieren kannst.",
+    res_gewerbe_wko:"WKO Infoseite ↗",
     res_cat4:"Produkte", res_fd101_t:"Fresh Date 101", res_fd101_d:"Der Einstieg zum Fresh Date", res_soon_t:"Kurze Produktvideos", res_soon_d:"In Arbeit", res_soon_badge:"Bald",
     res_cat5:"Aufzeichnungen", res_sm1:"Social Media Start", res_sm2:"Social Media Ins &amp; Outs mit Alisa",
     res_call1:"1. Call",res_call2:"2. Call",res_call3:"3. Call",res_call4:"4. Call",res_call5:"5. Call",
@@ -726,6 +738,11 @@ const UI = {
     res_cat2:"Our Podcast", res_podcast_d:"With Ulli & Noa · on business, mindset, and the path",
     res_cat3:"Understand & plan", res_l1_t:"Target Plan Basics", res_l1_d:"How the target levels build up", res_video:"▶ Video",
     res_l2_d:"What matters in your first months", res_l3_t:"Team Revenue & Commission", res_l3_d:"How your income is made up",
+    res_cat_gewerbe:"Business Registration",
+    res_gewerbe_note:"For current, binding information and support, please contact the relevant local authority (e.g. the Chamber of Commerce / trade licensing office).",
+    res_gewerbe_de_t:"Business Registration Germany", res_gewerbe_de_d:"What you need to know to get started as a direct sales partner in Germany.",
+    res_gewerbe_at_t:"Business Registration Austria", res_gewerbe_at_d:"In Lower Austria there's a guide for new direct sellers with lots of info to get started. The rules generally apply across all of Austria, though the base fees (Grundumlage) differ by state. Under Austrian trade law (GewO), you need a trade license (Gewerbeschein) as soon as you intend to earn money — which is actually good news, since it lets you present yourself legally on social media too.",
+    res_gewerbe_wko:"WKO info page ↗",
     res_cat4:"Products", res_fd101_t:"Fresh Date 101", res_fd101_d:"Your introduction to the Fresh Date", res_soon_t:"Short product videos", res_soon_d:"In progress", res_soon_badge:"Soon",
     res_cat5:"Recordings", res_sm1:"Social Media Kickoff", res_sm2:"Social Media Ins &amp; Outs with Alisa",
     res_call1:"Call 1",res_call2:"Call 2",res_call3:"Call 3",res_call4:"Call 4",res_call5:"Call 5",
@@ -1755,6 +1772,10 @@ renderNextUp();
    weil für sie ohnehin alles neu ist. Gespeichert wird nur die zuletzt gesehene id –
    getrennt vom Fortschritt (also auch nicht im Sicherungs-Code). */
 const NEWS=[
+  {id:'2026-09-25-3',items:[
+    {de:'Neue Ressourcen-Rubrik: Gewerbeanmeldung (Deutschland & Österreich)',
+     en:'New resources section: Business Registration (Germany & Austria)',v:'res'}
+  ]},
   {id:'2026-09-25-2',items:[
     {de:'Neues Video in Onboarding Tag 9',
      en:'New German video in onboarding Day 9 (English version coming soon)',v:'path'}
