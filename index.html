@@ -1356,10 +1356,10 @@ if(introCard)introCard.addEventListener('click',openWelcome);
 
 /* ---------------- plant streak: real SVG that grows with the streak ---------------- */
 /* Milestones purely for the label + progress bar; the drawing itself scales continuously. */
-const milestones=[0,3,7,14,30,60,100];
+const milestones=[0,1,2,4,6,8,10];
 function nextMilestone(s){for(const m of milestones)if(m>s)return m;return null;}
-/* Wachstum 0..1 – vorne steiler, damit man schon in den ersten Tagen etwas sieht; voll ab ~55 Tagen */
-function grow(streak){return streak<=0?0:Math.min(Math.pow(streak/55,0.5),1);}
+/* Wachstum 0..1 – vorne steiler, damit man schon in den ersten Tagen etwas sieht; voll mit Tag 10 (Onboarding-Abschluss) */
+function grow(streak){return streak<=0?0:Math.min(Math.pow(streak/10,0.5),1);}
 
 /* build an SVG plant whose size/leaves/flowers depend on `g` (0..1 growth) */
 function plantSVG(streak){
@@ -1381,7 +1381,7 @@ function plantSVG(streak){
   // stem
   s+=`<path d="M60 ${potTop-6} Q${60+sway} ${(potTop-6+topY)/2} 60 ${topY}" stroke="#4bb597" stroke-width="${3+g*2.5}" fill="none" stroke-linecap="round"/>`;
   // leaves appear progressively along the stem
-  const leaves=Math.max(1,Math.min(1+Math.floor(streak/2),8));  // more days = more leaves
+  const leaves=Math.max(1,Math.min(1+Math.floor(streak*0.8),8));  // more days = more leaves
   for(let i=0;i<leaves;i++){
     const t=(i+1)/(leaves+1);
     const ly=potTop-6-stemH*t;
@@ -1392,20 +1392,20 @@ function plantSVG(streak){
     s+=`<path d="M${lx} ${ly} q${side*size} ${-size*0.7} ${side*size*2} ${-size*0.2} q${-side*size} ${size*0.9} ${-side*size*2} ${size*0.2} Z" fill="${col}"/>`;
   }
   // buds -> flowers as it matures
-  if(streak>=14){
-    const flowers=streak>=30?3:1;
+  if(streak>=6){
+    const flowers=streak>=8?3:1;
     const fcolors=['#806cbf','#fbb33c','#6accb1'];
     for(let f=0;f<flowers;f++){
       const fx=60+(f-(flowers-1)/2)*16;
       const fy=topY-(f===Math.floor(flowers/2)?6:0);
-      const petal=streak>=30?5.5:4;
+      const petal=streak>=8?5.5:4;
       for(let p=0;p<6;p++){
         const a=p/6*Math.PI*2;
         s+=`<circle cx="${fx+Math.cos(a)*petal}" cy="${fy+Math.sin(a)*petal}" r="${petal}" fill="${fcolors[f%3]}" opacity=".92"/>`;
       }
       s+=`<circle cx="${fx}" cy="${fy}" r="${petal*0.7}" fill="#fbb33c"/>`;
     }
-  } else if(streak>=7){
+  } else if(streak>=4){
     // a closed bud on top
     s+=`<circle cx="60" cy="${topY-2}" r="${5+g*3}" fill="#806cbf"/>`;
     s+=`<path d="M55 ${topY} Q60 ${topY-10} 65 ${topY}" fill="#6accb1"/>`;
@@ -1419,20 +1419,20 @@ const STAGE_LABELS={
   de:[
     {min:0,label:"Ein Same wartet im Boden"},
     {min:1,label:"Ein zartes Sprießen"},
-    {min:3,label:"Erste kleine Blätter"},
-    {min:7,label:"Eine Knospe zeigt sich"},
-    {min:14,label:"Die erste Blüte öffnet sich"},
-    {min:30,label:"Sie blüht in voller Pracht"},
-    {min:60,label:"Kräftig gewachsen, stark dran geblieben"}
+    {min:2,label:"Erste kleine Blätter"},
+    {min:4,label:"Eine Knospe zeigt sich"},
+    {min:6,label:"Die erste Blüte öffnet sich"},
+    {min:8,label:"Sie blüht in voller Pracht"},
+    {min:10,label:"Volle Blüte – dein Fundament steht"}
   ],
   en:[
     {min:0,label:"A seed waits in the soil"},
     {min:1,label:"A gentle sprout"},
-    {min:3,label:"First little leaves"},
-    {min:7,label:"A bud appears"},
-    {min:14,label:"The first bloom opens"},
-    {min:30,label:"In full bloom"},
-    {min:60,label:"Strong and steady, still growing"}
+    {min:2,label:"First little leaves"},
+    {min:4,label:"A bud appears"},
+    {min:6,label:"The first bloom opens"},
+    {min:8,label:"In full bloom"},
+    {min:10,label:"Full bloom – your foundation stands"}
   ]
 };
 function labelFor(s){const list=STAGE_LABELS[LANG];let l=list[0];for(const x of list)if(s>=x.min)l=x;return l.label;}
