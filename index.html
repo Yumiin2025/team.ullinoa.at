@@ -676,7 +676,7 @@ const UI = {
     toast_next:"Stark. Tag {n} ist morgen für dich da 🌱", toast_all_done:"Alle Tage geschafft. Wow. 🌿",
     toast_day_waiting:"Tag {n} öffnet sich morgen für dich 🌱", toast_reset:"Fortschritt zurückgesetzt.", toast_loaded:"Fortschritt geladen ✓",
     day_tag:"Tag", status_done:"✓ Erledigt", status_today:"Heute dran", status_waiting:"🔒 Ab morgen", status_locked:"🔒 Bald",
-    todos_label:"📝 {n} To-dos", reflexion_label:"💭 Reflexion",
+    todos_label:"📝 {n} To-dos", closing_label:"🎉 Abschluss", reflexion_label:"💭 Reflexion",
     reset_confirm:"Möchtest du deinen Fortschritt wirklich zurücksetzen? Deine Serie, abgehakten To-dos und Reflexionen auf diesem Gerät werden gelöscht.",
     save_ey:"Nur für dich", save_h3:"Fortschritt sichern",
     save_hint:"Das ist dein persönlicher Sicherungs-Code – eine Kopie <b>nur deines</b> Fortschritts von diesem Gerät. Speichere ihn dir (Notizen, an dich selbst schicken). Mit „Code laden“ holst du ihn auf einem neuen Gerät oder nach dem Löschen der Browserdaten zurück. Er wird nirgends hochgeladen.",
@@ -806,7 +806,7 @@ const UI = {
     toast_next:"Nice work. Day {n} will be here tomorrow 🌱", toast_all_done:"All days complete. Wow. 🌿",
     toast_day_waiting:"Day {n} opens up for you tomorrow 🌱", toast_reset:"Progress reset.", toast_loaded:"Progress loaded ✓",
     day_tag:"Day", status_done:"✓ Done", status_today:"Today's the day", status_waiting:"🔒 Tomorrow", status_locked:"🔒 Soon",
-    todos_label:"📝 {n} to-dos", reflexion_label:"💭 Reflection",
+    todos_label:"📝 {n} to-dos", closing_label:"🎉 Wrap-up", reflexion_label:"💭 Reflection",
     reset_confirm:"Do you really want to reset your progress? Your streak, checked-off to-dos, and reflections on this device will be deleted.",
     save_ey:"Just for you", save_h3:"Save Progress",
     save_hint:"This is your personal backup code – a copy of <b>only your</b> progress from this device. Save it somewhere (notes, message it to yourself). Use „Load code“ to get it back on a new device or after clearing your browser data. It's never uploaded anywhere.",
@@ -1045,7 +1045,18 @@ const DAYS={
      {t:"Produkte bereitlegen und gemeinsam testen",d:"Leg die Produkte zum Live-Thema raus, die du hast. Nach dem Schauen probiert ihr zusammen – auftragen, riechen, schmecken. Weniger erklären, mehr erleben lassen."}
    ],
    reflect:"Wie war es, RINGANA im entspannten Rahmen zu teilen? Was hat den Gästen am meisten Spaß gemacht?",
-   outro:"Ein Nachmittag reicht, um Produkte zusammen lieben zu lernen. 🫶"}
+   outro:"Ein Nachmittag reicht, um Produkte zusammen lieben zu lernen. 🫶"},
+  {n:10,emoji:"🎉",title:"Dein eigenes Fresh Date",tease:"Alles, was du brauchst, steckt im Video und im Guide.",
+   video:"J1YSaiBZCdg",
+   lead:"Das ist dein letzter Onboarding-Tag.",
+   intro:[
+     "Schau dir das Video an und nimm dir danach in Ruhe Zeit für den Fresh Date Guide. Dort steht alles, was du für dein erstes eigenes Fresh Date brauchst – Ablauf, Produkte, Tipps.",
+     "Guide zum Nachlesen: <a href=\"Onboarding-Fresh-Date-Guide.pdf\" target=\"_blank\" rel=\"noopener\">Fresh Date Guide (PDF)</a>",
+     "Heute gibt's keine Aufgabenliste. Nimm dir die Zeit, die du brauchst – und wenn du bereit bist, lädst du die ersten Menschen zu deinem eigenen Fresh Date ein."
+   ],
+   tasks:[],
+   reflect:"Was nimmst du aus den letzten 10 Tagen mit? Worauf freust du dich bei deinem ersten eigenen Fresh Date am meisten?",
+   outro:"Du hast es geschafft. Ein Schritt nach dem anderen – und jetzt bist du bereit, loszulegen. 🌿🎉"}
  ],
  en:[
   {n:1,emoji:"🥳",title:"Your First Day",tease:"Four concrete things, then you're done.",
@@ -1141,7 +1152,17 @@ const DAYS={
      {t:"Set out the products and test together",d:"Put out the products for the Live's topic that you have. After watching, try them together – apply, smell, taste. Explain less, let people experience more."}
    ],
    reflect:"How did it feel to share RINGANA in a relaxed setting? What did your guests enjoy most?",
-   outro:"One afternoon is enough to fall in love with products together. 🫶"}
+   outro:"One afternoon is enough to fall in love with products together. 🫶"},
+  {n:10,emoji:"🎉",title:"Your Own Fresh Date",tease:"Everything you need is in the video and the guide.",
+   lead:"This is your last onboarding day.",
+   intro:[
+     "Watch the video, then take your time with the Fresh Date Guide. It has everything you need for your first own Fresh Date – how it runs, which products, and tips.",
+     "Guide to read: <a href=\"Onboarding-Fresh-Date-Guide.pdf\" target=\"_blank\" rel=\"noopener\">Fresh Date Guide (PDF)</a>",
+     "No to-do list today. Take the time you need – and when you're ready, invite the first people to your own Fresh Date."
+   ],
+   tasks:[],
+   reflect:"What are you taking with you from the last 10 days? What are you most looking forward to at your first own Fresh Date?",
+   outro:"You made it. One step at a time – and now you're ready to get going. 🌿🎉"}
  ]
 };
 let days=DAYS[LANG];
@@ -1173,7 +1194,7 @@ function renderTimeline(){
         <div class="th"><span class="tlabel">${T('day_tag')} ${d.n}</span><span class="tstatus">${status}</span></div>
         <h3>${d.title}</h3>
         <div class="ttease">${d.tease}</div>
-        <div class="tmeta"><span>${Tf('todos_label',{n:d.tasks.length})}</span><span>🎬 ${d.video?T('video_label'):T('video_soon_short')}</span><span>${T('reflexion_label')}</span></div>
+        <div class="tmeta"><span>${d.tasks.length?Tf('todos_label',{n:d.tasks.length}):T('closing_label')}</span><span>🎬 ${d.video?T('video_label'):T('video_soon_short')}</span><span>${T('reflexion_label')}</span></div>
       </div></div>`;
   }).join('');
   tl.querySelectorAll('.tday').forEach(el=>{
@@ -1207,12 +1228,12 @@ function openDay(n){
       <div class="lvideo-wrap">${d.video
         ? `<div class="lvideo"><iframe src="https://www.youtube-nocookie.com/embed/${d.video}" title="${T('day_tag')} ${d.n}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`
         : `<div class="lvideo-soon"><span>🎬</span> ${T('video_soon_long')}</div>`}</div>
-      <div class="todo-h">${T('todo_h')}</div>
+      ${d.tasks.length?`<div class="todo-h">${T('todo_h')}</div>
       ${d.tasks.map((t,i)=>`<div class="task ${savedTasks[i]?'done':''}" data-i="${i}">
           <span class="cb"></span>
           <div><div class="tk-t">${t.t}</div>${t.d?`<div class="tk-d">${t.d}</div>`:''}
           ${t.ex?`<div class="msg-ex">${t.ex}</div>`:''}</div>
-        </div>`).join('')}
+        </div>`).join('')}`:''}
       <div class="reflect">
         <div class="rh">${T('reflect_h')}</div>
         <div class="rq">${d.reflect}</div>
@@ -1774,6 +1795,10 @@ renderNextUp();
    weil für sie ohnehin alles neu ist. Gespeichert wird nur die zuletzt gesehene id –
    getrennt vom Fortschritt (also auch nicht im Sicherungs-Code). */
 const NEWS=[
+  {id:'2026-09-27',items:[
+    {de:'Neuer Tag 10: dein eigenes Fresh Date – Abschluss-Video & Guide',
+     en:'New Day 10: your own Fresh Date – closing video & guide',v:'path'}
+  ]},
   {id:'2026-09-25-3',items:[
     {de:'Neue Ressourcen-Rubrik: Gewerbeanmeldung (Deutschland & Österreich)',
      en:'New resources section: Business Registration (Germany & Austria)',v:'res'}
