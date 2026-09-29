@@ -339,7 +339,8 @@
   /* top bar plant */
   .streak .pot{width:26px;height:30px;display:flex;align-items:flex-end;justify-content:center}
   .streak .pot svg{width:26px;height:30px;overflow:visible}
-  .mini-ev{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+  .mini-ev{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer;transition:.12s}
+  .mini-ev:hover{opacity:.75}
   .mini-ev:last-child{border:none}
   .mini-ev .md{background:var(--teal);color:#fff;border-radius:9px;text-align:center;padding:5px 8px;font-size:11px;font-weight:700;min-width:44px;line-height:1.25}
   .mini-ev .mt{font-weight:700;font-size:13.5px;color:var(--teal)}
@@ -1437,6 +1438,11 @@ const STAGE_LABELS={
 };
 function labelFor(s){const list=STAGE_LABELS[LANG];let l=list[0];for(const x of list)if(s>=x.min)l=x;return l.label;}
 function renderPlant(streak){
+  // Die Pflanze darf nie hinter den tatsächlich abgeschlossenen Tagen zurückfallen:
+  // eine Lücke von >1 Tag setzt die Kalender-Serie zurück (reconcileStreak()), aber
+  // bereits erledigte Onboarding-Tage bleiben erledigt. Ohne diesen Max()-Schutz
+  // konnte die Blume bei "alle 10 Tage fertig" trotzdem leer aussehen.
+  streak=Math.max(streak,(state.doneDays||[]).length);
   document.getElementById('potTop').innerHTML=plantSVG(streak);
   document.getElementById('potBig').innerHTML=plantSVG(streak);
   document.getElementById('streakTop').textContent=streak;
@@ -1763,6 +1769,14 @@ if(todayBtn)todayBtn.addEventListener('click',()=>{curY=realToday.y;curM=realTod
 renderWeekdayHeader();
 renderMonth();
 
+/* Von "Als Nächstes" (Startseite) zu einem konkreten Kalendertag springen */
+function goToCalendarDate(y,m,d){
+  curY=y; curM=m;
+  renderMonth();
+  pick(d);
+  show('cal');
+}
+
 /* "Als Nächstes" im Rail: immer die nächsten Termine ab heute, direkt aus eventsByMonth */
 function renderNextUp(){
   const box=document.getElementById('nextUp');
@@ -1775,15 +1789,19 @@ function renderNextUp(){
     for(const dStr in daysObj){
       const d=+dStr, dateNum=y*10000+m*100+d;
       if(dateNum<todayNum)continue;
-      daysObj[dStr].map(materialize).forEach(e=>all.push({m,d,dateNum,e}));
+      daysObj[dStr].map(materialize).forEach(e=>all.push({y,m,d,dateNum,e}));
     }
   }
   all.sort((a,b)=>a.dateNum-b.dateNum);
   const seen=new Set();
   const next=all.filter(x=>{ if(seen.has(x.e.n))return false; seen.add(x.e.n); return true; }).slice(0,3);
   box.innerHTML = next.length
-    ? next.map(({m,d,e})=>`<div class="mini-ev"><div class="md">${d}.${m}.<br>${e.t}</div><div><div class="mt">${e.n}</div><div class="ms">${e.d}</div></div></div>`).join('')
+    ? next.map(({y,m,d,e})=>`<div class="mini-ev" role="button" tabindex="0" data-y="${y}" data-m="${m}" data-d="${d}"><div class="md">${d}.${m}.<br>${e.t}</div><div><div class="mt">${e.n}</div><div class="ms">${e.d}</div></div></div>`).join('')
     : `<div class="ms" style="padding:8px 0;font-style:italic">${T('nextup_empty')}</div>`;
+  box.querySelectorAll('.mini-ev').forEach(el=>{
+    el.addEventListener('click',()=>goToCalendarDate(+el.dataset.y,+el.dataset.m,+el.dataset.d));
+    el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();el.click();}});
+  });
 }
 renderNextUp();
 
@@ -1795,6 +1813,10 @@ renderNextUp();
    weil für sie ohnehin alles neu ist. Gespeichert wird nur die zuletzt gesehene id –
    getrennt vom Fortschritt (also auch nicht im Sicherungs-Code). */
 const NEWS=[
+  {id:'2026-09-29',items:[
+    {de:'Neu: „Als Nächstes"-Termine auf der Startseite sind jetzt anklickbar',
+     en:'New: "Coming Up" appointments on the home screen are now clickable',v:'path'}
+  ]},
   {id:'2026-09-27',items:[
     {de:'Neuer Tag 10: dein großer Moment – der Abschluss deines Onboardings',
      en:'New Day 10: your big moment – the finale of your onboarding',v:'path'}
