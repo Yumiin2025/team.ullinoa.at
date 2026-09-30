@@ -723,6 +723,12 @@ const UI = {
     ev_feier_link:"Anmelden (bis 11.12.)", ev_feier_meta:"RINGANA Campus A, 8295 Sankt Johann in der Haide, Österreich · Plätze begrenzt (120) – bitte nur verbindlich anmelden",
     ev_kickoff_n:"Team Kick-off 2027", ev_kickoff_d:"Ein ganzer Tag mit Insights von erfolgreichen Partner:innen, Tipps, Tricks und How-tos für deinen Business-Alltag – plus jede Menge Inspiration und Frauenpower. 9:00–18:00 Uhr · 20 €.",
     ev_kickoff_link:"Anmelden (bis 31.12.)", ev_kickoff_meta:"RINGANA Campus A, 8295 Sankt Johann in der Haide, Österreich · Plätze begrenzt, verbindliche Anmeldung",
+    ev_compliance_n:"Social Media & Compliance bei RINGANA", ev_compliance_d:"Die wichtigsten Regeln für Social Media, Schritt für Schritt erklärt – warum Compliance kein Stoppschild, sondern ein Schutzschild ist, und was auf Instagram erlaubt ist. Ideal für alle, die sichtbar und gleichzeitig rechtssicher posten wollen.",
+    ev_compliance_link:"Zoom beitreten", ev_compliance_meta:"Meeting-ID 854 0771 3886 · Kenncode 593743",
+    ev_natur_n:"Naturtalente Inspiration Day", ev_natur_d:"Starke Impulse, inspirierende Persönlichkeiten und jede Menge positive Energie. Speaker aus unterschiedlichen Teams teilen ihre Erfahrungen, Erfolgsstrategien und Geschichten, die bewegen und motivieren. Ein Tag zum Auftanken, Vernetzen und Inspirierenlassen – Verpflegung den ganzen Tag inklusive. 9:00–18:00 Uhr.",
+    ev_natur_link:"Tickets (149 €)", ev_natur_meta:"Mutlangen · Ticket erst gültig ab Zahlungseingang",
+    ev_bic_n:"Business Info Call", ev_bic_d:"Bring Menschen aus deinem Umfeld mit, die neugierig auf RINGANA als Business sind – wir übernehmen den Call, du bringst die Gäste mit. Nicht überreden, sondern ehrlich erzählen und selbst entscheiden lassen.",
+    ev_bic_link:"Registrieren",
     news_h:"Neu für dich", news_ok:"Verstanden", news_close:"Schließen"
   },
   en:{
@@ -853,6 +859,12 @@ const UI = {
     ev_feier_link:"Register (by Dec 11)", ev_feier_meta:"RINGANA Campus A, 8295 Sankt Johann in der Haide, Austria · Limited to 120 spots – please only register if you're sure you're coming",
     ev_kickoff_n:"Team Kick-off 2027", ev_kickoff_d:"A full day of insights from successful partners, tips, tricks and how-tos for your everyday business – plus plenty of inspiration and women's empowerment. 9:00am–6:00pm · €20.",
     ev_kickoff_link:"Register (by Dec 31)", ev_kickoff_meta:"RINGANA Campus A, 8295 Sankt Johann in der Haide, Austria · Limited spots, registration is binding",
+    ev_compliance_n:"Social Media & Compliance at RINGANA", ev_compliance_d:"The most important social media rules, explained step by step – why compliance is a shield, not a stop sign, and what's allowed on Instagram. Ideal for anyone who wants to stay visible while posting on the safe side of the law.",
+    ev_compliance_link:"Join Zoom", ev_compliance_meta:"Meeting ID 854 0771 3886 · Passcode 593743",
+    ev_natur_n:"Naturtalente Inspiration Day", ev_natur_d:"Powerful impulses, inspiring people and lots of positive energy. Speakers from different teams share their experiences, success strategies and stories that move and motivate. A day to recharge, connect and get inspired – food included all day. 9:00am–6:00pm.",
+    ev_natur_link:"Tickets (€149)", ev_natur_meta:"Mutlangen, Germany · Ticket only valid once payment is received",
+    ev_bic_n:"Business Info Call", ev_bic_d:"Bring people from your circle who are curious about RINGANA as a business – we run the call, you bring the guests. Not about convincing, just honest sharing so everyone can decide for themselves.",
+    ev_bic_link:"Register",
     news_h:"New for you", news_ok:"Got it", news_close:"Close"
   }
 };
@@ -1640,6 +1652,8 @@ const zoomEN="https://us06web.zoom.us/j/82711339043";
 const freshForm="https://forms.gle/ZnVJ3JBvr9jUi8FL6";
 const ringbar="https://www.ringana.com/ringbar/";
 
+const complianceZoom='https://us06web.zoom.us/j/85407713886?pwd=H1p1XF2HoGPI4e2bBtYihRe6wnMHof.1';
+
 const runWienUrl='https://ringanaevents.flave.world/users/47410319-d2b7-440a-a698-ba941ac9fd5c/events/06e08e6b-58cb-4118-8413-5f718f7da2f8';
 const conventionTicket='https://ringanaevents.flave.world/users/47410319-d2b7-440a-a698-ba941ac9fd5c/events/f61caca0-e047-46f3-9d97-8baed0c84cb5';
 const conventionStream='https://ringanaevents.flave.world/users/47410319-d2b7-440a-a698-ba941ac9fd5c/events/5968eaa7-cc93-4401-8176-c82ff03a9487';
@@ -1665,6 +1679,12 @@ function teamFeier(){return {t:'10:00',n:T('ev_feier_n'),d:T('ev_feier_d'),type:
   link:'https://eveeno.com/teamfeier',linkLabel:T('ev_feier_link'),meta:T('ev_feier_meta')};}
 function teamKickoff(){return {t:'09:00',n:T('ev_kickoff_n'),d:T('ev_kickoff_d'),type:'event',
   link:'https://eveeno.com/teamkickoff',linkLabel:T('ev_kickoff_link'),meta:T('ev_kickoff_meta')};}
+function complianceWebinar(){return {t:'10:00',n:T('ev_compliance_n'),d:T('ev_compliance_d'),type:'event',
+  link:complianceZoom,linkLabel:T('ev_compliance_link'),meta:T('ev_compliance_meta')};}
+function naturtalente(){return {t:'09:00',n:T('ev_natur_n'),d:T('ev_natur_d'),type:'event',
+  link:'https://eveeno.com/323695814',linkLabel:T('ev_natur_link'),meta:T('ev_natur_meta')};}
+function businessInfoCall(){return {t:'20:00',n:T('ev_bic_n'),d:T('ev_bic_d'),type:'call',
+  link:'https://scheduler.zoom.us/ullinoa/business-info-call',linkLabel:T('ev_bic_link')};}
 function materialize(desc){
   switch(desc.k){
     case 'freshwn': return freshWN(desc.url);
@@ -1675,27 +1695,30 @@ function materialize(desc){
     case 'conv': return convention(desc.day);
     case 'feier': return teamFeier();
     case 'kickoff': return teamKickoff();
+    case 'compliance': return complianceWebinar();
+    case 'naturtalente': return naturtalente();
+    case 'bic': return businessInfoCall();
     default: return null;
   }
 }
 
 const eventsByMonth={
   '2026-9':{ 1:[{k:'call'}], 15:[{k:'callen'}], 19:[{k:'conv',day:1}], 20:[{k:'conv',day:2}], 25:[{k:'fresh'}] },
-  '2026-10':{ 3:[{k:'run'}], 4:[{k:'call'}], 9:[{k:'fresh'}], 15:[{k:'callen'}], 21:[{k:'freshwn',url:'https://eveeno.com/freshdateoktober'}], 23:[{k:'fresh'}] },
-  '2026-11':{ 1:[{k:'call'}], 4:[{k:'freshwn',url:'https://eveeno.com/freshdate4november'}], 6:[{k:'fresh'}], 15:[{k:'callen'}], 17:[{k:'freshwn',url:'https://eveeno.com/freshdate17november'}], 27:[{k:'fresh'}] },
-  '2026-12':{ 1:[{k:'call'}], 4:[{k:'fresh'}], 15:[{k:'callen'}], 21:[{k:'feier'}] },
-  '2027-1':{ 15:[{k:'kickoff'},{k:'callen'}] },
-  '2027-2':{ 5:[{k:'fresh'}], 15:[{k:'callen'}], 19:[{k:'fresh'}] },
-  '2027-3':{ 5:[{k:'fresh'}], 15:[{k:'callen'}], 26:[{k:'fresh'}] },
-  '2027-4':{ 9:[{k:'fresh'}], 15:[{k:'callen'}], 30:[{k:'fresh'}] },
-  '2027-5':{ 14:[{k:'fresh'}], 15:[{k:'callen'}], 28:[{k:'fresh'}] },
-  '2027-6':{ 4:[{k:'fresh'}], 15:[{k:'callen'}], 18:[{k:'fresh'}] },
-  '2027-7':{ 2:[{k:'fresh'}], 15:[{k:'callen'}], 23:[{k:'fresh'}] },
-  '2027-8':{ 6:[{k:'fresh'}], 15:[{k:'callen'}], 20:[{k:'fresh'}] },
-  '2027-9':{ 3:[{k:'fresh'}], 15:[{k:'callen'}], 24:[{k:'fresh'}] },
-  '2027-10':{ 8:[{k:'fresh'}], 15:[{k:'callen'}], 22:[{k:'fresh'}] },
-  '2027-11':{ 5:[{k:'fresh'}], 15:[{k:'callen'}], 19:[{k:'fresh'}] },
-  '2027-12':{ 3:[{k:'fresh'}], 10:[{k:'fresh'}], 15:[{k:'callen'}], 17:[{k:'fresh'}] }
+  '2026-10':{ 3:[{k:'run'}], 4:[{k:'call'}], 7:[{k:'compliance'},{k:'bic'}], 9:[{k:'fresh'}], 15:[{k:'callen'}], 17:[{k:'naturtalente'}], 21:[{k:'freshwn',url:'https://eveeno.com/freshdateoktober'}], 23:[{k:'fresh'}] },
+  '2026-11':{ 1:[{k:'call'}], 4:[{k:'freshwn',url:'https://eveeno.com/freshdate4november'}], 6:[{k:'fresh'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 17:[{k:'freshwn',url:'https://eveeno.com/freshdate17november'}], 27:[{k:'fresh'}] },
+  '2026-12':{ 1:[{k:'call'}], 4:[{k:'fresh'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 21:[{k:'feier'}] },
+  '2027-1':{ 7:[{k:'bic'}], 15:[{k:'kickoff'},{k:'callen'}] },
+  '2027-2':{ 5:[{k:'fresh'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 19:[{k:'fresh'}] },
+  '2027-3':{ 5:[{k:'fresh'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 26:[{k:'fresh'}] },
+  '2027-4':{ 7:[{k:'bic'}], 9:[{k:'fresh'}], 15:[{k:'callen'}], 30:[{k:'fresh'}] },
+  '2027-5':{ 7:[{k:'bic'}], 14:[{k:'fresh'}], 15:[{k:'callen'}], 28:[{k:'fresh'}] },
+  '2027-6':{ 4:[{k:'fresh'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 18:[{k:'fresh'}] },
+  '2027-7':{ 2:[{k:'fresh'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 23:[{k:'fresh'}] },
+  '2027-8':{ 6:[{k:'fresh'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 20:[{k:'fresh'}] },
+  '2027-9':{ 3:[{k:'fresh'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 24:[{k:'fresh'}] },
+  '2027-10':{ 7:[{k:'bic'}], 8:[{k:'fresh'}], 15:[{k:'callen'}], 22:[{k:'fresh'}] },
+  '2027-11':{ 5:[{k:'fresh'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 19:[{k:'fresh'}] },
+  '2027-12':{ 3:[{k:'fresh'}], 7:[{k:'bic'}], 10:[{k:'fresh'}], 15:[{k:'callen'}], 17:[{k:'fresh'}] }
 };
 
 const MONTH_NAMES={
@@ -1813,6 +1836,10 @@ renderNextUp();
    weil für sie ohnehin alles neu ist. Gespeichert wird nur die zuletzt gesehene id –
    getrennt vom Fortschritt (also auch nicht im Sicherungs-Code). */
 const NEWS=[
+  {id:'2026-09-30',items:[
+    {de:'Neu im Kalender: Social Media & Compliance Webinar (7.10.), Naturtalente Inspiration Day (17.10.) und monatlicher Business Info Call (jeden 7.)',
+     en:'New in the calendar: Social Media & Compliance webinar (Oct 7), Naturtalente Inspiration Day (Oct 17), and a monthly Business Info Call (every 7th)',v:'cal'}
+  ]},
   {id:'2026-09-29',items:[
     {de:'Neu: „Als Nächstes"-Termine auf der Startseite sind jetzt anklickbar',
      en:'New: "Coming Up" appointments on the home screen are now clickable',v:'path'}
