@@ -727,8 +727,10 @@ const UI = {
     ev_compliance_link:"Zoom beitreten", ev_compliance_meta:"Meeting-ID 854 0771 3886 · Kenncode 593743",
     ev_natur_n:"Naturtalente Inspiration Day", ev_natur_d:"Starke Impulse, inspirierende Persönlichkeiten und jede Menge positive Energie. Speaker aus unterschiedlichen Teams teilen ihre Erfahrungen, Erfolgsstrategien und Geschichten, die bewegen und motivieren. Ein Tag zum Auftanken, Vernetzen und Inspirierenlassen – Verpflegung den ganzen Tag inklusive. 9:00–18:00 Uhr.",
     ev_natur_link:"Tickets (149 €)", ev_natur_meta:"Mutlangen · Ticket erst gültig ab Zahlungseingang",
-    ev_bic_n:"Business Info Call", ev_bic_d:"Bring Menschen aus deinem Umfeld mit, die neugierig auf RINGANA als Business sind – wir übernehmen den Call, du bringst die Gäste mit. Nicht überreden, sondern ehrlich erzählen und selbst entscheiden lassen.",
+    ev_bic_n:"Business Info Call (Deutsch)", ev_bic_d:"<strong>Jeden 7. im Monat, 20 Uhr:</strong> der Business Info Call auf Deutsch. Lad Leute aus deinem Umfeld ein, die neugierig auf RINGANA als Business sind – wir übernehmen den Call, du bringst sie mit. Kein Verkaufsgespräch, einfach ehrlich erzählt, damit jede:r selbst entscheiden kann.",
     ev_bic_link:"Registrieren",
+    ev_bicen_n:"Business Info Call (Englisch)", ev_bicen_d:"<strong>Jeden 6. im Monat, 20 Uhr (CET):</strong> der Business Info Call auf Englisch, mit Noa. Ideal für internationale Interessent:innen in deinem Umfeld – lad sie einfach ein, den Rest übernehmen wir.",
+    ev_bicen_link:"Registrieren",
     news_h:"Neu für dich", news_ok:"Verstanden", news_close:"Schließen"
   },
   en:{
@@ -863,8 +865,10 @@ const UI = {
     ev_compliance_link:"Join Zoom", ev_compliance_meta:"Meeting ID 854 0771 3886 · Passcode 593743",
     ev_natur_n:"Naturtalente Inspiration Day", ev_natur_d:"Powerful impulses, inspiring people and lots of positive energy. Speakers from different teams share their experiences, success strategies and stories that move and motivate. A day to recharge, connect and get inspired – food included all day. 9:00am–6:00pm.",
     ev_natur_link:"Tickets (€149)", ev_natur_meta:"Mutlangen, Germany · Ticket only valid once payment is received",
-    ev_bic_n:"Business Info Call", ev_bic_d:"Bring people from your circle who are curious about RINGANA as a business – we run the call, you bring the guests. Not about convincing, just honest sharing so everyone can decide for themselves.",
+    ev_bic_n:"Business Info Call (German)", ev_bic_d:"<strong>Every 7th of the month, 8 PM CET:</strong> the Business Info Call in German. Invite people from your circle who are curious about RINGANA as a business – we run the call, you bring them along. No sales pitch, just honest sharing so everyone can decide for themselves.",
     ev_bic_link:"Register",
+    ev_bicen_n:"Business Info Call (English)", ev_bicen_d:"<strong>Every 6th of the month, 8 PM CET:</strong> the Business Info Call in English, hosted by Noa. Perfect for international prospects in your circle – just invite them, we'll take it from there.",
+    ev_bicen_link:"Register",
     news_h:"New for you", news_ok:"Got it", news_close:"Close"
   }
 };
@@ -1685,6 +1689,8 @@ function naturtalente(){return {t:'09:00',n:T('ev_natur_n'),d:T('ev_natur_d'),ty
   link:'https://eveeno.com/323695814',linkLabel:T('ev_natur_link'),meta:T('ev_natur_meta')};}
 function businessInfoCall(){return {t:'20:00',n:T('ev_bic_n'),d:T('ev_bic_d'),type:'call',
   link:'https://scheduler.zoom.us/ullinoa/business-info-call',linkLabel:T('ev_bic_link')};}
+function businessInfoCallEN(){return {t:'20:00',n:T('ev_bicen_n'),d:T('ev_bicen_d'),type:'call',
+  link:'https://scheduler.zoom.us/ullinoa/business-info-call-with-noa',linkLabel:T('ev_bicen_link')};}
 function materialize(desc){
   switch(desc.k){
     case 'freshwn': return freshWN(desc.url);
@@ -1698,27 +1704,28 @@ function materialize(desc){
     case 'compliance': return complianceWebinar();
     case 'naturtalente': return naturtalente();
     case 'bic': return businessInfoCall();
+    case 'bicen': return businessInfoCallEN();
     default: return null;
   }
 }
 
 const eventsByMonth={
   '2026-9':{ 1:[{k:'call'}], 15:[{k:'callen'}], 19:[{k:'conv',day:1}], 20:[{k:'conv',day:2}], 25:[{k:'fresh'}] },
-  '2026-10':{ 3:[{k:'run'}], 4:[{k:'call'}], 7:[{k:'compliance'},{k:'bic'}], 9:[{k:'fresh'}], 15:[{k:'callen'}], 17:[{k:'naturtalente'}], 21:[{k:'freshwn',url:'https://eveeno.com/freshdateoktober'}], 23:[{k:'fresh'}] },
-  '2026-11':{ 1:[{k:'call'}], 4:[{k:'freshwn',url:'https://eveeno.com/freshdate4november'}], 6:[{k:'fresh'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 17:[{k:'freshwn',url:'https://eveeno.com/freshdate17november'}], 27:[{k:'fresh'}] },
-  '2026-12':{ 1:[{k:'call'}], 4:[{k:'fresh'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 21:[{k:'feier'}] },
-  '2027-1':{ 7:[{k:'bic'}], 15:[{k:'kickoff'},{k:'callen'}] },
-  '2027-2':{ 5:[{k:'fresh'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 19:[{k:'fresh'}] },
-  '2027-3':{ 5:[{k:'fresh'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 26:[{k:'fresh'}] },
-  '2027-4':{ 7:[{k:'bic'}], 9:[{k:'fresh'}], 15:[{k:'callen'}], 30:[{k:'fresh'}] },
-  '2027-5':{ 7:[{k:'bic'}], 14:[{k:'fresh'}], 15:[{k:'callen'}], 28:[{k:'fresh'}] },
-  '2027-6':{ 4:[{k:'fresh'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 18:[{k:'fresh'}] },
-  '2027-7':{ 2:[{k:'fresh'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 23:[{k:'fresh'}] },
-  '2027-8':{ 6:[{k:'fresh'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 20:[{k:'fresh'}] },
-  '2027-9':{ 3:[{k:'fresh'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 24:[{k:'fresh'}] },
-  '2027-10':{ 7:[{k:'bic'}], 8:[{k:'fresh'}], 15:[{k:'callen'}], 22:[{k:'fresh'}] },
-  '2027-11':{ 5:[{k:'fresh'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 19:[{k:'fresh'}] },
-  '2027-12':{ 3:[{k:'fresh'}], 7:[{k:'bic'}], 10:[{k:'fresh'}], 15:[{k:'callen'}], 17:[{k:'fresh'}] }
+  '2026-10':{ 3:[{k:'run'}], 4:[{k:'call'}], 6:[{k:'bicen'}], 7:[{k:'compliance'},{k:'bic'}], 9:[{k:'fresh'}], 15:[{k:'callen'}], 17:[{k:'naturtalente'}], 21:[{k:'freshwn',url:'https://eveeno.com/freshdateoktober'}], 23:[{k:'fresh'}] },
+  '2026-11':{ 1:[{k:'call'}], 4:[{k:'freshwn',url:'https://eveeno.com/freshdate4november'}], 6:[{k:'fresh'},{k:'bicen'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 17:[{k:'freshwn',url:'https://eveeno.com/freshdate17november'}], 27:[{k:'fresh'}] },
+  '2026-12':{ 1:[{k:'call'}], 4:[{k:'fresh'}], 6:[{k:'bicen'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 21:[{k:'feier'}] },
+  '2027-1':{ 6:[{k:'bicen'}], 7:[{k:'bic'}], 15:[{k:'kickoff'},{k:'callen'}] },
+  '2027-2':{ 5:[{k:'fresh'}], 6:[{k:'bicen'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 19:[{k:'fresh'}] },
+  '2027-3':{ 5:[{k:'fresh'}], 6:[{k:'bicen'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 26:[{k:'fresh'}] },
+  '2027-4':{ 6:[{k:'bicen'}], 7:[{k:'bic'}], 9:[{k:'fresh'}], 15:[{k:'callen'}], 30:[{k:'fresh'}] },
+  '2027-5':{ 6:[{k:'bicen'}], 7:[{k:'bic'}], 14:[{k:'fresh'}], 15:[{k:'callen'}], 28:[{k:'fresh'}] },
+  '2027-6':{ 4:[{k:'fresh'}], 6:[{k:'bicen'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 18:[{k:'fresh'}] },
+  '2027-7':{ 2:[{k:'fresh'}], 6:[{k:'bicen'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 23:[{k:'fresh'}] },
+  '2027-8':{ 6:[{k:'fresh'},{k:'bicen'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 20:[{k:'fresh'}] },
+  '2027-9':{ 3:[{k:'fresh'}], 6:[{k:'bicen'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 24:[{k:'fresh'}] },
+  '2027-10':{ 6:[{k:'bicen'}], 7:[{k:'bic'}], 8:[{k:'fresh'}], 15:[{k:'callen'}], 22:[{k:'fresh'}] },
+  '2027-11':{ 5:[{k:'fresh'}], 6:[{k:'bicen'}], 7:[{k:'bic'}], 15:[{k:'callen'}], 19:[{k:'fresh'}] },
+  '2027-12':{ 3:[{k:'fresh'}], 6:[{k:'bicen'}], 7:[{k:'bic'}], 10:[{k:'fresh'}], 15:[{k:'callen'}], 17:[{k:'fresh'}] }
 };
 
 const MONTH_NAMES={
@@ -1836,6 +1843,10 @@ renderNextUp();
    weil für sie ohnehin alles neu ist. Gespeichert wird nur die zuletzt gesehene id –
    getrennt vom Fortschritt (also auch nicht im Sicherungs-Code). */
 const NEWS=[
+  {id:'2026-09-30-2',items:[
+    {de:'Neu: Business Info Call auf Englisch, jeden 6. im Monat, 20 Uhr',
+     en:'New: English Business Info Call, on the 6th of every month, 8 PM',v:'cal'}
+  ]},
   {id:'2026-09-30',items:[
     {de:'Neu im Kalender: Social Media & Compliance Webinar (7.10.), Naturtalente Inspiration Day (17.10.) und monatlicher Business Info Call (jeden 7.)',
      en:'New in the calendar: Social Media & Compliance webinar (Oct 7), Naturtalente Inspiration Day (Oct 17), and a monthly Business Info Call (every 7th)',v:'cal'}
