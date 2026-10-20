@@ -107,6 +107,13 @@
   .wa-cta p{font-size:14px;color:var(--ink);line-height:1.6;margin-bottom:13px}
   .wa-btn{display:block;width:100%;text-align:center;background:#25d366;color:#fff;text-decoration:none;font-weight:700;font-family:'Fraunces';font-size:16px;padding:15px;border-radius:14px}
   .wa-btn:active{transform:scale(.98)}
+  .cg-btn{display:block;width:100%;text-align:center;background:var(--teal);color:#fff;text-decoration:none;font-weight:700;font-family:'Fraunces';font-size:16px;padding:15px;border-radius:14px;margin-top:8px}
+  .cg-btn:active{transform:scale(.98)}
+  .cg-next{background:var(--mint);border-radius:16px;padding:16px 18px 18px;margin:6px 0 18px}
+  .cg-next-h{font-family:'Fraunces';font-size:13px;font-weight:600;color:var(--purple);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+  .cg-next p{font-size:14.5px;line-height:1.6;margin-bottom:10px}
+  .cg-sign p{font-family:'Fraunces';font-style:italic;color:var(--teal);font-size:16px}
+  .cg-later{display:block;margin:12px auto 0;background:none;border:none;color:var(--muted);font-size:14px;padding:6px 12px}
 
   .timeline{position:relative;padding-left:38px}
   .timeline::before{content:"";position:absolute;left:14px;top:8px;bottom:40px;width:2px;
@@ -1310,6 +1317,7 @@ function openDay(n){
       renderPlant(state.streak);
       const more=days.some(x=>x.n===n+1);
       closeDay();
+      if(!more && LANG==='en'){openCongrats();return;}   // nur Englisch: Glückwunsch-Seite mit Workbook
       toast(more?Tf('toast_next',{n:n+1}):T('toast_all_done'));
       return;
     }
@@ -1363,6 +1371,36 @@ function openWelcome(){
         <p>${T('w_cta_p')}</p>
         <a class="wa-btn" href="${WA_ONBOARDING}" target="_blank" rel="noopener">${T('w_cta_btn')}</a>
       </div>
+    </div>`;
+  overlay.classList.add('show');
+  document.body.style.overflow='hidden';
+  sheet.scrollTop=0;
+}
+/* ---------------- Glückwunsch nach dem letzten Onboarding-Tag (nur EN) ---------------- */
+const WORKBOOK_PDF='Onboarding-Build-Your-Network-Workbook.pdf';
+function openCongrats(){
+  sheet.innerHTML=`
+    <div class="sheet-hd">
+      <button class="close" onclick="closeDay()">✕</button>
+      <div class="ey">Onboarding complete</div>
+      <h3>Congratulations 🎉</h3>
+    </div>
+    <div class="sheet-bd">
+      <div class="intro-prose">
+        <p class="lead">You made it through all 10 days. 🎉</p>
+        <p>That's no small thing. You're one of the few who actually sees an onboarding through to the end. And you've shown yourself something: when you set your mind to something, you follow through.</p>
+        <p>That's exactly what carries you from here. Onboarding was the start, now we build: your conversations, your connections, your business. You don't have to know everything at once. You just have to keep going, step by step, just like these last 10 days.</p>
+        <p>You have the foundation, a team behind you, and proof that you can do this. Now it's time to get going.</p>
+      </div>
+      <div class="cg-next">
+        <div class="cg-next-h">Your next step</div>
+        <p>To go with you, we made a small 30-day workbook called Build Your Network. It is not for reading, it is for filling in. It helps you see where you stand, where your biggest lever is and which three actions to focus on first.</p>
+        <a class="cg-btn" href="${WORKBOOK_PDF}" target="_blank" rel="noopener">Open the workbook (PDF)</a>
+      </div>
+      <div class="intro-prose cg-sign">
+        <p>We're incredibly proud of you. 🤍<br>Ulli &amp; Noa</p>
+      </div>
+      <button type="button" class="cg-later" onclick="closeDay()">Close</button>
     </div>`;
   overlay.classList.add('show');
   document.body.style.overflow='hidden';
@@ -1843,6 +1881,9 @@ renderNextUp();
    weil für sie ohnehin alles neu ist. Gespeichert wird nur die zuletzt gesehene id –
    getrennt vom Fortschritt (also auch nicht im Sicherungs-Code). */
 const NEWS=[
+  {id:'2026-10-20',items:[   // nur Englisch (kein de-Text): wird auf der deutschen Seite nicht angezeigt
+    {en:'New: the Build Your Network workbook, your 30-day plan for after onboarding (PDF)',href:'Onboarding-Build-Your-Network-Workbook.pdf'}
+  ]},
   {id:'2026-09-30-2',items:[
     {de:'Neu: Business Info Call auf Englisch, jeden 6. im Monat, 20 Uhr',
      en:'New: English Business Info Call, on the 6th of every month, 8 PM',v:'cal'}
@@ -1914,9 +1955,11 @@ function renderNews(){
   if(seen===null && !HAD_PROGRESS){ markNewsSeen(); bar.hidden=true; return; }   // ganz neue Person
   const unseen=NEWS.filter(n=>seen===null||n.id>seen).sort((a,b)=>b.id.localeCompare(a.id));
   if(!unseen.length){bar.hidden=true;return;}
-  const items=[].concat(...unseen.map(n=>n.items)).slice(0,6);
+  const items=[].concat(...unseen.map(n=>n.items)).filter(it=>it[LANG]).slice(0,6);   // Einträge ohne Text in dieser Sprache entfallen
+  if(!items.length){bar.hidden=true;return;}
   document.getElementById('newsList').innerHTML=items.map(it=>{
-    const txt=it[LANG]||it.de;
+    const txt=it[LANG];
+    if(it.href)return `<li><a href="${it.href}" target="_blank" rel="noopener">${txt} →</a></li>`;
     return '<li>'+(it.v?`<a data-v="${it.v}">${txt} →</a>`:txt)+'</li>';
   }).join('');
   bar.hidden=false;
